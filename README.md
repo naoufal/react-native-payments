@@ -8,6 +8,8 @@ __`react-native-apple-pay`__ is a React Native library for accepting payments wi
 
 __Note: This library is still in progress.__
 
+![react-native-apple-pay](https://cloud.githubusercontent.com/assets/1627824/8768439/d18959e2-2e4e-11e5-8103-d08230128fcd.gif)
+
 ## Documentation
 - [Install](https://github.com/naoufal/react-native-apple-pay#install)
 - [Supported Payment Processors](https://github.com/naoufal/react-native-apple-pay#supported-payment-processors)
