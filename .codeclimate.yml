@@ -1,0 +1,5 @@
+exclude_paths:
+  - "TouchID.xcodeproj"
+  - "**/*.h"
+  - "**/*.m"
+  - "**/*.swift"
