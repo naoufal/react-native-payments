@@ -1,0 +1,27 @@
+{
+  "name": "react-native-payments",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "babel src/ -D lib/",
+    "prepublish": "npm run build",
+    "flow": "flow"
+  },
+  "author": "Naoufal Kadhom",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-jest": "^19.0.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-latest": "^6.24.1",
+    "flow-bin": "^0.43.1",
+    "jest": "^19.0.2",
+    "regenerator-runtime": "^0.10.3"
+  },
+  "dependencies": {
+    "uuid": "^3.0.1"
+  }
+}
