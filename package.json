@@ -5,8 +5,6 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "babel src/ -D lib/",
-    "prepublish": "npm run build",
     "flow": "flow"
   },
   "author": "Naoufal Kadhom",
@@ -23,5 +21,8 @@
   },
   "dependencies": {
     "uuid": "^3.0.1"
+  },
+  "peerDependencies": {
+    "react-native": "^0.41.2"
   }
 }

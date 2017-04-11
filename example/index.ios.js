@@ -10,23 +10,40 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableHighlight
+  TouchableHighlight,
+  NativeModules
 } from 'react-native';
 import PaymentRequest from 'react-native-payments';
 
 export default class example extends Component {
+  constructor() {
+    super();
+
+    this.handlePaymentPress = this.handlePaymentPress.bind(this);
+  }
+
   componentDidMount() {
     const methodData = [{
       supportedMethods: ['apple-pay'],
       data: {
-        merchantId: '12345'
+        merchantIdentifier: '12345',
+        supportedNetworks: ['visa', 'mastercard'],
+        countryCode: 'US',
+        currencyCode: 'USD'
       }
     }];
     const details = {
       id: 'native-payments-example',
+      displayItems: [{
+        label: 'Sub-total',
+        amount: { currency: 'USD', value: '55.00' }
+      }, {
+        label: 'Sales Tax',
+        amount: { currency: 'USD', value: '5.00' }
+      }],
       total: {
           label: 'Total',
-          amount: { currency: 'USD', amount: '9.99' },
+          amount: { currency: 'USD', value: '60.00' }
       }
     };
 
@@ -34,20 +51,27 @@ export default class example extends Component {
   }
 
   handlePaymentPress(e) {
-    return alert();
+      setTimeout(() => {
+        this.paymentRequest.abort();
+      }, 2000);
 
     return this.paymentRequest.show()
-        .then(paymentResponse => {
-            const { paymentToken } = paymentResponse.details;
+      .then(paymentResponse => {
+        console.log('paymentToken', paymentResponse);
+      })
 
-            // Charge payment token
-            return fetch('...').then(res => res.json())
-                .then(res => paymentResponse.complete('success'))
-                .catch(err => paymentResponse.complete('fail'));
-        })
-        .catch(err => {
-            alert('Something went wrong');
-        });
+
+    //     .then(paymentResponse => {
+    //         const { paymentToken } = paymentResponse.details;
+
+    //         // Charge payment token
+    //         return fetch('...').then(res => res.json())
+    //             .then(res => paymentResponse.complete('success'))
+    //             .catch(err => paymentResponse.complete('fail'));
+    //     })
+    //     .catch(err => {
+    //         alert('Something went wrong');
+    //     });
   }
 
   render() {
