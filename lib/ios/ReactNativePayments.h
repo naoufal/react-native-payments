@@ -1,5 +1,6 @@
 @import UIKit;
 @import PassKit;
+@import AddressBook;
 
 #if __has_include("RCTBridgeModule.h")
 #import "RCTBridgeModule.h"
@@ -8,9 +9,6 @@
 #endif
 
 @interface ReactNativePayments : NSObject <RCTBridgeModule, PKPaymentAuthorizationViewControllerDelegate>
-@property NSString *paymentProcessor;
-@property NSString *paymentProcessorPublicKey;
-@property NSString *backendUrl;
 
 @property (nonatomic, strong) RCTResponseSenderBlock callback;
 @property (nonatomic, strong) PKPaymentRequest *paymentRequest;

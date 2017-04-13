@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -26,7 +20,7 @@ export default class example extends Component {
     const methodData = [{
       supportedMethods: ['apple-pay'],
       data: {
-        merchantIdentifier: '12345',
+        merchantIdentifier: 'merchant.com.react-native-payments.naoufal',
         supportedNetworks: ['visa', 'mastercard'],
         countryCode: 'US',
         currencyCode: 'USD'
@@ -51,27 +45,15 @@ export default class example extends Component {
   }
 
   handlePaymentPress(e) {
-      setTimeout(() => {
-        this.paymentRequest.abort();
-      }, 2000);
-
     return this.paymentRequest.show()
       .then(paymentResponse => {
-        console.log('paymentToken', paymentResponse);
+        console.log(paymentResponse);
+
+        // TODO:
+        // - Charge the token or send it back to the Native Side
+        return paymentResponse.complete('success');
       })
-
-
-    //     .then(paymentResponse => {
-    //         const { paymentToken } = paymentResponse.details;
-
-    //         // Charge payment token
-    //         return fetch('...').then(res => res.json())
-    //             .then(res => paymentResponse.complete('success'))
-    //             .catch(err => paymentResponse.complete('fail'));
-    //     })
-    //     .catch(err => {
-    //         alert('Something went wrong');
-    //     });
+      .catch(e => this.paymentRequest.abort());
   }
 
   render() {
