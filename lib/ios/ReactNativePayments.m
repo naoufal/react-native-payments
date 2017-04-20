@@ -66,7 +66,22 @@ RCT_EXPORT_METHOD(createPaymentRequest: (NSDictionary *)methodData
     self.paymentRequest.currencyCode = methodData[@"currencyCode"];
     self.paymentRequest.paymentSummaryItems = itemSummary;
 
-    NSLog(@"PAYMENT REQUEST CREATED");
+    // Request Shipping
+    if (options[@"requestShipping"]) {
+        self.paymentRequest.requiredShippingAddressFields = PKAddressFieldPostalAddress;
+    }
+
+    if (options[@"requestPayerName"]) {
+        self.paymentRequest.requiredShippingAddressFields = self.paymentRequest.requiredShippingAddressFields | PKAddressFieldName;
+    }
+
+    if (options[@"requestPayerPhone"]) {
+        self.paymentRequest.requiredShippingAddressFields = self.paymentRequest.requiredShippingAddressFields | PKAddressFieldPhone;
+    }
+
+    if (options[@"requestPayerEmail"]) {
+        self.paymentRequest.requiredShippingAddressFields = self.paymentRequest.requiredShippingAddressFields | PKAddressFieldEmail;
+    }
 
     callback(@[[NSNull null]]);
 }
@@ -108,6 +123,18 @@ RCT_EXPORT_METHOD(complete: (NSString *)paymentStatus
     callback(@[[NSNull null]]);
 }
 
+RCT_EXPORT_METHOD(handleShippingContactChange: (NSArray *)shippingMethods
+                          paymentSummaryItems: (NSArray *)paymentSummaryItems
+                                     callback: (RCTResponseSenderBlock)callback)
+{
+    self.shippingContactCompletion(
+                                   PKPaymentAuthorizationStatusSuccess,
+                                   shippingMethods,
+                                   self.paymentRequest.paymentSummaryItems
+                                   );
+}
+
+
 
 -(void) paymentAuthorizationViewControllerDidFinish:(PKPaymentAuthorizationViewController *)controller
 {
@@ -136,7 +163,6 @@ RCT_EXPORT_METHOD(complete: (NSString *)paymentStatus
                                                            @"transactionIdentifier": payment.token.transactionIdentifier,
                                                            @"paymentData": [[NSString alloc] initWithData:payment.token.paymentData encoding:NSUTF8StringEncoding]
                                                            }
-                                                    //     @"token": [[NSString alloc] initWithData:payment.token.paymentData encoding:NSUTF8StringEncoding]
      ];
 
 
@@ -144,17 +170,28 @@ RCT_EXPORT_METHOD(complete: (NSString *)paymentStatus
 }
 
 
-// Shipping Contact && Shipping Method delegates
-//- (void) paymentAuthorizationViewController:(PKPaymentAuthorizationViewController *)controller
-//                   didSelectShippingContact:(CNContact *)contact
-//                                 completion:(void (^)(PKPaymentAuthorizationStatus, NSArray *, NSArray *))completion
-//{
-//    self.selectedContact = contact;
-//    [self updateShippingCost];
-//    NSArray *shippingMethods = [self shippingMethodsForContact:contact];
-//    completion(PKPaymentAuthorizationStatusSuccess, shippingMethods, self.summaryItems);
-//}
-//
+// Shipping Contact
+- (void) paymentAuthorizationViewController:(PKPaymentAuthorizationViewController *)controller
+                   didSelectShippingContact:(PKContact *)contact
+                                 completion:(nonnull void (^)(PKPaymentAuthorizationStatus, NSArray<PKShippingMethod *> * _Nonnull, NSArray<PKPaymentSummaryItem *> * _Nonnull))completion
+{
+    self.shippingContactCompletion = completion;
+
+    // TODO
+    // - Determine shipping methods on JS
+    // - Send shipping methods back over the bridge
+    CNPostalAddress *postalAddress = contact.postalAddress;
+    [self.bridge.eventDispatcher sendDeviceEventWithName:@"NativePayments:onshippingaddresschange" body:@{
+                                                                                                          @"city": postalAddress.city,
+                                                                                                          @"state": postalAddress.state,
+                                                                                                          @"postalCode": postalAddress.postalCode,
+                                                                                                          @"country": postalAddress.country,
+                                                                                                          @"countryCode": postalAddress.ISOCountryCode
+                                                                                                          // street, subAdministrativeArea, and subLocality are supressed for privacy
+                                                                                                          }];
+}
+
+// Shipping Method delegates
 //- (void) paymentAuthorizationViewController:(PKPaymentAuthorizationViewController *)controller
 //                    didSelectShippingMethod:(PKShippingMethod *)shippingMethod
 //                                 completion:(void (^)(PKPaymentAuthorizationStatus, NSArray *))completion

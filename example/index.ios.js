@@ -16,7 +16,7 @@ export default class example extends Component {
     this.handlePaymentPress = this.handlePaymentPress.bind(this);
   }
 
-  componentDidMount() {
+  handlePaymentPress(e) {
     const methodData = [{
       supportedMethods: ['apple-pay'],
       data: {
@@ -41,13 +41,18 @@ export default class example extends Component {
       }
     };
 
-    this.paymentRequest = new PaymentRequest(methodData, details);
-  }
+    const options = {
+      requestShipping: true,
+      requestPayerPhone: true,
+      requestPayerEmail: true,
+      requestPayerName: true,
+      shippingType: 'shipping'
+    };
 
-  handlePaymentPress(e) {
+    this.paymentRequest = new PaymentRequest(methodData, details, options);
+
     return this.paymentRequest.show()
       .then(paymentResponse => {
-        console.log(paymentResponse);
 
         // TODO:
         // - Charge the token or send it back to the Native Side
