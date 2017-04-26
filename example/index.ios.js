@@ -9,6 +9,18 @@ import {
 } from 'react-native';
 import PaymentRequest from 'react-native-payments';
 
+const INIT_DISPLAY_ITEMS = [{
+  label: 'Sub-total',
+  amount: { currency: 'USD', value: '55.00' }
+}, {
+  label: 'Shipping',
+  amount: { currency: 'USD', value: '5.00' }
+}];
+const INIT_TOTAL = {
+  label: 'Total',
+  amount: { currency: 'USD', value: '60.00' }
+};
+
 export default class example extends Component {
   constructor() {
     super();
@@ -28,17 +40,8 @@ export default class example extends Component {
     }];
     const details = {
       id: 'native-payments-example',
-      displayItems: [{
-        label: 'Sub-total',
-        amount: { currency: 'USD', value: '55.00' }
-      }, {
-        label: 'Sales Tax',
-        amount: { currency: 'USD', value: '5.00' }
-      }],
-      total: {
-          label: 'Total',
-          amount: { currency: 'USD', value: '60.00' }
-      }
+      displayItems: INIT_DISPLAY_ITEMS,
+      total: INIT_TOTAL
     };
 
     const options = {
@@ -50,6 +53,34 @@ export default class example extends Component {
     };
 
     this.paymentRequest = new PaymentRequest(methodData, details, options);
+
+    this.paymentRequest.addEventListener('shippingaddresschange', e => {
+      e.updateWith((details, addr) => {
+        const newDisplayItems = (addr.postalCode === '94114')
+          ? [{
+            label: 'Sub-total',
+            amount: { currency: 'USD', value: '55.00' }
+          }]
+          : INIT_DISPLAY_ITEMS;
+        const newTotal = (addr.postalCode === '94114')
+          ? {
+              amount: {
+                currency: 'USD',
+                value: '55.00'
+              },
+              label: 'total'
+            }
+          : INIT_TOTAL;
+
+        const updatedDetails = Object.assign({},
+          details,
+          { total: newTotal },
+          { displayItems: newDisplayItems }
+        );
+
+        return Promise.resolve(updatedDetails);
+      });
+    });
 
     return this.paymentRequest.show()
       .then(paymentResponse => {
