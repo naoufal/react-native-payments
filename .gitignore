@@ -24,3 +24,8 @@ DerivedData
 # npm
 #
 node_modules/
+
+# Editors
+#
+.vscode/launch.json
+*/jsconfig.json
