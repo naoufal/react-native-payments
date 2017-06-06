@@ -9,17 +9,42 @@ import {
 } from 'react-native';
 import PaymentRequest from 'react-native-payments';
 
+const INIT_TOTAL = {
+  label: 'Total',
+  amount: { currency: 'USD', value: '55.00' }
+};
+let INIT_SHIPPING_OPTIONS = [
+  {
+    id: 'economy',
+    label: 'Economy Shipping (5-7 Days)',
+    amount: {
+      currency: 'USD',
+      value: '0.00',
+    },
+    selected: true
+  }, {
+    id: 'express',
+    label: 'Express Shipping (2-3 Days)',
+    amount: {
+      currency: 'USD',
+      value: '5.00',
+    },
+  }, {
+    id: 'next-day',
+    label: 'Next Day Delivery',
+    amount: {
+      currency: 'USD',
+      value: '12.00',
+    },
+  }
+];
 const INIT_DISPLAY_ITEMS = [{
   label: 'Sub-total',
   amount: { currency: 'USD', value: '55.00' }
 }, {
   label: 'Shipping',
-  amount: { currency: 'USD', value: '5.00' }
+  amount: INIT_SHIPPING_OPTIONS[0].amount
 }];
-const INIT_TOTAL = {
-  label: 'Total',
-  amount: { currency: 'USD', value: '60.00' }
-};
 
 export default class example extends Component {
   constructor() {
@@ -38,10 +63,12 @@ export default class example extends Component {
         currencyCode: 'USD'
       }
     }];
+
     const details = {
       id: 'native-payments-example',
       displayItems: INIT_DISPLAY_ITEMS,
-      total: INIT_TOTAL
+      total: INIT_TOTAL,
+      shippingOptions: INIT_SHIPPING_OPTIONS
     };
 
     const options = {
@@ -55,14 +82,16 @@ export default class example extends Component {
     this.paymentRequest = new PaymentRequest(methodData, details, options);
 
     this.paymentRequest.addEventListener('shippingaddresschange', e => {
-      e.updateWith((details, addr) => {
-        const newDisplayItems = (addr.postalCode === '94114')
+      console.log(e.target.shippingOption);
+      //TODO: Update to use new API
+      const selectedShippingAddress = e.target.shippingAddress;
+      const updatedDisplayItems = (selectedShippingAddress.postalCode === '94114')
           ? [{
             label: 'Sub-total',
             amount: { currency: 'USD', value: '55.00' }
           }]
           : INIT_DISPLAY_ITEMS;
-        const newTotal = (addr.postalCode === '94114')
+      const updatedTotal = (selectedShippingAddress.postalCode === '94114')
           ? {
               amount: {
                 currency: 'USD',
@@ -71,14 +100,53 @@ export default class example extends Component {
               label: 'total'
             }
           : INIT_TOTAL;
+      const updatedShippingOptions = (selectedShippingAddress.postalCode === '94114')
+        ? [{
+    id: 'express1',
+    label: 'foo Shipping (2-3 Days)',
+    amount: {
+      currency: 'USD',
+      value: '11.00',
+    },
+  }]
+        : INIT_SHIPPING_OPTIONS;
+      const error = (selectedShippingAddress.postalCode === '94114') && `Sorry homie, can't ship there.` // This is actually ignored by Apple Pay
 
-        const updatedDetails = Object.assign({},
-          details,
-          { total: newTotal },
-          { displayItems: newDisplayItems }
-        );
+      e.updateWith({
+        total: updatedTotal,
+        displayItems: updatedDisplayItems,
+        shippingOptions: updatedShippingOptions,
+        error
+      });
+    });
 
-        return Promise.resolve(updatedDetails);
+    this.paymentRequest.addEventListener('shippingoptionchange', e => {
+      const selectedShippingOptionId = e.target.shippingOption;
+      const updatedShippingOptions = [...INIT_SHIPPING_OPTIONS].map(shippingOption => {
+        return Object.assign({}, shippingOption, {
+          selected: shippingOption.id === selectedShippingOptionId
+        });
+      });
+      const selectedShippingOption = updatedShippingOptions.find(shippingOption => shippingOption.selected);
+      const updatedDisplayItems = [...INIT_DISPLAY_ITEMS].map(displayOption => {
+        return (displayOption.label !== 'Shipping')
+          ? displayOption
+          : Object.assign({}, displayOption, {
+            amount: selectedShippingOption.amount
+          })
+      });
+      const updatedTotal = Object.assign({}, INIT_TOTAL, {
+          amount: {
+            currency: 'USD',
+            value: (parseFloat(INIT_TOTAL.amount.value) + parseFloat(selectedShippingOption.amount.value)).toString()
+          }
+      });
+
+      // TODO: update total
+      e.updateWith({
+        total: updatedTotal,
+        displayItems: updatedDisplayItems,
+        shippingOptions: updatedShippingOptions
       });
     });
 

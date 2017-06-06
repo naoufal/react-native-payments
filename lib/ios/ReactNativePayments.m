@@ -49,6 +49,10 @@ RCT_EXPORT_METHOD(createPaymentRequest: (NSDictionary *)methodData
     self.paymentRequest.countryCode = methodData[@"countryCode"];
     self.paymentRequest.currencyCode = methodData[@"currencyCode"];
     self.paymentRequest.paymentSummaryItems = [self getPaymentSummaryItemsFromDetails:details];
+    self.paymentRequest.shippingMethods = [self getShippingMethodsFromDetails:details];
+
+    // Internal slots
+    self.initialOptions = options;
 
     // Request Shipping
     if (options[@"requestShipping"]) {
@@ -69,36 +73,6 @@ RCT_EXPORT_METHOD(createPaymentRequest: (NSDictionary *)methodData
 
     callback(@[[NSNull null]]);
 }
-
-RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
-                  callback: (RCTResponseSenderBlock)callback)
-
-{
-    // TODO:
-    // - This method will include shippingContact and shippingMethod changes
-
-    if (!self.shippingContactCompletion) {
-        // TODO:
-        // - Call callback with error saying shippingContactCompletion was never called;
-
-        return;
-    }
-
-    NSArray<PKShippingMethod *> * shippingMethods = @[];
-    NSArray<PKPaymentSummaryItem *> * paymentSummaryItems = [self getPaymentSummaryItemsFromDetails:details];
-
-    self.shippingContactCompletion(
-                                   PKPaymentAuthorizationStatusSuccess,
-                                   shippingMethods,
-                                   paymentSummaryItems
-                                   );
-
-    // Call callback and invalidate `self.shippingContactCompletion`
-    callback(@[[NSNull null]]);
-    self.shippingContactCompletion = nil;
-}
-
-
 
 RCT_EXPORT_METHOD(show:(RCTResponseSenderBlock)callback)
 {
@@ -137,18 +111,6 @@ RCT_EXPORT_METHOD(complete: (NSString *)paymentStatus
     callback(@[[NSNull null]]);
 }
 
-RCT_EXPORT_METHOD(handleShippingContactChange: (NSArray *)shippingMethods
-                          paymentSummaryItems: (NSArray *)paymentSummaryItems
-                                     callback: (RCTResponseSenderBlock)callback)
-{
-    self.shippingContactCompletion(
-                                   PKPaymentAuthorizationStatusSuccess,
-                                   shippingMethods,
-                                   self.paymentRequest.paymentSummaryItems
-                                   );
-}
-
-
 
 -(void) paymentAuthorizationViewControllerDidFinish:(PKPaymentAuthorizationViewController *)controller
 {
@@ -157,6 +119,59 @@ RCT_EXPORT_METHOD(handleShippingContactChange: (NSArray *)shippingMethods
     [self.bridge.eventDispatcher sendDeviceEventWithName:@"NativePayments:onuserdismiss" body:nil];
 }
 
+RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
+                  callback: (RCTResponseSenderBlock)callback)
+
+{
+    if (!self.shippingContactCompletion && !self.shippingMethodCompletion) {
+        // TODO:
+        // - Call callback with error saying shippingContactCompletion was never called;
+
+        return;
+    }
+
+    NSArray<PKShippingMethod *> * shippingMethods = [self getShippingMethodsFromDetails:details];
+
+    NSArray<PKPaymentSummaryItem *> * paymentSummaryItems = [self getPaymentSummaryItemsFromDetails:details];
+
+
+    if (self.shippingMethodCompletion) {
+        self.shippingMethodCompletion(
+                                      PKPaymentAuthorizationStatusSuccess,
+                                      paymentSummaryItems
+                                      );
+
+        // Invalidate `self.shippingMethodCompletion`
+        self.shippingMethodCompletion = nil;
+    }
+
+    if (self.shippingContactCompletion) {
+        // Display shipping address error when shipping is needed and shipping method count is below 1
+        if (self.initialOptions[@"requestShipping"] && [shippingMethods count] == 0) {
+            return self.shippingContactCompletion(
+                                           PKPaymentAuthorizationStatusInvalidShippingPostalAddress,
+                                           shippingMethods,
+                                           paymentSummaryItems
+                                           );
+        } else {
+            self.shippingContactCompletion(
+                                           PKPaymentAuthorizationStatusSuccess,
+                                           shippingMethods,
+                                           paymentSummaryItems
+                                           );
+        }
+        // Invalidate `self.shippingContactCompletion`
+        self.shippingContactCompletion = nil;
+
+    }
+
+    // Call callback
+    callback(@[[NSNull null]]);
+
+}
+
+// DELEGATES
+// ---------------
 - (void) paymentAuthorizationViewController:(PKPaymentAuthorizationViewController *)controller
                         didAuthorizePayment:(PKPayment *)payment
                                  completion:(void (^)(PKPaymentAuthorizationStatus))completion
@@ -189,11 +204,9 @@ RCT_EXPORT_METHOD(handleShippingContactChange: (NSArray *)shippingMethods
                    didSelectShippingContact:(PKContact *)contact
                                  completion:(nonnull void (^)(PKPaymentAuthorizationStatus, NSArray<PKShippingMethod *> * _Nonnull, NSArray<PKPaymentSummaryItem *> * _Nonnull))completion
 {
+    NSLog(@"DID SELECT SHIPPING CONTACT");
     self.shippingContactCompletion = completion;
 
-    // TODO
-    // - Determine shipping methods on JS
-    // - Send shipping methods back over the bridge
     CNPostalAddress *postalAddress = contact.postalAddress;
     // street, subAdministrativeArea, and subLocality are supressed for privacy
     [self.bridge.eventDispatcher sendDeviceEventWithName:@"NativePayments:onshippingaddresschange" body:@{
@@ -214,15 +227,19 @@ RCT_EXPORT_METHOD(handleShippingContactChange: (NSArray *)shippingMethods
 }
 
 // Shipping Method delegates
-//- (void) paymentAuthorizationViewController:(PKPaymentAuthorizationViewController *)controller
-//                    didSelectShippingMethod:(PKShippingMethod *)shippingMethod
-//                                 completion:(void (^)(PKPaymentAuthorizationStatus, NSArray *))completion
-//{
-//    self.selectedShippingMethod = shippingMethod;
-//    [self updateShippingCost];
-//    completion(PKPaymentAuthorizationStatusSuccess, self.summaryItems);
-//}
+- (void)paymentAuthorizationViewController:(PKPaymentAuthorizationViewController *)controller
+                   didSelectShippingMethod:(PKShippingMethod *)shippingMethod
+                                completion:(void (^)(PKPaymentAuthorizationStatus, NSArray<PKPaymentSummaryItem *> * _Nonnull))completion
+{
+    NSLog(@"DID SELECT SHIPPING METHOD");
 
+    self.shippingMethodCompletion = completion;
+
+    [self.bridge.eventDispatcher sendDeviceEventWithName:@"NativePayments:onshippingoptionchange" body:@{
+                                                                                                         @"selectedShippingOptionId": shippingMethod.identifier
+                                                                                                         }];
+
+}
 
 // PRIVATE METHODS
 // ---------------
@@ -246,6 +263,29 @@ RCT_EXPORT_METHOD(handleShippingContactChange: (NSArray *)shippingMethods
 
     return paymentSummaryItems;
 }
+
+- (NSArray<PKShippingMethod *> *_Nonnull)getShippingMethodsFromDetails:(NSDictionary *_Nonnull)details
+{
+    // Setup `shippingMethods` array
+    NSMutableArray <PKShippingMethod *> * shippingMethods = [NSMutableArray array];
+
+    // Add `shippingOptions` to `shippingMethods`
+    NSArray *shippingOptions = details[@"shippingOptions"];
+    if (shippingOptions) {
+        for (int i = 0; i < [shippingOptions count]; i++) {
+            PKShippingMethod *shippingOption = [PKShippingMethod summaryItemWithLabel:shippingOptions[i][@"label"] amount:[NSDecimalNumber decimalNumberWithString: shippingOptions[i][@"amount"][@"value"]]];
+            shippingOption.detail = @"";
+            // TODO: format to local currency
+//            shippingOption.detail = shippingOptions[i][@"amount"][@"value"];
+            shippingOption.identifier = shippingOptions[i][@"id"];
+
+            [shippingMethods addObject: shippingOption];
+        }
+    }
+
+    return shippingMethods;
+}
+
 
 
 @end
