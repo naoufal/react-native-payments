@@ -7,7 +7,7 @@ import {
   TouchableHighlight,
   NativeModules
 } from 'react-native';
-import PaymentRequest from 'react-native-payments';
+import { PaymentRequest } from 'react-native-payments';
 
 const INIT_TOTAL = {
   label: 'Total',
@@ -102,13 +102,13 @@ export default class example extends Component {
           : INIT_TOTAL;
       const updatedShippingOptions = (selectedShippingAddress.postalCode === '94114')
         ? [{
-    id: 'express1',
-    label: 'foo Shipping (2-3 Days)',
-    amount: {
-      currency: 'USD',
-      value: '11.00',
-    },
-  }]
+            id: 'express1',
+            label: 'foo Shipping (2-3 Days)',
+            amount: {
+              currency: 'USD',
+              value: '11.00',
+            },
+          }]
         : INIT_SHIPPING_OPTIONS;
       const error = (selectedShippingAddress.postalCode === '94114') && `Sorry homie, can't ship there.` // This is actually ignored by Apple Pay
 

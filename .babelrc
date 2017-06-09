@@ -1,5 +1,4 @@
 {
-  "plugins": ["transform-class-properties"]
-  // ,
-  // "presets": ["flow", "latest"]
+  "plugins": ["transform-class-properties"],
+  "presets": ["env", "react-native"]
 }
