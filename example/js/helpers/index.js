@@ -1,4 +1,5 @@
 import ReactNativePayments from 'react-native-payments';
+import { getShippingOptions } from '../services/shipping';
 
 const METHOD_DATA = [{
     supportedMethods: ['apple-pay'],
@@ -9,63 +10,164 @@ const METHOD_DATA = [{
         currencyCode: 'USD'
     }
 }];
+const DISPLAY_ITEMS = [{
+    label: 'BoJack Sweater',
+    amount: { currency: 'USD', value: '99.99' }
+}];
+const TOTAL = {
+    label: 'Netflix',
+    amount: { currency: 'USD', value: '99.99' }
+};
 
-export const basicPR = () => {
-    const details = {
-        id: 'native-payments-basic-example',
-        displayItems: [{
-            label: 'Ultimate Warrior Shirt',
-            amount: { currency: 'USD', value: '32.00' }
-        }],
-        total: {
-            label: 'Naoufal Kadhom',
-            amount: { currency: 'USD', value: '32.00' }
-        }
-    };
+function addStringAmounts(...prices) {
+    return prices.reduce((acc, stringAmount) => {
+        return acc + parseFloat(stringAmount);
+    }, 0).toString();
+}
 
-    const paymentRequest = new ReactNativePayments.PaymentRequest(METHOD_DATA, details);
+function prDisplayHandler(paymentRequest) {
     return paymentRequest.show()
       .then(paymentResponse => paymentResponse.complete('success'))
       .catch(e => paymentRequest.abort());
+}
+
+function initPR(methodData, details, options = {}) {
+    return new ReactNativePayments.PaymentRequest(methodData, details, options);
 };
 
-const prWithOptions = (options) => {
+export function displayItemAndTotal() {
     const details = {
-        id: 'native-payments-basic-example',
-        displayItems: [{
-            label: 'Ultimate Warrior Shirt',
-            amount: { currency: 'USD', value: '32.00' }
-        }],
-        total: {
-            label: 'Naoufal Kadhom',
-            amount: { currency: 'USD', value: '32.00' }
-        }
+        id: 'displayItemAndTotal',
+        displayItems: DISPLAY_ITEMS,
+        total: TOTAL
     };
+    const paymentRequest = initPR(METHOD_DATA, details);
+
+    return prDisplayHandler(paymentRequest);
+}
+
+export function requestPayerName() {
+    const details = {
+        id: 'requestPayerName',
+        displayItems: DISPLAY_ITEMS,
+        total: TOTAL
+    };
+    const options = { requestPayerName: true };
+    const paymentRequest = initPR(METHOD_DATA, details, options);
+
+    return prDisplayHandler(paymentRequest);
+}
+
+export function requestPayerPhone() {
+    const details = {
+        id: 'requestPayerPhone',
+        displayItems: DISPLAY_ITEMS,
+        total: TOTAL
+    };
+    const options = { requestPayerPhone: true };
+    const paymentRequest = initPR(METHOD_DATA, details, options);
+
+    return prDisplayHandler(paymentRequest);
+}
+
+export function requestPayerEmail() {
+    const details = {
+        id: 'requestPayerEmail',
+        displayItems: DISPLAY_ITEMS,
+        total: TOTAL
+    };
+    const options = { requestPayerEmail: true };
+    const paymentRequest = initPR(METHOD_DATA, details, options);
+
+    return prDisplayHandler(paymentRequest);
+}
+
+export function requestPayerAll() {
+    const details = {
+        id: 'requestPayerAll',
+        displayItems: DISPLAY_ITEMS,
+        total: TOTAL
+    };
+    const options = {
+        requestPayerName: true,
+        requestPayerPhone: true,
+        requestPayerEmail: true
+    };
+    const paymentRequest = initPR(METHOD_DATA, details, options);
+
+    return prDisplayHandler(paymentRequest);
+}
+
+export function requestShippingDetails() {
+    const details = {
+        id: 'requestShippingDetails',
+        displayItems: DISPLAY_ITEMS,
+        total: TOTAL
+    };
+    const options = { requestShipping: true };
+    const paymentRequest = initPR(METHOD_DATA, details, options);
+
+    return prDisplayHandler(paymentRequest);
+}
+
+export function handleShippingChanges() {
+    const shippingOptions = getShippingOptions();
+    const displayItems = [...DISPLAY_ITEMS, {
+        label: 'Shipping',
+        amount: shippingOptions[0].amount
+    }];
+    const details = {
+        id: 'handleShippingAddressChange',
+        shippingOptions,
+        displayItems,
+        total: TOTAL
+    };
+    const options = { requestShipping: true };
 
     const paymentRequest = new ReactNativePayments.PaymentRequest(METHOD_DATA, details, options);
-    return paymentRequest.show()
-      .then(paymentResponse => paymentResponse.complete('success'))
-      .catch(e => paymentRequest.abort());
-};
+    paymentRequest.addEventListener('shippingaddresschange', e => {
+        console.log(paymentRequest.shippingAddress);
 
-export const requestPayerName = prWithOptions.bind(null, {
-    requestPayerName: true
-});
+        // Typically `getShippingOptions` would be calculated
+        // based on the `shippingAddress`.
+        const newShippingOptions = getShippingOptions();
 
-export const requestPayerPhone = prWithOptions.bind(null, {
-    requestPayerPhone: true
-});
+        e.updateWith({
+            total: TOTAL,
+            shippingOptions: newShippingOptions
+        });
+    });
 
-export const requestPayerEmail = prWithOptions.bind(null, {
-    requestPayerEmail: true
-});
+    paymentRequest.addEventListener('shippingoptionchange', e => {
+        const nextShippingOptions = shippingOptions.map(shippingOption => {
+            return Object.assign({}, shippingOption, {
+                selected: shippingOption.id === paymentRequest.shippingOption
+            });
+        });
+        const selectedShippingOption = nextShippingOptions.find(shippingOption => shippingOption.selected);
+        const nextDisplayItems = displayItems.map(displayItem => {
+            return (displayItem.label !== 'Shipping')
+                ? displayItem
+                : Object.assign({}, displayItem, {
+                    amount: selectedShippingOption.amount
+                });
+        });
 
-export const requestPayerAll = prWithOptions.bind(null, {
-    requestPayerName: true,
-    requestPayerPhone: true,
-    requestPayerEmail: true
-});
+        e.updateWith({
+            displayItems: nextDisplayItems,
+            shippingOptions: nextShippingOptions,
+            total: {
+                label: 'Netflix',
+                amount: {
+                    currency: 'USD',
+                    value: addStringAmounts(
+                        selectedShippingOption.amount.value,
+                        details.total.amount.value
+                    )
+                }
+            }
+        });
+    });
 
-export const requestShippingDetails = prWithOptions.bind(null, {
-    requestShipping: true
-});
+    return prDisplayHandler(paymentRequest);
+}

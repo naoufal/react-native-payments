@@ -1,24 +1,24 @@
 import React from 'react'
 import {
   View,
-  ScrollView,
   Text,
   TouchableHighlight,
   StyleSheet
 } from 'react-native';
 
 import {
-  basicPR,
+  displayItemAndTotal,
   requestPayerName,
   requestPayerPhone,
   requestPayerEmail,
   requestPayerAll,
-  requestShippingDetails
+  requestShippingDetails,
+  handleShippingChanges
  } from './helpers';
 
 const BASIC_EXAMPLES = [{
   label: 'Display Item + Total',
-  handlePress: basicPR
+  handlePress: displayItemAndTotal
 }, {
   label: 'Request Payer Name',
   handlePress: requestPayerName
@@ -37,10 +37,10 @@ const BASIC_EXAMPLES = [{
 }];
 
 const ADVANCED_EXAMPLES = [{
-  label: 'Handle Shipping Address Change',
-  handlePress: null
+  label: 'Handle Shipping Changes',
+  handlePress: handleShippingChanges
 }, {
-  label: 'Handle Shipping Option Change',
+  label: 'Handle Shipping Changes with Promises',
   handlePress: null
 }];
 
@@ -88,10 +88,10 @@ const Content = () => (
 );
 
 export default () => (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <Header />
       <Content />
-    </ScrollView>
+    </View>
 );
 
 const baseTextStyles = {
