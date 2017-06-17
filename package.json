@@ -19,7 +19,7 @@
     "regenerator-runtime": "^0.10.3"
   },
   "peerDependencies": {
-		"react-native": "0.43.2"
+    "react-native": "0.43.2"
   },
   "dependencies": {
     "uuid": "^3.0.1"

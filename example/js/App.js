@@ -2,9 +2,9 @@ import React from 'react'
 import {
   View,
   Text,
-  TouchableHighlight,
+  Touchable,
   StyleSheet
-} from 'react-native';
+} from 'react-primitives';
 
 import {
   displayItemAndTotal,
@@ -59,7 +59,7 @@ const ExampleList = ({ examples }) => {
   return (
     <View>
       {examples.map(({ label, handlePress }) => (
-        <TouchableHighlight
+        <Touchable
             key={label}
             style={styles.exampleLink}
             onPress={handlePress}
@@ -72,7 +72,7 @@ const ExampleList = ({ examples }) => {
             >
               {label}
             </Text>
-        </TouchableHighlight>
+        </Touchable>
       ))}
     </View>
   );

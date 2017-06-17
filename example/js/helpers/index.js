@@ -1,15 +1,30 @@
-import ReactNativePayments from 'react-native-payments';
+import { Platform } from 'react-primitives';
 import { getShippingOptions } from '../services/shipping';
 
-const METHOD_DATA = [{
-    supportedMethods: ['apple-pay'],
-    data: {
-        merchantIdentifier: 'merchant.com.react-native-payments.naoufal',
-        supportedNetworks: ['visa', 'mastercard'],
-        countryCode: 'US',
-        currencyCode: 'USD'
+function getPlatformMethodData(platformOS) {
+    switch (platformOS) {
+        case 'web':
+            return [{
+                supportedMethods: ['basic-card'],
+                data: {
+                    supportedNetworks: ['visa', 'mastercard', 'amex'],
+                    supportedTypes: ['credit'],
+                },
+            }];
+        case 'ios':
+            return [{
+                supportedMethods: ['apple-pay'],
+                data: {
+                    merchantIdentifier: 'merchant.com.react-native-payments.naoufal',
+                    supportedNetworks: ['visa', 'mastercard', 'amex'],
+                    countryCode: 'US',
+                    currencyCode: 'USD'
+                }
+            }];
     }
-}];
+}
+
+const METHOD_DATA = getPlatformMethodData(Platform.OS);
 const DISPLAY_ITEMS = [{
     label: 'BoJack Sweater',
     amount: { currency: 'USD', value: '99.99' }
@@ -32,7 +47,7 @@ function prDisplayHandler(paymentRequest) {
 }
 
 function initPR(methodData, details, options = {}) {
-    return new ReactNativePayments.PaymentRequest(methodData, details, options);
+    return new PaymentRequest(methodData, details, options);
 };
 
 export function displayItemAndTotal() {
@@ -124,7 +139,7 @@ export function handleShippingChanges() {
     };
     const options = { requestShipping: true };
 
-    const paymentRequest = new ReactNativePayments.PaymentRequest(METHOD_DATA, details, options);
+    const paymentRequest = new PaymentRequest(METHOD_DATA, details, options);
     paymentRequest.addEventListener('shippingaddresschange', e => {
         console.log(paymentRequest.shippingAddress);
 
