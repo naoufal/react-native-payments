@@ -1,9 +1,9 @@
 const path = require('path');
 
 module.exports = {
-  entry: './example/web/index.web.js',
+  entry: './examples/web/index.web.js',
   output: {
-    path: path.resolve(__dirname, 'example', 'web', 'public'),
+    path: path.resolve(__dirname, 'examples', 'web', 'public'),
     filename: 'bundle.js'
   },
   resolve: {

@@ -5,7 +5,7 @@ module.exports = Object.assign({}, baseWebpackConfig, {
     devServer: {
         port: 8080,
         historyApiFallback: {
-            index: './example/web/public/index.html'
+            index: './examples/web/public/index.html'
         }
     },
     plugins: [
