@@ -5,21 +5,32 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "flow": "flow"
+    "flow": "flow",
+    "web:start": "webpack-dev-server --open --config=webpack.development.config.js",
+    "web:build": "webpack --config=webpack.production.config.js --color --progress",
+    "web:deploy": "now ./example/web/public/ --name='rnp-web' --public",
+    "deploy": "yarn run web:build && yarn run web:deploy"
   },
   "author": "Naoufal Kadhom",
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-jest": "19.0.0",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-module-resolver": "^2.7.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-react-native": "^1.9.2",
     "babel-register": "^6.24.1",
     "flow-bin": "^0.43.1",
     "jest": "^20.0.4",
-    "regenerator-runtime": "^0.10.3"
-  },
-  "peerDependencies": {
-    "react-native": "0.43.2"
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-native": "0.43.2",
+    "react-primitives": "^0.4.2",
+    "regenerator-runtime": "^0.10.3",
+    "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.4.5"
   },
   "dependencies": {
     "uuid": "^3.0.1"

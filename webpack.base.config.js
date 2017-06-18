@@ -1,10 +1,15 @@
 const path = require('path');
 
 module.exports = {
-  entry: './index.web.js',
+  entry: './example/web/index.web.js',
   output: {
-    path: path.resolve(__dirname, 'public'),
+    path: path.resolve(__dirname, 'example', 'web', 'public'),
     filename: 'bundle.js'
+  },
+  resolve: {
+    alias: {
+      'react-native-payments': path.resolve(__dirname)
+    }
   },
   module: {
     rules: [
@@ -12,12 +17,9 @@ module.exports = {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['env']
-          }
+          loader: 'babel-loader'
         }
       }
     ]
   }
-};
+}

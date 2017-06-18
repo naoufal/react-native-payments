@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import App from './js/App';
-
+import App from '../common/App';
 
 if (window.PaymentRequest) {
     render(<App />, document.getElementById('app'));

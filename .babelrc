@@ -1,4 +1,13 @@
 {
-  "plugins": ["transform-class-properties"],
+  "plugins": [
+    "transform-class-properties",
+    "transform-object-rest-spread",
+    ["module-resolver", {
+      "alias": {
+          "react-native-payments": "./"
+      },
+      "cwd": "babelrc"
+    }]
+  ],
   "presets": ["react-native"]
 }

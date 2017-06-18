@@ -44,11 +44,12 @@ const ADVANCED_EXAMPLES = [{
   handlePress: null
 }];
 
+      // <Text style={styles.supHeading}>
+      //     Version {require('react-native-payments').version}
+      // </Text>
 const Header = () => (
     <View>
-      <Text style={styles.supHeading}>
-          Version {require('../package.json').version}
-      </Text>
+
       <Text style={styles.heading}>
           React Native Payments
       </Text>
