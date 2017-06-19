@@ -7,19 +7,31 @@ import {
 } from 'react-primitives';
 
 import {
-  displayItemAndTotal,
+  oneItem,
+  twoItems,
+  twoItemsPlusTax,
   requestPayerName,
   requestPayerPhone,
   requestPayerEmail,
   requestPayerAll,
   requestShippingDetails,
-  handleShippingChanges
- } from './helpers';
+  staticShipping,
+  dynamicShipping,
+  noInternationalShipping
+ } from './handlers';
 
-const BASIC_EXAMPLES = [{
-  label: 'Display Item + Total',
-  handlePress: displayItemAndTotal
+const ORDER_SUMMARY_EXAMPLES = [{
+  label: 'One Item',
+  handlePress: oneItem
 }, {
+  label: 'Two Items',
+  handlePress: twoItems
+}, {
+  label: 'Two Items + Tax',
+  handlePress: twoItemsPlusTax
+}];
+
+const CONTACT_INFO_EXAMPLES = [{
   label: 'Request Payer Name',
   handlePress: requestPayerName
 }, {
@@ -31,17 +43,17 @@ const BASIC_EXAMPLES = [{
 }, {
   label: 'Request Payer Name, Phone & Email',
   handlePress: requestPayerAll
-}, {
-  label: 'Request Shipping Details',
-  handlePress: requestShippingDetails
 }];
 
-const ADVANCED_EXAMPLES = [{
-  label: 'Handle Shipping Changes',
-  handlePress: handleShippingChanges
+const SHIPPING_ADDRESS_EXAMPLES = [{
+  label: 'Static Shipping',
+  handlePress: staticShipping
 }, {
-  label: 'Handle Shipping Changes with Promises',
-  handlePress: null
+  label: 'Dynamic Shipping',
+  handlePress: dynamicShipping
+}, {
+  label: 'No International Shipping',
+  handlePress: noInternationalShipping
 }];
 
       // <Text style={styles.supHeading}>
@@ -81,10 +93,12 @@ const ExampleList = ({ examples }) => {
 
 const Content = () => (
     <View style={styles.content}>
-      <Text style={styles.subHeading}>Basic Examples</Text>
-      <ExampleList examples={BASIC_EXAMPLES} />
-      <Text style={styles.subHeading}>Advanced Examples</Text>
-      <ExampleList examples={ADVANCED_EXAMPLES} />
+      <Text style={styles.subHeading}>Order Summary Examples</Text>
+      <ExampleList examples={ORDER_SUMMARY_EXAMPLES} />
+      <Text style={styles.subHeading}>Contact Info Examples</Text>
+      <ExampleList examples={CONTACT_INFO_EXAMPLES} />
+      <Text style={styles.subHeading}>Shipping Address Examples</Text>
+      <ExampleList examples={SHIPPING_ADDRESS_EXAMPLES} />
     </View>
 );
 
