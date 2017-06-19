@@ -1,14 +1,15 @@
 const path = require('path');
 
 module.exports = {
-  entry: './examples/web/index.web.js',
+  entry: './index.web.js',
   output: {
-    path: path.resolve(__dirname, 'examples', 'web', 'public'),
+    path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js'
   },
   resolve: {
+    modules: [path.resolve(__dirname, 'node_modules')],
     alias: {
-      'react-native-payments': path.resolve(__dirname)
+      'react-native': 'react-primitives'
     }
   },
   module: {

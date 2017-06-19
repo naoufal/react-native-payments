@@ -12,7 +12,7 @@ import {
   View
 } from 'react-native';
 
-export default class example extends Component {
+export default class ReactNativePaymentsExample extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('example', () => example);
+AppRegistry.registerComponent('ReactNativePaymentsExample', () => ReactNativePaymentsExample);

@@ -1,10 +1,22 @@
-import React from 'react'
+import React from 'react';
 import {
   View,
   Text,
-  Touchable,
-  StyleSheet
+  StyleSheet,
+  Platform
 } from 'react-primitives';
+
+// TODO:
+// - Look into how to clean this up
+let Touchable;
+let ScrollView;
+if (Platform.OS === 'web') {
+  ScrollView = View;
+  Touchable = require('react-primitives').Touchable;
+} else {
+  ScrollView = require('react-native').ScrollView;
+  Touchable = require('react-native').TouchableHighlight;
+}
 
 import {
   oneItem,
@@ -56,12 +68,11 @@ const SHIPPING_ADDRESS_EXAMPLES = [{
   handlePress: noInternationalShipping
 }];
 
-      // <Text style={styles.supHeading}>
-      //     Version {require('react-native-payments').version}
-      // </Text>
 const Header = () => (
     <View>
-
+      <Text style={styles.supHeading}>
+        Version {require('react-native-payments/package.json').version}
+      </Text>
       <Text style={styles.heading}>
           React Native Payments
       </Text>
@@ -103,10 +114,10 @@ const Content = () => (
 );
 
 export default () => (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Header />
       <Content />
-    </View>
+    </ScrollView>
 );
 
 const baseTextStyles = {
@@ -139,7 +150,7 @@ const styles = StyleSheet.create({
   },
   exampleLink: {
     paddingVertical: 10,
-    borderTopWidth: 0.5,
+    borderTopWidth: 1,
     borderTopColor: '#D0D0D2'
   },
   exampleLinkLabel: {

@@ -1,4 +1,4 @@
-import { Platform } from 'react-primitives';
+import { Platform } from 'react-native';
 import { getShippingOptions } from '../services/shipping';
 
 // helpers
