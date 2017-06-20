@@ -2,28 +2,6 @@ import { Platform } from 'react-native';
 import { getShippingOptions } from '../services/shipping';
 
 // helpers
-function getPlatformMethodData(platformOS) {
-    switch (platformOS) {
-        case 'web':
-            return [{
-                supportedMethods: ['basic-card'],
-                data: {
-                    supportedNetworks: ['visa', 'mastercard', 'amex']
-                },
-            }];
-        case 'ios':
-            return [{
-                supportedMethods: ['apple-pay'],
-                data: {
-                    merchantIdentifier: 'merchant.com.react-native-payments.naoufal',
-                    supportedNetworks: ['visa', 'mastercard', 'amex'],
-                    countryCode: 'US',
-                    currencyCode: 'USD'
-                }
-            }];
-    }
-}
-
 function addStringAmounts(...prices) {
     return prices.reduce((acc, stringAmount) => {
         return acc + parseFloat(stringAmount);
@@ -33,7 +11,7 @@ function addStringAmounts(...prices) {
 function prDisplayHandler(paymentRequest) {
     return paymentRequest.show()
       .then(paymentResponse => paymentResponse.complete('success'))
-      .catch(console.error);
+      .catch(console.warn);
 }
 
 function initPR(methodData, details, options = {}) {
@@ -56,7 +34,20 @@ function getPlatformTotalLabel(platformOS) {
         : 'Total';
 }
 
-const METHOD_DATA = getPlatformMethodData(Platform.OS);
+const METHOD_DATA = [{
+    supportedMethods: ['basic-card'],
+    data: {
+        supportedNetworks: ['visa', 'mastercard', 'amex']
+    },
+}, {
+    supportedMethods: ['apple-pay'],
+    data: {
+        merchantIdentifier: 'merchant.com.react-native-payments.naoufal',
+        supportedNetworks: ['visa', 'mastercard', 'amex'],
+        countryCode: 'US',
+        currencyCode: 'USD'
+    }
+}];
 const DISPLAY_ITEMS = [{
     label: 'Movie Ticket',
     amount: { currency: 'USD', value: '15.00' }
