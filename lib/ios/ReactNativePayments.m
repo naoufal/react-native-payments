@@ -21,55 +21,19 @@ RCT_EXPORT_METHOD(createPaymentRequest: (NSDictionary *)methodData
                   options: (NSDictionary *)options
                   callback: (RCTResponseSenderBlock)callback)
 {
-    // https://developer.apple.com/reference/passkit/pkpaymentnetwork
-    NSDictionary *supportedNetworksMapping = @{
-        @"amex": PKPaymentNetworkAmex,
-        @"chinaunionpay": PKPaymentNetworkChinaUnionPay,
-        @"discover": PKPaymentNetworkDiscover,
-        @"jcb": PKPaymentNetworkJCB,
-        @"mastercard": PKPaymentNetworkMasterCard,
-        @"privatelabel": PKPaymentNetworkPrivateLabel,
-        @"visa": PKPaymentNetworkVisa,
-        @"interac": PKPaymentNetworkInterac,
-        @"suica": PKPaymentNetworkSuica,
-        @"quicpay": PKPaymentNetworkQuicPay,
-        @"idcredit": PKPaymentNetworkIDCredit
-    };
-
-    // Setup supportedNetworks
-    NSMutableArray *supportedNetworks = [NSMutableArray array];
-    for (int i = 0; i < [methodData[@"supportedNetworks"] count]; i++) {
-        [supportedNetworks addObject: [supportedNetworksMapping objectForKey: methodData[@"supportedNetworks"][i]]];
-    }
-
     self.paymentRequest = [[PKPaymentRequest alloc] init];
     self.paymentRequest.merchantIdentifier = methodData[@"merchantIdentifier"];
     self.paymentRequest.merchantCapabilities = PKMerchantCapability3DS;
-    self.paymentRequest.supportedNetworks = supportedNetworks;
     self.paymentRequest.countryCode = methodData[@"countryCode"];
     self.paymentRequest.currencyCode = methodData[@"currencyCode"];
+    self.paymentRequest.supportedNetworks = [self getSupportedNetworksFromMethodData:methodData];
     self.paymentRequest.paymentSummaryItems = [self getPaymentSummaryItemsFromDetails:details];
     self.paymentRequest.shippingMethods = [self getShippingMethodsFromDetails:details];
 
-    // Internal slots
+    [self setRequiredShippingAddressFieldsFromOptions:options];
+    
+    // Set options so that we can later access it.
     self.initialOptions = options;
-
-    // Request Shipping
-    if (options[@"requestShipping"]) {
-        self.paymentRequest.requiredShippingAddressFields = PKAddressFieldPostalAddress;
-    }
-
-    if (options[@"requestPayerName"]) {
-        self.paymentRequest.requiredShippingAddressFields = self.paymentRequest.requiredShippingAddressFields | PKAddressFieldName;
-    }
-
-    if (options[@"requestPayerPhone"]) {
-        self.paymentRequest.requiredShippingAddressFields = self.paymentRequest.requiredShippingAddressFields | PKAddressFieldPhone;
-    }
-
-    if (options[@"requestPayerEmail"]) {
-        self.paymentRequest.requiredShippingAddressFields = self.paymentRequest.requiredShippingAddressFields | PKAddressFieldEmail;
-    }
 
     callback(@[[NSNull null]]);
 }
@@ -80,10 +44,9 @@ RCT_EXPORT_METHOD(show:(RCTResponseSenderBlock)callback)
     self.viewController = [[PKPaymentAuthorizationViewController alloc] initWithPaymentRequest: self.paymentRequest];
     self.viewController.delegate = self;
 
+    // TODO - Replace `rootViewController` with a the top rootViewController
     UIViewController *ctrl = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
     [ctrl presentViewController:self.viewController animated:YES completion:nil];
-
-    NSLog(@"PAYMENT REQUEST SHOWN");
 
     callback(@[[NSNull null]]);
 }
@@ -98,15 +61,11 @@ RCT_EXPORT_METHOD(abort: (RCTResponseSenderBlock)callback)
 RCT_EXPORT_METHOD(complete: (NSString *)paymentStatus
                   callback: (RCTResponseSenderBlock)callback)
 {
-    if ([paymentStatus isEqual: @"success"]) {
-        NSLog(@"baz baz baz");
-
+    if ([paymentStatus isEqualToString: @"success"]) {
         self.completion(PKPaymentAuthorizationStatusSuccess);
+    } else {
+        self.completion(PKPaymentAuthorizationStatusFailure);
     }
-
-    NSLog(@"foo foo foo");
-
-    self.completion(PKPaymentAuthorizationStatusSuccess);
 
     callback(@[[NSNull null]]);
 }
@@ -114,7 +73,6 @@ RCT_EXPORT_METHOD(complete: (NSString *)paymentStatus
 
 -(void) paymentAuthorizationViewControllerDidFinish:(PKPaymentAuthorizationViewController *)controller
 {
-    NSLog(@"Payment Authorization Controller dismissed.");
     [controller dismissViewControllerAnimated:YES completion:nil];
     [self.bridge.eventDispatcher sendDeviceEventWithName:@"NativePayments:onuserdismiss" body:nil];
 }
@@ -160,7 +118,7 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
                                            paymentSummaryItems
                                            );
         }
-        // Invalidate `self.shippingContactCompletion`
+        // Invalidate `aself.shippingContactCompletion`
         self.shippingContactCompletion = nil;
 
     }
@@ -209,21 +167,22 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
 
     CNPostalAddress *postalAddress = contact.postalAddress;
     // street, subAdministrativeArea, and subLocality are supressed for privacy
-    [self.bridge.eventDispatcher sendDeviceEventWithName:@"NativePayments:onshippingaddresschange" body:@{
-                                                                                                          @"recipient": @[[NSNull null]],
-                                                                                                          @"organization": @[[NSNull null]],
-                                                                                                          @"addressLine": @[[NSNull null]],
-                                                                                                          @"city": postalAddress.city,
-                                                                                                          @"region": postalAddress.state,
-                                                                                                          @"country": postalAddress.ISOCountryCode,
-
-                                                                                                          @"postalCode": postalAddress.postalCode,
-                                                                                                          @"phone": @[[NSNull null]],
-                                                                                                          @"languageCode": @[[NSNull null]],
-                                                                                                          @"sortingCode": @[[NSNull null]],
-                                                                                                          @"dependentLocality": @[[NSNull null]]
-
-                                                                                                          }];
+    [self.bridge.eventDispatcher sendDeviceEventWithName:@"NativePayments:onshippingaddresschange"
+                                                    body:@{
+                                                           @"recipient": @[[NSNull null]],
+                                                           @"organization": @[[NSNull null]],
+                                                           @"addressLine": @[[NSNull null]],
+                                                           @"city": postalAddress.city,
+                                                           @"region": postalAddress.state,
+                                                           @"country": postalAddress.ISOCountryCode,
+                                                           
+                                                           @"postalCode": postalAddress.postalCode,
+                                                           @"phone": @[[NSNull null]],
+                                                           @"languageCode": @[[NSNull null]],
+                                                           @"sortingCode": @[[NSNull null]],
+                                                           @"dependentLocality": @[[NSNull null]]
+                                                           
+                                                           }];
 }
 
 // Shipping Method delegates
@@ -243,6 +202,33 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
 
 // PRIVATE METHODS
 // ---------------
+- (NSArray *_Nonnull)getSupportedNetworksFromMethodData:(NSDictionary *_Nonnull)methodData
+{
+    // https://developer.apple.com/reference/passkit/pkpaymentnetwork
+    NSDictionary *supportedNetworksMapping = @{
+                                               @"amex": PKPaymentNetworkAmex,
+                                               @"chinaunionpay": PKPaymentNetworkChinaUnionPay,
+                                               @"discover": PKPaymentNetworkDiscover,
+                                               @"jcb": PKPaymentNetworkJCB,
+                                               @"mastercard": PKPaymentNetworkMasterCard,
+                                               @"privatelabel": PKPaymentNetworkPrivateLabel,
+                                               @"visa": PKPaymentNetworkVisa,
+                                               @"interac": PKPaymentNetworkInterac,
+                                               @"suica": PKPaymentNetworkSuica,
+                                               @"quicpay": PKPaymentNetworkQuicPay,
+                                               @"idcredit": PKPaymentNetworkIDCredit
+                                               };
+    
+    // Setup supportedNetworks
+    NSArray *jsSupportedNetworks = methodData[@"supportedNetworks"];
+    NSMutableArray *supportedNetworks = [NSMutableArray array];
+    for (NSString *supportedNetwork in jsSupportedNetworks) {
+        [supportedNetworks addObject: supportedNetworksMapping[supportedNetwork]];
+    }
+    
+    return supportedNetworks;
+}
+
 - (NSArray<PKPaymentSummaryItem *> *_Nonnull)getPaymentSummaryItemsFromDetails:(NSDictionary *_Nonnull)details
 {
     // Setup `paymentSummaryItems` array
@@ -250,16 +236,15 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
 
     // Add `displayItems` to `paymentSummaryItems`
     NSArray *displayItems = details[@"displayItems"];
-    if (displayItems) {
-        for (int i = 0; i < [displayItems count]; i++) {
-            PKPaymentSummaryItem *displayItem = [PKPaymentSummaryItem summaryItemWithLabel:displayItems[i][@"label"] amount:[NSDecimalNumber decimalNumberWithString: displayItems[i][@"amount"][@"value"]]];
-            [paymentSummaryItems addObject: displayItem];
+    if (displayItems.count > 0) {
+        for (NSDictionary *displayItem in displayItems) {
+            [paymentSummaryItems addObject: [self convertDisplayItemToPaymentSummaryItem:displayItem]];
         }
     }
 
     // Add total to `paymentSummaryItems`
-    PKPaymentSummaryItem *total = [PKPaymentSummaryItem summaryItemWithLabel: details[@"total"][@"label"] amount:[NSDecimalNumber decimalNumberWithString: details[@"total"][@"amount"][@"value"]]];
-    [paymentSummaryItems addObject: total];
+    NSDictionary *total = details[@"total"];
+    [paymentSummaryItems addObject: [self convertDisplayItemToPaymentSummaryItem:total]];
 
     return paymentSummaryItems;
 }
@@ -271,21 +256,56 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
 
     // Add `shippingOptions` to `shippingMethods`
     NSArray *shippingOptions = details[@"shippingOptions"];
-    if (shippingOptions) {
-        for (int i = 0; i < [shippingOptions count]; i++) {
-            PKShippingMethod *shippingOption = [PKShippingMethod summaryItemWithLabel:shippingOptions[i][@"label"] amount:[NSDecimalNumber decimalNumberWithString: shippingOptions[i][@"amount"][@"value"]]];
-            shippingOption.detail = @"";
-            // TODO: format to local currency
-//            shippingOption.detail = shippingOptions[i][@"amount"][@"value"];
-            shippingOption.identifier = shippingOptions[i][@"id"];
-
-            [shippingMethods addObject: shippingOption];
+    if (shippingOptions.count > 0) {
+        for (NSDictionary *shippingOption in shippingOptions) {
+            [shippingMethods addObject: [self convertShippingOptionToShippingMethod:shippingOption]];
         }
     }
 
     return shippingMethods;
 }
 
+- (PKPaymentSummaryItem *_Nonnull)convertDisplayItemToPaymentSummaryItem:(NSDictionary *_Nonnull)displayItem;
+{
+    NSDecimalNumber *decimalNumberAmount = [NSDecimalNumber decimalNumberWithString:displayItem[@"amount"][@"value"]];
+    PKPaymentSummaryItem *paymentSummaryItem = [PKPaymentSummaryItem summaryItemWithLabel:displayItem[@"label"] amount:decimalNumberAmount];
+    
+    return paymentSummaryItem;
+}
 
+- (PKShippingMethod *_Nonnull)convertShippingOptionToShippingMethod:(NSDictionary *_Nonnull)shippingOption
+{
+    PKShippingMethod *shippingMethod = [PKShippingMethod summaryItemWithLabel:shippingOption[@"label"] amount:[NSDecimalNumber decimalNumberWithString: shippingOption[@"amount"][@"value"]]];
+    shippingMethod.identifier = shippingOption[@"id"];
+    
+    // shippingOption.detail is not part of the PaymentRequest spec.
+    if ([shippingOption[@"detail"] isKindOfClass:[NSString class]]) {
+        shippingMethod.detail = shippingOption[@"detail"];
+    } else {
+        shippingMethod.detail = @"";
+    }
+    
+    return shippingMethod;
+}
+
+- (void)setRequiredShippingAddressFieldsFromOptions:(NSDictionary *_Nonnull)options
+{
+    // Request Shipping
+    if (options[@"requestShipping"]) {
+        self.paymentRequest.requiredShippingAddressFields = PKAddressFieldPostalAddress;
+    }
+    
+    if (options[@"requestPayerName"]) {
+        self.paymentRequest.requiredShippingAddressFields = self.paymentRequest.requiredShippingAddressFields | PKAddressFieldName;
+    }
+    
+    if (options[@"requestPayerPhone"]) {
+        self.paymentRequest.requiredShippingAddressFields = self.paymentRequest.requiredShippingAddressFields | PKAddressFieldPhone;
+    }
+    
+    if (options[@"requestPayerEmail"]) {
+        self.paymentRequest.requiredShippingAddressFields = self.paymentRequest.requiredShippingAddressFields | PKAddressFieldEmail;
+    }
+}
 
 @end
