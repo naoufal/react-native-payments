@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Platform
-} from 'react-primitives';
+import { View, Text, StyleSheet, Platform } from 'react-primitives';
 
 // TODO:
 // - Look into how to clean this up
@@ -37,130 +32,150 @@ import {
   errorNoShippingOptions,
   errorInvalidShippingOptionsAmount,
   errorDuplicateShippingOptionsId
- } from './handlers';
+} from './handlers';
 
-const ORDER_SUMMARY_EXAMPLES = [{
-  label: 'One Item',
-  handlePress: oneItem
-}, {
-  label: 'Two Items',
-  handlePress: twoItems
-}, {
-  label: 'Two Items + Tax',
-  handlePress: twoItemsPlusTax
-}];
+const ORDER_SUMMARY_EXAMPLES = [
+  {
+    label: 'One Item',
+    handlePress: oneItem
+  },
+  {
+    label: 'Two Items',
+    handlePress: twoItems
+  },
+  {
+    label: 'Two Items + Tax',
+    handlePress: twoItemsPlusTax
+  }
+];
 
-const CONTACT_INFO_EXAMPLES = [{
-  label: 'Request Payer Name',
-  handlePress: requestPayerName
-}, {
-  label: 'Request Payer Phone',
-  handlePress: requestPayerPhone
-}, {
-  label: 'Request Payer Email',
-  handlePress: requestPayerEmail
-}, {
-  label: 'Request Payer Name, Phone & Email',
-  handlePress: requestPayerAll
-}];
+const CONTACT_INFO_EXAMPLES = [
+  {
+    label: 'Request Payer Name',
+    handlePress: requestPayerName
+  },
+  {
+    label: 'Request Payer Phone',
+    handlePress: requestPayerPhone
+  },
+  {
+    label: 'Request Payer Email',
+    handlePress: requestPayerEmail
+  },
+  {
+    label: 'Request Payer Name, Phone & Email',
+    handlePress: requestPayerAll
+  }
+];
 
-const SHIPPING_ADDRESS_EXAMPLES = [{
-  label: 'Static Shipping',
-  handlePress: staticShipping
-}, {
-  label: 'Dynamic Shipping',
-  handlePress: dynamicShipping
-}, {
-  label: 'No International Shipping',
-  handlePress: noInternationalShipping
-}];
+const SHIPPING_ADDRESS_EXAMPLES = [
+  {
+    label: 'Static Shipping',
+    handlePress: staticShipping
+  },
+  {
+    label: 'Dynamic Shipping',
+    handlePress: dynamicShipping
+  },
+  {
+    label: 'No International Shipping',
+    handlePress: noInternationalShipping
+  }
+];
 
-const ERROR_EXAMPLES = [{
-  label: 'No Total',
-  handlePress: errorNoTotal
-}, {
-  label: 'Negative Total',
-  handlePress: errorNegativeTotal
-}, {
-  label: 'Invalid Total Amount',
-  handlePress: errorInvalidTotalAmount
-}, {
-  label: 'Invalid Display Item Amount',
-  handlePress: errorInvalidDisplayItemAmount
-}, {
-  label: 'No Shipping Options',
-  handlePress: errorNoShippingOptions
-}, {
-  label: 'Invalid Shipping Options Amount',
-  handlePress: errorInvalidShippingOptionsAmount
-}, {
-  label: 'Duplicate Shipping Option Id',
-  handlePress: errorDuplicateShippingOptionsId
-}];
+const ERROR_EXAMPLES = [
+  {
+    label: 'No Total',
+    handlePress: errorNoTotal
+  },
+  {
+    label: 'Negative Total',
+    handlePress: errorNegativeTotal
+  },
+  {
+    label: 'Invalid Total Amount',
+    handlePress: errorInvalidTotalAmount
+  },
+  {
+    label: 'Invalid Display Item Amount',
+    handlePress: errorInvalidDisplayItemAmount
+  },
+  {
+    label: 'No Shipping Options',
+    handlePress: errorNoShippingOptions
+  },
+  {
+    label: 'Invalid Shipping Options Amount',
+    handlePress: errorInvalidShippingOptionsAmount
+  },
+  {
+    label: 'Duplicate Shipping Option Id',
+    handlePress: errorDuplicateShippingOptionsId
+  }
+];
 
-const Header = () => (
-    <View>
-      <Text style={styles.supHeading}>
-        Version {require('react-native-payments/package.json').version}
-      </Text>
-      <Text style={styles.heading}>
-          React Native Payments
-      </Text>
-    </View>
-);
+const Header = () =>
+  <View>
+    <Text style={styles.supHeading}>
+      Version {require('react-native-payments/package.json').version}
+    </Text>
+    <Text style={styles.heading}>
+      React Native Payments
+    </Text>
+  </View>;
 
 const ExampleList = ({ examples }) => {
   return (
     <View>
-      {examples.map(({ label, handlePress }) => (
+      {examples.map(({ label, handlePress }) =>
         <Touchable
-            key={label}
-            style={styles.exampleLink}
-            onPress={handlePress}
-            underlayColor='#f0f4f7'
+          key={label}
+          style={styles.exampleLink}
+          onPress={handlePress}
+          underlayColor="#f0f4f7"
         >
-            <Text
-              style={[styles.exampleLinkLabel, !handlePress && {
+          <Text
+            style={[
+              styles.exampleLinkLabel,
+              !handlePress && {
                 color: '#888'
-              }]}
-            >
-              {label}
-            </Text>
+              }
+            ]}
+          >
+            {label}
+          </Text>
         </Touchable>
-      ))}
+      )}
     </View>
   );
 };
 
-const Content = () => (
-    <View style={styles.content}>
-      <Text style={styles.subHeading}>Order Summary Examples</Text>
-      <ExampleList examples={ORDER_SUMMARY_EXAMPLES} />
-      <Text style={styles.subHeading}>Contact Info Examples</Text>
-      <ExampleList examples={CONTACT_INFO_EXAMPLES} />
-      <Text style={styles.subHeading}>Shipping Address Examples</Text>
-      <ExampleList examples={SHIPPING_ADDRESS_EXAMPLES} />
-      {__DEV__ && <ErrorExamples />}
-    </View>
-);
+const Content = () =>
+  <View style={styles.content}>
+    <Text style={styles.subHeading}>Order Summary Examples</Text>
+    <ExampleList examples={ORDER_SUMMARY_EXAMPLES} />
+    <Text style={styles.subHeading}>Contact Info Examples</Text>
+    <ExampleList examples={CONTACT_INFO_EXAMPLES} />
+    <Text style={styles.subHeading}>Shipping Address Examples</Text>
+    <ExampleList examples={SHIPPING_ADDRESS_EXAMPLES} />
+    {__DEV__ && <ErrorExamples />}
+  </View>;
 
-const ErrorExamples = () => (
+const ErrorExamples = () =>
   <View>
-      <Text style={styles.subHeading}>Error Examples</Text>
-      <ExampleList examples={ERROR_EXAMPLES} />
-  </View>
-);
+    <Text style={styles.subHeading}>Error Examples</Text>
+    <ExampleList examples={ERROR_EXAMPLES} />
+  </View>;
 
-export default () => (
-    <ScrollView style={styles.container}>
-      <Header />
-      <Content />
-    </ScrollView>
-);
+export default () =>
+  <ScrollView style={styles.container}>
+    <Header />
+    <Content />
+  </ScrollView>;
 
 const baseTextStyles = {
-    fontWeight: '700',
-    letterSpacing: -0.5
+  fontWeight: '700',
+  letterSpacing: -0.5
 };
 const styles = StyleSheet.create({
   container: {
@@ -184,8 +199,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     fontSize: 20
   },
-  content: {
-  },
+  content: {},
   exampleLink: {
     paddingVertical: 10,
     borderTopWidth: 1,

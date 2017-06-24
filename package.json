@@ -3,11 +3,12 @@
   "version": "0.41.0",
   "private": true,
   "scripts": {
-    "start": "echo 'foo'",
-    "test": "jest",
+    "precommit": "lint-staged",
     "run:packager": "cd examples/native && yarn run:packager",
     "run:ios": "cd examples/native && yarn run:ios",
-    "run:web": "cd examples/web && yarn run:web"
+    "run:web": "cd examples/web && yarn run:web",
+
+    "test": "jest"
   },
   "dependencies": {
     "es6-error": "^4.0.2",
@@ -17,7 +18,10 @@
   "devDependencies": {
     "babel-jest": "20.0.3",
     "babel-preset-react-native": "2.0.0",
+    "husky": "^0.14.1",
     "jest": "20.0.4",
+    "lint-staged": "^4.0.0",
+    "prettier": "^1.4.4",
     "react-test-renderer": "16.0.0-alpha.12"
   },
   "peerDependencies": {
@@ -30,6 +34,12 @@
       "/examples/",
       "lib/js/__tests__",
       "TODO: fix test"
+    ]
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --single-quote --write",
+      "git add"
     ]
   }
 }

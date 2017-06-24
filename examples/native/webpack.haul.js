@@ -12,5 +12,5 @@ module.exports = ({ platform }, defaults) => ({
       'react-primitives': 'react-native',
       'react-native-payments': '../..'
     }
-  },
+  }
 });
