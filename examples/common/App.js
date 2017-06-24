@@ -11,11 +11,11 @@ import {
 let Touchable;
 let ScrollView;
 if (Platform.OS === 'web') {
-  ScrollView = View;
   Touchable = require('react-primitives').Touchable;
+  ScrollView = View;
 } else {
-  ScrollView = require('react-native').ScrollView;
   Touchable = require('react-native').TouchableHighlight;
+  ScrollView = require('react-native').ScrollView;
 }
 
 import {
@@ -29,7 +29,14 @@ import {
   requestShippingDetails,
   staticShipping,
   dynamicShipping,
-  noInternationalShipping
+  noInternationalShipping,
+  errorNoTotal,
+  errorNegativeTotal,
+  errorInvalidTotalAmount,
+  errorInvalidDisplayItemAmount,
+  errorNoShippingOptions,
+  errorInvalidShippingOptionsAmount,
+  errorDuplicateShippingOptionsId
  } from './handlers';
 
 const ORDER_SUMMARY_EXAMPLES = [{
@@ -66,6 +73,29 @@ const SHIPPING_ADDRESS_EXAMPLES = [{
 }, {
   label: 'No International Shipping',
   handlePress: noInternationalShipping
+}];
+
+const ERROR_EXAMPLES = [{
+  label: 'No Total',
+  handlePress: errorNoTotal
+}, {
+  label: 'Negative Total',
+  handlePress: errorNegativeTotal
+}, {
+  label: 'Invalid Total Amount',
+  handlePress: errorInvalidTotalAmount
+}, {
+  label: 'Invalid Display Item Amount',
+  handlePress: errorInvalidDisplayItemAmount
+}, {
+  label: 'No Shipping Options',
+  handlePress: errorNoShippingOptions
+}, {
+  label: 'Invalid Shipping Options Amount',
+  handlePress: errorInvalidShippingOptionsAmount
+}, {
+  label: 'Duplicate Shipping Option Id',
+  handlePress: errorDuplicateShippingOptionsId
 }];
 
 const Header = () => (
@@ -110,7 +140,15 @@ const Content = () => (
       <ExampleList examples={CONTACT_INFO_EXAMPLES} />
       <Text style={styles.subHeading}>Shipping Address Examples</Text>
       <ExampleList examples={SHIPPING_ADDRESS_EXAMPLES} />
+      {__DEV__ && <ErrorExamples />}
     </View>
+);
+
+const ErrorExamples = () => (
+  <View>
+      <Text style={styles.subHeading}>Error Examples</Text>
+      <ExampleList examples={ERROR_EXAMPLES} />
+  </View>
 );
 
 export default () => (

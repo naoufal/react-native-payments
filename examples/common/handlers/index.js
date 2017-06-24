@@ -215,11 +215,13 @@ export function staticShipping() {
         shippingOptions: [{
             id: 'economy',
             label: 'Economy Shipping',
-            amount: { currency: 'USD', value: '0.00' }
+            amount: { currency: 'USD', value: '0.00' },
+            detail: 'Arrives in 3-5 days'
         }, {
             id: 'express',
             label: 'Express Shipping',
-            amount: { currency: 'USD', value: '5.00'  }
+            amount: { currency: 'USD', value: '5.00' },
+            detail: 'Arrives tomorrow'
         }]
     };
     const options = { requestShipping: true };
@@ -253,7 +255,12 @@ export function staticShipping() {
         });
 
         // Update total
-        details.total.amount.value = addDisplayItems(details.displayItems);
+        details.total = Object.assign({}, details.total, {
+            amount: {
+                currency: details.total.amount.currency,
+                value: addDisplayItems(details.displayItems)
+            }
+        });
 
         e.updateWith(details);
     });
@@ -267,11 +274,13 @@ function getShippingOptionsForState(state) {
     return [{
         id: 'economy',
         label: 'Economy Shipping',
-        amount: { currency: 'USD', value: isCalifornia ? '0.00' : '3.00' }
+        amount: { currency: 'USD', value: isCalifornia ? '0.00' : '3.00' },
+        detail: 'Arrives in 3-5 days'
     }, {
         id: 'express',
         label: 'Express Shipping',
-        amount: { currency: 'USD', value: isCalifornia ? '5.00' : '10.00' }
+        amount: { currency: 'USD', value: isCalifornia ? '5.00' : '10.00' },
+        detail: 'Arrives tomorrow'
     }];
 }
 
@@ -295,6 +304,7 @@ export function dynamicShipping() {
 
     const paymentRequest = new PaymentRequest(METHOD_DATA, details, options);
     paymentRequest.addEventListener('shippingaddresschange', e => {
+        console.log(paymentRequest.shippingAddress);
         const updateDetailsWithPromise = new Promise((resolve, reject) => {
             updateDetailsWithMutation(
                 paymentRequest,
@@ -325,7 +335,6 @@ export function dynamicShipping() {
 }
 
 function updateDetailsWithMutation(paymentRequest, details, nextShippingOptions) {
-    const state = paymentRequest.shippingAddress && paymentRequest.shippingAddress.region;
     // Update `shippingOptions` prices for selected state
     details.shippingOptions = nextShippingOptions;
 
@@ -352,7 +361,12 @@ function updateDetailsWithMutation(paymentRequest, details, nextShippingOptions)
     });
 
     // Update total
-    details.total.amount.value = addDisplayItems(details.displayItems);
+    details.total = Object.assign({}, details.total, {
+        amount: {
+            currency: details.total.amount.currency,
+            value: addDisplayItems(details.displayItems)
+        }
+    });
 
     return details;
 }
@@ -366,11 +380,13 @@ function getShippingOptionsForCountry(countryCode) {
     return [{
         id: 'economy',
         label: 'Economy Shipping',
-        amount: { currency: 'USD', value: '0.00' }
+        amount: { currency: 'USD', value: '0.00' },
+        detail: 'Arrives in 3-5 days'
     }, {
         id: 'express',
         label: 'Express Shipping',
-        amount: { currency: 'USD', value: '5.00' }
+        amount: { currency: 'USD', value: '5.00' },
+        detail: 'Arrives tomorrow.'
     }];
 }
 export function noInternationalShipping() {
@@ -418,6 +434,175 @@ export function noInternationalShipping() {
 
         e.updateWith(details);
     });
+
+    return prDisplayHandler(paymentRequest);
+}
+
+// Error Examples
+export function errorNoTotal() {
+    let details = {
+        id: 'errorNoTotal',
+        displayItems: [{
+            label: 'Movie Ticket',
+            amount: { currency: 'USD', value: '15.00' }
+        }],
+        total: null
+    };
+    const paymentRequest = new PaymentRequest(METHOD_DATA, details);
+
+    return prDisplayHandler(paymentRequest);
+}
+
+export function errorNegativeTotal() {
+    let details = {
+        id: 'errorNegativeTotal',
+        displayItems: [{
+            label: 'Movie Ticket',
+            amount: { currency: 'USD', value: '15.00' }
+        }],
+        total: {
+            label: getPlatformTotalLabel(Platform.OS),
+            amount: { currency: 'USD', value: '-15.00' }
+        }
+    };
+    const paymentRequest = new PaymentRequest(METHOD_DATA, details);
+
+    return prDisplayHandler(paymentRequest);
+}
+
+export function errorInvalidTotalAmount() {
+    let details = {
+        id: 'errorNoShippingOptions',
+        displayItems: [{
+            label: 'Movie Ticket',
+            amount: { currency: 'USD', value: '15.00' }
+        }],
+        total: {
+            label: getPlatformTotalLabel(Platform.OS),
+            amount: { currency: 'USD', value: '10.' }
+        }
+    };
+    const paymentRequest = new PaymentRequest(METHOD_DATA, details);
+
+    return prDisplayHandler(paymentRequest);
+}
+
+export function errorInvalidDisplayItemAmount() {
+    let details = {
+        id: 'errorNoShippingOptions',
+        displayItems: [{
+            label: 'Movie Ticket',
+            amount: { currency: 'USD', value: '10.' }
+        }],
+        total: {
+            label: getPlatformTotalLabel(Platform.OS),
+            amount: { currency: 'USD', value: '10.00' }
+        }
+    };
+    const paymentRequest = new PaymentRequest(METHOD_DATA, details);
+
+    return prDisplayHandler(paymentRequest);
+}
+
+export function errorNoShippingOptions() {
+    let details = {
+        id: 'errorNoShippingOptions',
+        displayItems: [{
+            label: 'Movie Ticket',
+            amount: { currency: 'USD', value: '15.00' }
+        }, {
+            label: 'Shipping',
+            amount: { currency: 'USD', value: '0.00' }
+        }],
+        total: {
+            label: getPlatformTotalLabel(Platform.OS),
+            amount: { currency: 'USD', value: '15.00' }
+        }
+    };
+    const options = { requestShipping: true };
+
+    const paymentRequest = new PaymentRequest(METHOD_DATA, details, options);
+    paymentRequest.addEventListener(
+        'shippingaddresschange',
+        e => e.updateWith(details)
+    );
+
+    paymentRequest.addEventListener(
+        'shippingoptionchange',
+        e => e.updateWith(details)
+    );
+
+    return prDisplayHandler(paymentRequest);
+}
+
+export function errorInvalidShippingOptionsAmount() {
+    let details = {
+        id: 'errorInvalidShippingOptionsAmount',
+        displayItems: [{
+            label: 'Movie Ticket',
+            amount: { currency: 'USD', value: '15.00' }
+        }, {
+            label: 'Shipping',
+            amount: { currency: 'USD', value: '0.00' }
+        }],
+        total: {
+            label: getPlatformTotalLabel(Platform.OS),
+            amount: { currency: 'USD', value: '15.00' }
+        },
+        shippingOptions: [{
+            id: 'next-day',
+            label: 'Next Day',
+            amount: { currency: 'USD', value: '10.'},
+            detail: 'Arrives tomorrow.'
+        }]
+    };
+    const options = { requestShipping: true };
+
+    const paymentRequest = new PaymentRequest(METHOD_DATA, details, options);
+    paymentRequest.addEventListener(
+        'shippingaddresschange',
+        e => e.updateWith(details)
+    );
+
+    paymentRequest.addEventListener(
+        'shippingoptionchange',
+        e => e.updateWith(details)
+    );
+
+    return prDisplayHandler(paymentRequest);
+}
+
+export function errorDuplicateShippingOptionsId() {
+    let details = {
+        id: 'errorDuplicateShippingOptionsId',
+        displayItems: [{
+            label: 'Movie Ticket',
+            amount: { currency: 'USD', value: '15.00' }
+        }, {
+            label: 'Shipping',
+            amount: { currency: 'USD', value: '0.00' }
+        }],
+        total: {
+            label: getPlatformTotalLabel(Platform.OS),
+            amount: { currency: 'USD', value: '15.00' }
+        },
+        shippingOptions: [
+            { id: null, label: 'foo', amount: { currency: 'USD', value: '0.00'} },
+            { id: null, label: 'bar', amount: { currency: 'USD', value: '1.00'} }
+        ]
+    };
+    const options = { requestShipping: true };
+
+    const paymentRequest = new PaymentRequest(METHOD_DATA, details, options);
+    paymentRequest.addEventListener(
+        'shippingaddresschange',
+        e => e.updateWith(details)
+    );
+
+    paymentRequest.addEventListener(
+        'shippingoptionchange',
+        e => e.updateWith(details)
+    );
 
     return prDisplayHandler(paymentRequest);
 }

@@ -36,7 +36,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* ReactNativePaymentsExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ReactNativePaymentsExampleTests.m */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		AD0E7D2F1EF771880091681F /* libReactNativePayments.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD0E7D2E1EF771830091681F /* libReactNativePayments.a */; };
+		ADC8C17E1EFD683200FB8071 /* libReactNativePayments.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC8C17C1EFD680F00FB8071 /* libReactNativePayments.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -229,9 +229,9 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
-		AD0E7D2D1EF771830091681F /* PBXContainerItemProxy */ = {
+		ADC8C17B1EFD680F00FB8071 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = AD0E7D101EF771830091681F /* ReactNativePayments.xcodeproj */;
+			containerPortal = ADC8C15E1EFD680F00FB8071 /* ReactNativePayments.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = ReactNativePayments;
@@ -263,7 +263,7 @@
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
-		AD0E7D101EF771830091681F /* ReactNativePayments.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePayments.xcodeproj; path = "../node_modules/react-native-payments/lib/ios/ReactNativePayments.xcodeproj"; sourceTree = "<group>"; };
+		ADC8C15E1EFD680F00FB8071 /* ReactNativePayments.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePayments.xcodeproj; path = ../../../lib/ios/ReactNativePayments.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -279,7 +279,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD0E7D2F1EF771880091681F /* libReactNativePayments.a in Frameworks */,
+				ADC8C17E1EFD683200FB8071 /* libReactNativePayments.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -446,7 +446,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				AD0E7D101EF771830091681F /* ReactNativePayments.xcodeproj */,
+				ADC8C15E1EFD680F00FB8071 /* ReactNativePayments.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -494,10 +494,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		AD0E7D111EF771830091681F /* Products */ = {
+		ADC8C15F1EFD680F00FB8071 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AD0E7D2E1EF771830091681F /* libReactNativePayments.a */,
+				ADC8C17C1EFD680F00FB8071 /* libReactNativePayments.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -660,8 +660,8 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
-					ProductGroup = AD0E7D111EF771830091681F /* Products */;
-					ProjectRef = AD0E7D101EF771830091681F /* ReactNativePayments.xcodeproj */;
+					ProductGroup = ADC8C15F1EFD680F00FB8071 /* Products */;
+					ProjectRef = ADC8C15E1EFD680F00FB8071 /* ReactNativePayments.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -850,11 +850,11 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		AD0E7D2E1EF771830091681F /* libReactNativePayments.a */ = {
+		ADC8C17C1EFD680F00FB8071 /* libReactNativePayments.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libReactNativePayments.a;
-			remoteRef = AD0E7D2D1EF771830091681F /* PBXContainerItemProxy */;
+			remoteRef = ADC8C17B1EFD680F00FB8071 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

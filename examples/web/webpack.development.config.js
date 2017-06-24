@@ -10,6 +10,7 @@ module.exports = Object.assign({}, baseWebpackConfig, {
     },
     plugins: [
         new webpack.DefinePlugin({
+            __DEV__: true,
             'process.env': {
                 NODE_ENV: JSON.stringify('development'),
             },
