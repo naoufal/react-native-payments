@@ -31,7 +31,7 @@ RCT_EXPORT_METHOD(createPaymentRequest: (NSDictionary *)methodData
     self.paymentRequest.shippingMethods = [self getShippingMethodsFromDetails:details];
 
     [self setRequiredShippingAddressFieldsFromOptions:options];
-    
+
     // Set options so that we can later access it.
     self.initialOptions = options;
 
@@ -88,7 +88,7 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
         return;
     }
 
-    NSArray<PKShippingMethod *> * shippingMethods = [self getShippingMethodsFromDetails:details];
+        NSArray<PKShippingMethod *> * shippingMethods = [self getShippingMethodsFromDetails:details];
 
     NSArray<PKPaymentSummaryItem *> * paymentSummaryItems = [self getPaymentSummaryItemsFromDetails:details];
 
@@ -169,19 +169,17 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
     // street, subAdministrativeArea, and subLocality are supressed for privacy
     [self.bridge.eventDispatcher sendDeviceEventWithName:@"NativePayments:onshippingaddresschange"
                                                     body:@{
-                                                           @"recipient": @[[NSNull null]],
-                                                           @"organization": @[[NSNull null]],
-                                                           @"addressLine": @[[NSNull null]],
+                                                           @"recipient": [NSNull null],
+                                                           @"organization": [NSNull null],
+                                                           @"addressLine": [NSNull null],
                                                            @"city": postalAddress.city,
                                                            @"region": postalAddress.state,
-                                                           @"country": postalAddress.ISOCountryCode,
-                                                           
+                                                           @"country": [postalAddress.ISOCountryCode uppercaseString],
                                                            @"postalCode": postalAddress.postalCode,
-                                                           @"phone": @[[NSNull null]],
-                                                           @"languageCode": @[[NSNull null]],
-                                                           @"sortingCode": @[[NSNull null]],
-                                                           @"dependentLocality": @[[NSNull null]]
-                                                           
+                                                           @"phone": [NSNull null],
+                                                           @"languageCode": [NSNull null],
+                                                           @"sortingCode": [NSNull null],
+                                                           @"dependentLocality": [NSNull null]
                                                            }];
 }
 
@@ -218,14 +216,14 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
                                                @"quicpay": PKPaymentNetworkQuicPay,
                                                @"idcredit": PKPaymentNetworkIDCredit
                                                };
-    
+
     // Setup supportedNetworks
     NSArray *jsSupportedNetworks = methodData[@"supportedNetworks"];
     NSMutableArray *supportedNetworks = [NSMutableArray array];
     for (NSString *supportedNetwork in jsSupportedNetworks) {
         [supportedNetworks addObject: supportedNetworksMapping[supportedNetwork]];
     }
-    
+
     return supportedNetworks;
 }
 
@@ -269,7 +267,7 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
 {
     NSDecimalNumber *decimalNumberAmount = [NSDecimalNumber decimalNumberWithString:displayItem[@"amount"][@"value"]];
     PKPaymentSummaryItem *paymentSummaryItem = [PKPaymentSummaryItem summaryItemWithLabel:displayItem[@"label"] amount:decimalNumberAmount];
-    
+
     return paymentSummaryItem;
 }
 
@@ -277,14 +275,14 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
 {
     PKShippingMethod *shippingMethod = [PKShippingMethod summaryItemWithLabel:shippingOption[@"label"] amount:[NSDecimalNumber decimalNumberWithString: shippingOption[@"amount"][@"value"]]];
     shippingMethod.identifier = shippingOption[@"id"];
-    
+
     // shippingOption.detail is not part of the PaymentRequest spec.
     if ([shippingOption[@"detail"] isKindOfClass:[NSString class]]) {
         shippingMethod.detail = shippingOption[@"detail"];
     } else {
         shippingMethod.detail = @"";
     }
-    
+
     return shippingMethod;
 }
 
@@ -294,15 +292,15 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
     if (options[@"requestShipping"]) {
         self.paymentRequest.requiredShippingAddressFields = PKAddressFieldPostalAddress;
     }
-    
+
     if (options[@"requestPayerName"]) {
         self.paymentRequest.requiredShippingAddressFields = self.paymentRequest.requiredShippingAddressFields | PKAddressFieldName;
     }
-    
+
     if (options[@"requestPayerPhone"]) {
         self.paymentRequest.requiredShippingAddressFields = self.paymentRequest.requiredShippingAddressFields | PKAddressFieldPhone;
     }
-    
+
     if (options[@"requestPayerEmail"]) {
         self.paymentRequest.requiredShippingAddressFields = self.paymentRequest.requiredShippingAddressFields | PKAddressFieldEmail;
     }
