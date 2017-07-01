@@ -1,6 +1,6 @@
 {
   "name": "react-native-payments",
-  "version": "0.41.0",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "precommit": "lint-staged",
@@ -32,8 +32,7 @@
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/examples/",
-      "lib/js/__tests__",
-      "TODO: fix test"
+      "lib/js/__tests__"
     ]
   },
   "lint-staged": {
