@@ -6,7 +6,9 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "run:packager": "yarn run haul start -- --platform ios",
-    "run:ios": "react-native run-ios"
+    "run:ios": "react-native run-ios",
+    "run:demo": "yarn && react-native run-ios --configuration=Release",
+    "build:ios": "yarn run haul bundle --platform=ios --bundle-output=ios/main.jsbundle --assets-dest=ios/build/assets"
   },
   "dependencies": {
     "react": "~15.4.0-rc.4",

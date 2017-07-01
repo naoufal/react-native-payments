@@ -7,7 +7,7 @@
     "run:packager": "cd examples/native && yarn run:packager",
     "run:ios": "cd examples/native && yarn run:ios",
     "run:web": "cd examples/web && yarn run:web",
-
+    "run:demo": "cd examples/native && yarn run:demo",
     "test": "jest"
   },
   "dependencies": {

@@ -32,7 +32,7 @@ function getTaxFromSubTotal(subTotal, tax = 0.15) {
 }
 
 function getPlatformTotalLabel(platformOS) {
-  return platformOS === 'ios' ? 'React Native Payments' : 'Total';
+  return platformOS === 'ios' ? 'Merchant' : 'Total';
 }
 
 const METHOD_DATA = [
