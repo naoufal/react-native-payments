@@ -137,23 +137,12 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
     // Store completion for later use
     self.completion = completion;
 
-    NSError *error;
-//    ABMultiValueRef addressMultiValue = ABRecordCopyValue(payment.billingAddress, kABPersonAddressProperty);
-//    NSDictionary *addressDictionary = (__bridge_transfer NSDictionary *) ABMultiValueCopyValueAtIndex(addressMultiValue, 0);
-//
-//    if (error) {
-//    NSData *json = [NSJSONSerialization dataWithJSONObject:addressDictionary options:NSJSONWritingPrettyPrinted error: &error];
-
-//
     [self.bridge.eventDispatcher sendDeviceEventWithName:@"NativePayments:onuseraccept"
                                                     body:@{
                                                            @"transactionIdentifier": payment.token.transactionIdentifier,
                                                            @"paymentData": [[NSString alloc] initWithData:payment.token.paymentData encoding:NSUTF8StringEncoding]
                                                            }
      ];
-
-
-    // ... Send payment token, shipping and billing address, and order information to your server ...
 }
 
 
@@ -162,7 +151,6 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
                    didSelectShippingContact:(PKContact *)contact
                                  completion:(nonnull void (^)(PKPaymentAuthorizationStatus, NSArray<PKShippingMethod *> * _Nonnull, NSArray<PKPaymentSummaryItem *> * _Nonnull))completion
 {
-    NSLog(@"DID SELECT SHIPPING CONTACT");
     self.shippingContactCompletion = completion;
 
     CNPostalAddress *postalAddress = contact.postalAddress;
@@ -188,8 +176,6 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
                    didSelectShippingMethod:(PKShippingMethod *)shippingMethod
                                 completion:(void (^)(PKPaymentAuthorizationStatus, NSArray<PKPaymentSummaryItem *> * _Nonnull))completion
 {
-    NSLog(@"DID SELECT SHIPPING METHOD");
-
     self.shippingMethodCompletion = completion;
 
     [self.bridge.eventDispatcher sendDeviceEventWithName:@"NativePayments:onshippingoptionchange" body:@{
