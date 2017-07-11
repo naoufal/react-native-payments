@@ -6,7 +6,7 @@
 [![npm](https://img.shields.io/npm/dm/react-native-payments.svg?style=flat-square)](https://www.npmjs.com/package/react-native-payments)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-Accept Payments with Apple Pay and using the [Payment Request API](https://paymentrequest.show).
+Accept Payments with Apple Pay using the [Payment Request API](https://paymentrequest.show).
 
 __Features__
 - __Simple.__ No more checkout forms.
