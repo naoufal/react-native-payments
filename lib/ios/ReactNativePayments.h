@@ -13,11 +13,11 @@
 @property (nonatomic, strong) RCTResponseSenderBlock callback;
 @property (nonatomic, strong) PKPaymentRequest *paymentRequest;
 @property (nonatomic, strong) NSDictionary *initialOptions;
+@property BOOL *hasGatewayParameters;
 @property (nonatomic, strong) PKPaymentAuthorizationViewController *viewController;
 @property (nonatomic, copy) void (^completion)(PKPaymentAuthorizationStatus);
 @property (nonatomic, copy) void (^shippingContactCompletion)(PKPaymentAuthorizationStatus, NSArray<PKShippingMethod *> * _Nonnull, NSArray<PKPaymentSummaryItem *> * _Nonnull);
 @property (nonatomic, copy) void (^shippingMethodCompletion)(PKPaymentAuthorizationStatus, NSArray<PKPaymentSummaryItem *> * _Nonnull);
-
 
 // Private methods
 - (NSArray *_Nonnull)getSupportedNetworksFromMethodData:(NSDictionary *_Nonnull)methodData;
@@ -25,5 +25,8 @@
 - (NSArray<PKShippingMethod *> *_Nonnull)getShippingMethodsFromDetails:(NSDictionary *_Nonnull)details;
 - (PKPaymentSummaryItem *_Nonnull)convertDisplayItemToPaymentSummaryItem:(NSDictionary *_Nonnull)displayItem;
 - (PKShippingMethod *_Nonnull)convertShippingOptionToShippingMethod:(NSDictionary *_Nonnull)shippingOption;
+- (void)handleUserAccept:(PKPayment *_Nonnull)payment
+            paymentToken:(NSString *_Nullable)token;
+- (void)handleGatewayERror:(NSError *_Nonnull)error;
 
 @end

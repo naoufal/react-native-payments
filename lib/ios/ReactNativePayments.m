@@ -1,4 +1,5 @@
 #import "ReactNativePayments.h"
+#import "GatewayManager.h"
 #import <React/RCTEventDispatcher.h>
 
 @implementation ReactNativePayments
@@ -13,7 +14,10 @@ RCT_EXPORT_MODULE()
 
 - (NSDictionary *)constantsToExport
 {
-    return @{ @"canMakePayments": @([PKPaymentAuthorizationViewController canMakePayments]) };
+    return @{
+             @"canMakePayments": @([PKPaymentAuthorizationViewController canMakePayments]),
+             @"supportedGateways": [GatewayManager getSupportedGateways]
+             };
 }
 
 RCT_EXPORT_METHOD(createPaymentRequest: (NSDictionary *)methodData
@@ -21,8 +25,16 @@ RCT_EXPORT_METHOD(createPaymentRequest: (NSDictionary *)methodData
                   options: (NSDictionary *)options
                   callback: (RCTResponseSenderBlock)callback)
 {
+    NSString *merchantId = methodData[@"merchantIdentifier"];
+    NSDictionary *gatewayParameters = methodData[@"paymentMethodTokenizationParameters"][@"parameters"];
+    
+    if (gatewayParameters) {
+        self.hasGatewayParameters = true;
+        [GatewayManager configureGateway:gatewayParameters merchantIdentifier:merchantId];
+    }
+    
     self.paymentRequest = [[PKPaymentRequest alloc] init];
-    self.paymentRequest.merchantIdentifier = methodData[@"merchantIdentifier"];
+    self.paymentRequest.merchantIdentifier = merchantId;
     self.paymentRequest.merchantCapabilities = PKMerchantCapability3DS;
     self.paymentRequest.countryCode = methodData[@"countryCode"];
     self.paymentRequest.currencyCode = methodData[@"currencyCode"];
@@ -137,12 +149,19 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
     // Store completion for later use
     self.completion = completion;
 
-    [self.bridge.eventDispatcher sendDeviceEventWithName:@"NativePayments:onuseraccept"
-                                                    body:@{
-                                                           @"transactionIdentifier": payment.token.transactionIdentifier,
-                                                           @"paymentData": [[NSString alloc] initWithData:payment.token.paymentData encoding:NSUTF8StringEncoding]
-                                                           }
-     ];
+    if (self.hasGatewayParameters) {
+        [GatewayManager createTokenWithPayment:payment completion:^(NSString * _Nullable token, NSError * _Nullable error) {
+            if (error) {
+                NSLog(@"WTF");
+                [self handleGatewayError:error];
+                return;
+            }
+            
+            [self handleUserAccept:payment paymentToken:token];
+        }];
+    } else {
+        [self handleUserAccept:payment paymentToken:nil];
+    }
 }
 
 
@@ -290,6 +309,34 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
     if (options[@"requestPayerEmail"]) {
         self.paymentRequest.requiredShippingAddressFields = self.paymentRequest.requiredShippingAddressFields | PKAddressFieldEmail;
     }
+}
+
+- (void)handleUserAccept:(PKPayment *_Nonnull)payment
+                paymentToken:(NSString *_Nullable)token
+{
+    NSString *transactionId = payment.token.transactionIdentifier;
+    NSString *paymentData = [[NSString alloc] initWithData:payment.token.paymentData encoding:NSUTF8StringEncoding];
+    NSMutableDictionary *paymentResponse = [[NSMutableDictionary alloc]initWithCapacity:3];
+    [paymentResponse setObject:transactionId forKey:@"transactionIdentifier"];
+    [paymentResponse setObject:paymentData forKey:@"paymentData"];
+    
+    if (token) {
+        [paymentResponse setObject:token forKey:@"paymentToken"];
+    }
+    
+    [self.bridge.eventDispatcher sendDeviceEventWithName:@"NativePayments:onuseraccept"
+                                                    body:paymentResponse
+     ];
+}
+
+- (void)handleGatewayError:(NSError *_Nonnull)error
+{
+    NSLog(@"ERRROOOORRR");
+    [self.bridge.eventDispatcher sendDeviceEventWithName:@"NativePayments:ongatewayerror"
+                                                    body: @{
+                                                            @"error": [error localizedDescription]
+                                                            }
+     ];
 }
 
 @end
