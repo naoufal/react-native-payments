@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ADB95AAF1F199853007C2365 /* GatewayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ADB95AAE1F199853007C2365 /* GatewayManager.m */; };
 		B3E7B58A1CC2AC0600A0062D /* ReactNativePayments.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* ReactNativePayments.m */; };
 /* End PBXBuildFile section */
 
@@ -24,6 +25,8 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libReactNativePayments.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libReactNativePayments.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADB95AAD1F199853007C2365 /* GatewayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GatewayManager.h; sourceTree = "<group>"; };
+		ADB95AAE1F199853007C2365 /* GatewayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GatewayManager.m; sourceTree = "<group>"; };
 		B3E7B5881CC2AC0600A0062D /* ReactNativePayments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReactNativePayments.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* ReactNativePayments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReactNativePayments.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -50,6 +53,8 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				ADB95AAD1F199853007C2365 /* GatewayManager.h */,
+				ADB95AAE1F199853007C2365 /* GatewayManager.m */,
 				B3E7B5881CC2AC0600A0062D /* ReactNativePayments.h */,
 				B3E7B5891CC2AC0600A0062D /* ReactNativePayments.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
@@ -112,6 +117,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADB95AAF1F199853007C2365 /* GatewayManager.m in Sources */,
 				B3E7B58A1CC2AC0600A0062D /* ReactNativePayments.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -197,7 +203,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
-				"$(inherited)",
+					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",

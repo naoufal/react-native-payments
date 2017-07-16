@@ -31,8 +31,12 @@ import {
   errorInvalidDisplayItemAmount,
   errorNoShippingOptions,
   errorInvalidShippingOptionsAmount,
-  errorDuplicateShippingOptionsId
+  errorDuplicateShippingOptionsId,
+  errorGatewayNotSupported
 } from './handlers';
+
+import Header from './components/Header';
+import { baseTextStyles } from './styles';
 
 const ORDER_SUMMARY_EXAMPLES = [
   {
@@ -111,18 +115,12 @@ const ERROR_EXAMPLES = [
   {
     label: 'Duplicate Shipping Option Id',
     handlePress: errorDuplicateShippingOptionsId
+  },
+  {
+    label: 'Gateway Not Supported (React Native Only)',
+    handlePress: errorGatewayNotSupported
   }
 ];
-
-const Header = () =>
-  <View>
-    <Text style={styles.supHeading}>
-      Version {require('react-native-payments/package.json').version}
-    </Text>
-    <Text style={styles.heading}>
-      React Native Payments
-    </Text>
-  </View>;
 
 const ExampleList = ({ examples }) => {
   return (
@@ -166,32 +164,19 @@ const ErrorExamples = () =>
     <Text style={styles.subHeading}>Error Examples</Text>
     <ExampleList examples={ERROR_EXAMPLES} />
   </View>;
+const ReactNativePaymentsVersion = require('react-native-payments/package.json')
+  .version;
 
 export default () =>
   <ScrollView style={styles.container}>
-    <Header />
+    <Header supHeadingText={ReactNativePaymentsVersion} />
     <Content />
   </ScrollView>;
 
-const baseTextStyles = {
-  fontWeight: '700',
-  letterSpacing: -0.5
-};
 const styles = StyleSheet.create({
   container: {
     marginTop: 25,
     padding: 10
-  },
-  supHeading: {
-    ...baseTextStyles,
-    fontSize: 11,
-    fontWeight: '700',
-    letterSpacing: -0.5,
-    color: '#A8A8A8'
-  },
-  heading: {
-    ...baseTextStyles,
-    fontSize: 27
   },
   subHeading: {
     ...baseTextStyles,

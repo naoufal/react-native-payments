@@ -11,7 +11,10 @@ Accept Payments with Apple Pay using the [Payment Request API](https://paymentre
 __Features__
 - __Simple.__ No more checkout forms.
 - __Effective__. Faster checkouts that increase conversion.
-- __Cross-platform.__ Share your payments code between iOS and web apps.
+- __Future-proof__. Use a W3C Standards API, supported by companies like Google, Firefox and others.
+- __Cross-platform.__ Share payments code between your iOS and web apps.
+- __Payment Processor Support__. Process payments with payment processors like Stripe.
+
 
 <img width="280px" src="https://user-images.githubusercontent.com/1627824/27758096-9fc6bf9a-5dc1-11e7-9d8f-b2d409302fc7.gif" />
 
@@ -21,6 +24,7 @@ __Features__
 - [Demo](#demo)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Payment Processors](#payment-processors)
 - [API](#api)
 - [Resources](#resources)
 - [License](#license)
@@ -269,7 +273,7 @@ paymentRequest.show()
   });
 ```
 
-There are two ways to process Apple Pay payments -- on your server or using a payment platform's native library.
+There are two ways to process Apple Pay payments -- on your server or using a payment processor.
 
 #### Processing Payments on Your Server
 If you're equiped to Apple Pay payments on your server, all you have to do is send the Payment Response's `transactionIdentifier` and `paymentData` to your server.
@@ -296,8 +300,77 @@ paymentRequest.show()
 
 You can learn more about server-side decrypting of Payment Tokens on Apple's [Payment Token Format Reference](https://developer.apple.com/library/content/documentation/PassKit/Reference/PaymentTokenJSON/PaymentTokenJSON.html) documentation.
 
-#### Processing Payments with a Payment Platform
-Documentation coming soon.
+#### Processing Payments with a Payment Processor
+React Native Payments also supports processing payments with payment processors. There are three parts to setting up a payment processor:
+
+1. Creating an Apple Pay certificate
+2. Adding and Linking the Payment Processor's SDK
+3. Adding your Payment Processor's Tokens
+
+_NOTE: For payment processor specific documentation, see the [Payment Processors](#payment-processors) section._
+
+When using a payment processor, you'll receive a `paymentToken` field within the `details` of the `PaymentResponse`.  Use this token to charge customers with your payment processor.
+
+```es6
+paymentRequest.show()
+  .then(paymentResponse => {
+    const { paymentToken } = paymentResponse.details;
+
+    return fetch('...', {
+      method: 'POST',
+      body: {
+        paymentToken
+      }
+    })
+    .then(res => res.json())
+    .then(successHandler)
+    .catch(errorHandler);
+  });
+```
+
+## Payment Processors
+- [Stripe](#stripe)
+
+### Stripe
+#### Creating an Apple Pay certificate
+Follow Stripe's [documentation](https://stripe.com/docs/apple-pay/apps#csr) on how to create and upload the Apple Pay certificate back to Stripe.
+
+#### Adding and Linking the Stripe SDK
+Next, you'll need to add Stripe's SDK to your project.  You can install it by following one of the methods [listed in Stripe's documentation](https://stripe.com/docs/mobile/ios#getting-started).
+
+Finally, in Xcode:
+1. Select the `ReactNativePayments` project from the left sidebar (under Libraries)
+2. Select `Build Settings` and search for `Framework Search Paths`
+3. Then add the path to where you added the Framework (remember, it's relative to `/node_modules/react-native-payments/lib/ios`)
+
+<img width="1000" alt="screen shot 2017-07-16 at 11 11 13 am" src="https://user-images.githubusercontent.com/1627824/28250182-cb47cd1e-6a17-11e7-9d67-47f35f0757bd.png">
+
+#### Adding your Stripe Tokens
+Now that you've added Stripe's SDK to your app, you're setup to use Stripe as a payment processor.
+
+In order to do so, you'll need to define a `paymentMethodTokenizationParameters` on your `PaymentMethodData` with Stripe specific parameters.  Here's an example of what Stripe `paramaters` look like:
+
+```diff
+  const supportedMethods = [
+    {
+      supportedMethods: ['apple-pay'],
+      data: {
+        merchantIdentifier: 'merchant.com.your-app.namespace',
+        supportedNetworks: ['visa', 'mastercard'],
+        countryCode: 'US',
+        currencyCode: 'USD',
++       paymentMethodTokenizationParameters: {
++         parameters: {
++           'gateway': 'stripe',
++           'stripe:publishableKey': 'your-publishable-key'
++         }
++       }
+      }
+    }
+  ];
+```
+
+Now you're all set to receive Stripe payment tokens in your `PaymentResponse`.
 
 ## API
 ### [PaymentRequest](https://github.com/naoufal/react-native-payments/tree/master/docs/PaymentRequest.md)
@@ -317,6 +390,11 @@ Documentation coming soon.
 - [Configuring your Environment](https://developer.apple.com/library/content/ApplePay_Guide/Configuration.html)
 - [Processing Payments](https://developer.apple.com/library/content/ApplePay_Guide/ProcessPayment.html#//apple_ref/doc/uid/TP40014764-CH5-SW4)
 - [Payment Token Format Reference](https://developer.apple.com/library/content/documentation/PassKit/Reference/PaymentTokenJSON/PaymentTokenJSON.html#//apple_ref/doc/uid/TP40014929)
+
+### Gateways
+#### Stripe
+- [Creating a new Apple Pay certificate](https://stripe.com/docs/apple-pay/apps#csr)
+- [Installing the Stripe SDK](https://stripe.com/docs/mobile/ios#getting-started)
 
 # License
 Licensed under the MIT License, Copyright © 2017, [Naoufal Kadhom](https://twitter.com/naoufal).
