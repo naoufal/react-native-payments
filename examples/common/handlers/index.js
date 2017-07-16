@@ -675,3 +675,32 @@ export function errorDuplicateShippingOptionsId() {
 
   return prDisplayHandler(paymentRequest);
 }
+
+export function errorGatewayNotSupported() {
+  const methodData = [
+    {
+      supportedMethods: ['apple-pay'],
+      data: {
+        merchantIdentifier: 'merchant.com.react-native-payments.naoufal',
+        supportedNetworks: ['visa', 'mastercard', 'amex'],
+        countryCode: 'US',
+        currencyCode: 'USD',
+        paymentMethodTokenizationParameters: {
+          parameters: {
+            gateway: 'stripe',
+            'stripe:stripe:publishableKey': 'pk_test_foo'
+          }
+        }
+      }
+    }
+  ];
+
+  const details = {
+    displayItems: DISPLAY_ITEMS,
+    total: TOTAL
+  };
+
+  const paymentRequest = new PaymentRequest(methodData, details);
+
+  return prDisplayHandler(paymentRequest);
+}

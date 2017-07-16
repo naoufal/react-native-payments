@@ -31,7 +31,8 @@ import {
   errorInvalidDisplayItemAmount,
   errorNoShippingOptions,
   errorInvalidShippingOptionsAmount,
-  errorDuplicateShippingOptionsId
+  errorDuplicateShippingOptionsId,
+  errorGatewayNotSupported
 } from './handlers';
 
 import Header from './components/Header';
@@ -114,6 +115,10 @@ const ERROR_EXAMPLES = [
   {
     label: 'Duplicate Shipping Option Id',
     handlePress: errorDuplicateShippingOptionsId
+  },
+  {
+    label: 'Gateway Not Supported (React Native Only)',
+    handlePress: errorGatewayNotSupported
   }
 ];
 
