@@ -1,6 +1,6 @@
 {
   "name": "react-native-payments",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "scripts": {
     "precommit": "lint-staged",
     "run:packager": "cd examples/native && yarn run:packager",
