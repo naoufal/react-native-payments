@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>DisplaySortedByTitle</key>
+			<true/>
+			<key>Title</key>
+			<string>Integration</string>
+			<key>Key</key>
+			<string>BraintreeDemoSettingsIntegration</string>
+			<key>DefaultValue</key>
+			<string>BraintreeDemoDropInViewController</string>
+			<key>Titles</key>
+			<array>
+				<string>Drop In (Legacy)</string>
+				<string>PayPal - Future Payment</string>
+				<string>PayPal - Billing Agreement</string>
+				<string>PayPal - Scopes</string>
+				<string>PayPal - One-Time Payment</string>
+				<string>Credit Card Tokenization</string>
+				<string>Combined - BTPaymentButton</string>
+				<string>PayPal - BTUIPayPalButton</string>
+				<string>Venmo - BTUIVenmoButton</string>
+				<string>Venmo - Custom Button</string>
+				<string>PayPal - Custom Button</string>
+				<string>Apple Pay - PassKit</string>
+				<string>Drop In</string>
+				<string>UI Components</string>
+				<string>Credit Cards - 3D Secure</string>
+				<string>Combined - Custom Button</string>
+				<string>Fraud Protection - BTDataCollector</string>
+				<string>UnionPay</string>
+				<string>PayPal Credit</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>BraintreeDemoDropInLegacyViewController</string>
+				<string>BraintreeDemoPayPalForceFuturePaymentViewController</string>
+				<string>BraintreeDemoPayPalBillingAgreementViewController</string>
+				<string>BraintreeDemoPayPalScopesViewController</string>
+				<string>BraintreeDemoPayPalOneTimePaymentViewController</string>
+				<string>BraintreeDemoCardTokenizationViewController</string>
+				<string>BraintreeDemoBTPaymentButtonViewController</string>
+				<string>BraintreeDemoBTUIPayPalButtonViewController</string>
+				<string>BraintreeDemoBTUIVenmoButtonViewController</string>
+				<string>BraintreeDemoCustomVenmoButtonViewController</string>
+				<string>BraintreeDemoCustomPayPalButtonViewController</string>
+				<string>BraintreeDemoApplePayPassKitViewController</string>
+				<string>BraintreeDemoDropInViewController</string>
+				<string>BraintreeDemoUIWidgetsViewController</string>
+				<string>BraintreeDemoThreeDSecureViewController</string>
+				<string>BraintreeDemoCustomMultiPayViewController</string>
+				<string>BraintreeDemoBTDataCollectorViewController</string>
+				<string>BraintreeDemoUnionPayViewController</string>
+				<string>BraintreeDemoPayPalCreditPaymentViewController</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Environment</string>
+			<key>Key</key>
+			<string>BraintreeDemoSettingsEnvironmentDefaultsKey</string>
+			<key>DefaultValue</key>
+			<integer>0</integer>
+			<key>ShortTitles</key>
+			<array>
+				<string>Sandbox</string>
+				<string>Production</string>
+				<string>Custom (enter below)</string>
+			</array>
+			<key>Titles</key>
+			<array>
+				<string>Sandbox (braintree-sample-merchant)</string>
+				<string>Production (executive-sample-merchant)</string>
+				<string>Custom (URL on previous screen)</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Custom Base URL</string>
+			<key>Key</key>
+			<string>BraintreeDemoSettingsCustomEnvironmentURLDefaultsKey</string>
+			<key>IASKTextAlignment</key>
+			<string>IASKUITextAlignmentRight</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Use Tokenization Key</string>
+			<key>Key</key>
+			<string>BraintreeDemoUseTokenizationKey</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Customer</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Include Customer in Client Token</string>
+			<key>Key</key>
+			<string>BraintreeDemoCustomerPresent</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Customer ID (Random if Blank)</string>
+			<key>Key</key>
+			<string>BraintreeDemoCustomerIdentifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>3D Secure</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Required (3DS Transaction Option)</string>
+			<key>Key</key>
+			<string>BraintreeDemoSettingsThreeDSecureRequiredDefaultsKey</string>
+			<key>Values</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+			<key>DefaultValue</key>
+			<integer>0</integer>
+			<key>Titles</key>
+			<array>
+				<string>Default (Required if 3DS Verification present)</string>
+				<string>Required</string>
+				<string>Optional (required = false)</string>
+			</array>
+			<key>ShortTitles</key>
+			<array>
+				<string>Default</string>
+				<string>Required</string>
+				<string>Optional</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>UX</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>DefaultValue</key>
+			<true/>
+			<key>Title</key>
+			<string>Modal Presentation</string>
+			<key>Key</key>
+			<string>BraintreeDemoChooserViewControllerShouldUseModalPresentationDefaultsKey</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Coinbase Disabled</string>
+			<key>Key</key>
+			<string>BraintreeDemoCoinbaseDisabledDefaultsKey</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Client Token Version</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Client Token Version</string>
+			<key>Key</key>
+			<string>BraintreeDemoSettingsClientTokenVersionDefaultsKey</string>
+			<key>Values</key>
+			<array>
+				<integer>2</integer>
+				<integer>3</integer>
+			</array>
+			<key>DefaultValue</key>
+			<integer>2</integer>
+			<key>Titles</key>
+			<array>
+				<string>v2</string>
+				<string>v3</string>
+			</array>
+			<key>ShortTitles</key>
+			<array>
+				<string>v2</string>
+				<string>v3</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

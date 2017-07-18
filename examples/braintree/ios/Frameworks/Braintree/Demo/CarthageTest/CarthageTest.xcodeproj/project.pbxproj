@@ -1,0 +1,371 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A74D4AF51BFBB3FB00BF36CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74D4AF41BFBB3FB00BF36CD /* AppDelegate.swift */; };
+		A74D4AF71BFBB3FB00BF36CD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74D4AF61BFBB3FB00BF36CD /* ViewController.swift */; };
+		A74D4AFA1BFBB3FB00BF36CD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A74D4AF81BFBB3FB00BF36CD /* Main.storyboard */; };
+		A74D4AFC1BFBB3FB00BF36CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A74D4AFB1BFBB3FB00BF36CD /* Assets.xcassets */; };
+		A74D4AFF1BFBB3FB00BF36CD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A74D4AFD1BFBB3FB00BF36CD /* LaunchScreen.storyboard */; };
+		A74D4B341BFBBA1A00BF36CD /* Braintree3DSecure.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A74D4B271BFBB55600BF36CD /* Braintree3DSecure.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A74D4B361BFBBA1A00BF36CD /* BraintreeApplePay.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A74D4B281BFBB55600BF36CD /* BraintreeApplePay.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A74D4B381BFBBA1A00BF36CD /* BraintreeCard.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A74D4B291BFBB55600BF36CD /* BraintreeCard.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A74D4B3A1BFBBA1A00BF36CD /* BraintreeCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A74D4B251BFBB4C100BF36CD /* BraintreeCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A74D4B3C1BFBBA1A00BF36CD /* BraintreeDataCollector.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A74D4B2A1BFBB55600BF36CD /* BraintreeDataCollector.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A74D4B3E1BFBBA1A00BF36CD /* BraintreePayPal.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A74D4B2B1BFBB55600BF36CD /* BraintreePayPal.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A74D4B401BFBBA1A00BF36CD /* BraintreeUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A74D4B2C1BFBB55600BF36CD /* BraintreeUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A77B38DB1BFBEE64002716C1 /* Braintree3DSecure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A74D4B271BFBB55600BF36CD /* Braintree3DSecure.framework */; };
+		A77B38DC1BFBEE64002716C1 /* BraintreeApplePay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A74D4B281BFBB55600BF36CD /* BraintreeApplePay.framework */; };
+		A77B38DD1BFBEE64002716C1 /* BraintreeCard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A74D4B291BFBB55600BF36CD /* BraintreeCard.framework */; };
+		A77B38DE1BFBEE64002716C1 /* BraintreeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A74D4B251BFBB4C100BF36CD /* BraintreeCore.framework */; };
+		A77B38DF1BFBEE64002716C1 /* BraintreeDataCollector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A74D4B2A1BFBB55600BF36CD /* BraintreeDataCollector.framework */; };
+		A77B38E01BFBEE64002716C1 /* BraintreePayPal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A74D4B2B1BFBB55600BF36CD /* BraintreePayPal.framework */; };
+		A77B38E11BFBEE64002716C1 /* BraintreeUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A74D4B2C1BFBB55600BF36CD /* BraintreeUI.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A74D4B211BFBB46C00BF36CD /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A74D4B3A1BFBBA1A00BF36CD /* BraintreeCore.framework in Embed Frameworks */,
+				A74D4B381BFBBA1A00BF36CD /* BraintreeCard.framework in Embed Frameworks */,
+				A74D4B341BFBBA1A00BF36CD /* Braintree3DSecure.framework in Embed Frameworks */,
+				A74D4B401BFBBA1A00BF36CD /* BraintreeUI.framework in Embed Frameworks */,
+				A74D4B361BFBBA1A00BF36CD /* BraintreeApplePay.framework in Embed Frameworks */,
+				A74D4B3E1BFBBA1A00BF36CD /* BraintreePayPal.framework in Embed Frameworks */,
+				A74D4B3C1BFBBA1A00BF36CD /* BraintreeDataCollector.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A74D4AF11BFBB3FB00BF36CD /* CarthageTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarthageTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A74D4AF41BFBB3FB00BF36CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A74D4AF61BFBB3FB00BF36CD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A74D4AF91BFBB3FB00BF36CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A74D4AFB1BFBB3FB00BF36CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A74D4AFE1BFBB3FB00BF36CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A74D4B001BFBB3FB00BF36CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A74D4B251BFBB4C100BF36CD /* BraintreeCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BraintreeCore.framework; path = ../../Carthage/Build/iOS/BraintreeCore.framework; sourceTree = "<group>"; };
+		A74D4B271BFBB55600BF36CD /* Braintree3DSecure.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Braintree3DSecure.framework; path = ../../Carthage/Build/iOS/Braintree3DSecure.framework; sourceTree = "<group>"; };
+		A74D4B281BFBB55600BF36CD /* BraintreeApplePay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BraintreeApplePay.framework; path = ../../Carthage/Build/iOS/BraintreeApplePay.framework; sourceTree = "<group>"; };
+		A74D4B291BFBB55600BF36CD /* BraintreeCard.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BraintreeCard.framework; path = ../../Carthage/Build/iOS/BraintreeCard.framework; sourceTree = "<group>"; };
+		A74D4B2A1BFBB55600BF36CD /* BraintreeDataCollector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BraintreeDataCollector.framework; path = ../../Carthage/Build/iOS/BraintreeDataCollector.framework; sourceTree = "<group>"; };
+		A74D4B2B1BFBB55600BF36CD /* BraintreePayPal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BraintreePayPal.framework; path = ../../Carthage/Build/iOS/BraintreePayPal.framework; sourceTree = "<group>"; };
+		A74D4B2C1BFBB55600BF36CD /* BraintreeUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BraintreeUI.framework; path = ../../Carthage/Build/iOS/BraintreeUI.framework; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A74D4AEE1BFBB3FB00BF36CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A77B38DB1BFBEE64002716C1 /* Braintree3DSecure.framework in Frameworks */,
+				A77B38DC1BFBEE64002716C1 /* BraintreeApplePay.framework in Frameworks */,
+				A77B38DD1BFBEE64002716C1 /* BraintreeCard.framework in Frameworks */,
+				A77B38DE1BFBEE64002716C1 /* BraintreeCore.framework in Frameworks */,
+				A77B38DF1BFBEE64002716C1 /* BraintreeDataCollector.framework in Frameworks */,
+				A77B38E01BFBEE64002716C1 /* BraintreePayPal.framework in Frameworks */,
+				A77B38E11BFBEE64002716C1 /* BraintreeUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A74D4AE81BFBB3FB00BF36CD = {
+			isa = PBXGroup;
+			children = (
+				A74D4B271BFBB55600BF36CD /* Braintree3DSecure.framework */,
+				A74D4B281BFBB55600BF36CD /* BraintreeApplePay.framework */,
+				A74D4B291BFBB55600BF36CD /* BraintreeCard.framework */,
+				A74D4B251BFBB4C100BF36CD /* BraintreeCore.framework */,
+				A74D4B2A1BFBB55600BF36CD /* BraintreeDataCollector.framework */,
+				A74D4B2B1BFBB55600BF36CD /* BraintreePayPal.framework */,
+				A74D4B2C1BFBB55600BF36CD /* BraintreeUI.framework */,
+				A74D4AF31BFBB3FB00BF36CD /* CarthageTest */,
+				A74D4AF21BFBB3FB00BF36CD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A74D4AF21BFBB3FB00BF36CD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A74D4AF11BFBB3FB00BF36CD /* CarthageTest.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A74D4AF31BFBB3FB00BF36CD /* CarthageTest */ = {
+			isa = PBXGroup;
+			children = (
+				A74D4AF41BFBB3FB00BF36CD /* AppDelegate.swift */,
+				A74D4AF61BFBB3FB00BF36CD /* ViewController.swift */,
+				A74D4AF81BFBB3FB00BF36CD /* Main.storyboard */,
+				A74D4AFB1BFBB3FB00BF36CD /* Assets.xcassets */,
+				A74D4AFD1BFBB3FB00BF36CD /* LaunchScreen.storyboard */,
+				A74D4B001BFBB3FB00BF36CD /* Info.plist */,
+			);
+			path = CarthageTest;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A74D4AF01BFBB3FB00BF36CD /* CarthageTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A74D4B031BFBB3FB00BF36CD /* Build configuration list for PBXNativeTarget "CarthageTest" */;
+			buildPhases = (
+				A74D4AED1BFBB3FB00BF36CD /* Sources */,
+				A74D4AEE1BFBB3FB00BF36CD /* Frameworks */,
+				A74D4AEF1BFBB3FB00BF36CD /* Resources */,
+				A74D4B211BFBB46C00BF36CD /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CarthageTest;
+			productName = CarthageTest;
+			productReference = A74D4AF11BFBB3FB00BF36CD /* CarthageTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A74D4AE91BFBB3FB00BF36CD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = Braintree;
+				TargetAttributes = {
+					A74D4AF01BFBB3FB00BF36CD = {
+						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = 43253H4X22;
+						LastSwiftMigration = 0830;
+					};
+				};
+			};
+			buildConfigurationList = A74D4AEC1BFBB3FB00BF36CD /* Build configuration list for PBXProject "CarthageTest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A74D4AE81BFBB3FB00BF36CD;
+			productRefGroup = A74D4AF21BFBB3FB00BF36CD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A74D4AF01BFBB3FB00BF36CD /* CarthageTest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A74D4AEF1BFBB3FB00BF36CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A74D4AFF1BFBB3FB00BF36CD /* LaunchScreen.storyboard in Resources */,
+				A74D4AFC1BFBB3FB00BF36CD /* Assets.xcassets in Resources */,
+				A74D4AFA1BFBB3FB00BF36CD /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A74D4AED1BFBB3FB00BF36CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A74D4AF71BFBB3FB00BF36CD /* ViewController.swift in Sources */,
+				A74D4AF51BFBB3FB00BF36CD /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A74D4AF81BFBB3FB00BF36CD /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A74D4AF91BFBB3FB00BF36CD /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A74D4AFD1BFBB3FB00BF36CD /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A74D4AFE1BFBB3FB00BF36CD /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A74D4B011BFBB3FB00BF36CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		A74D4B021BFBB3FB00BF36CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A74D4B041BFBB3FB00BF36CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 43253H4X22;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/../../Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = CarthageTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.braintreepayments.CarthageTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		A74D4B051BFBB3FB00BF36CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 43253H4X22;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/../../Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = CarthageTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.braintreepayments.CarthageTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A74D4AEC1BFBB3FB00BF36CD /* Build configuration list for PBXProject "CarthageTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A74D4B011BFBB3FB00BF36CD /* Debug */,
+				A74D4B021BFBB3FB00BF36CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A74D4B031BFBB3FB00BF36CD /* Build configuration list for PBXNativeTarget "CarthageTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A74D4B041BFBB3FB00BF36CD /* Debug */,
+				A74D4B051BFBB3FB00BF36CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A74D4AE91BFBB3FB00BF36CD /* Project object */;
+}

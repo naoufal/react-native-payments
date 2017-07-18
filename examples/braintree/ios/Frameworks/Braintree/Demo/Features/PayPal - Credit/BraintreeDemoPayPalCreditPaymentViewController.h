@@ -1,0 +1,5 @@
+#import "BraintreeDemoPaymentButtonBaseViewController.h"
+
+@interface BraintreeDemoPayPalCreditPaymentViewController : BraintreeDemoPaymentButtonBaseViewController
+
+@end
