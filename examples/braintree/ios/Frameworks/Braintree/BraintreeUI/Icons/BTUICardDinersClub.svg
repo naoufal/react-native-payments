@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="88px" height="56px" viewBox="0 0 88 56" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.0.1 (7597) - http://www.bohemiancoding.com/sketch -->
+    <title>BTUICardDinersClub</title>
+    <description>Created with Sketch.</description>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Diners-Club" sketch:type="MSLayerGroup" transform="translate(0.500000, 0.500000)">
+            <g transform="translate(20.000000, 11.000000)" id="Shape" sketch:type="MSShapeGroup">
+                <path d="M25.5,32.5 C35.0005792,32.543061 43.5,25.1446726 43.5,16.5 C43.5,6.30071262 35.0009481,-0.502144264 25.5,-0.5 L17.5,-0.5 C8.25522339,-0.502144264 0.5,6.30214246 0.5,16.5 C0.5,25.1475323 8.25522339,32.5434185 17.5,32.5 L25.5,32.5 L25.5,32.5 L25.5,32.5 L25.5,32.5 Z" fill="#004A97"></path>
+                <path d="M20.1,25.3 L20.1,6.7 C23.7212007,8.133402 26.292073,11.7528072 26.3,16 C26.292073,20.2460768 23.7212007,23.8632498 20.1,25.3 M6.66666667,16 C6.67532085,11.7572354 9.24453104,8.13843969 12.8666667,6.7 L12.8666667,25.3 C9.24453104,23.8615603 6.67532085,20.2457411 6.66666667,16 M17,0.5 C8.43857386,0.504034882 1.50183415,7.4399974 1.5,16 C1.50183415,24.5622034 8.43857386,31.4977992 17,31.5 C25.5610593,31.4977992 32.4985327,24.5622034 32.5,16 C32.4985327,7.4399974 25.5610593,0.504034882 17,0.5" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </g>
+</svg>

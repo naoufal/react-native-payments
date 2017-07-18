@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-567 369 88 56"
+	 style="enable-background:new -567 369 88 56;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:url(#Shape_3_);}
+	.st1{fill:url(#Shape_4_);}
+	.st2{fill:url(#Shape_5_);}
+</style>
+<g id="Page-1" sketch:type="MSPage">
+	<g id="JCB" transform="translate(0.500000, 0.500000)" sketch:type="MSLayerGroup">
+		
+			<linearGradient id="Shape_3_" gradientUnits="userSpaceOnUse" x1="-2147.8433" y1="11.4023" x2="-2146.7751" y2="11.4023" gradientTransform="matrix(14.0438 0 0 33.5536 29649.3828 14.0131)">
+			<stop  offset="0" style="stop-color:#50B031"/>
+			<stop  offset="1" style="stop-color:#55B330"/>
+		</linearGradient>
+		<path id="Shape" sketch:type="MSShapeGroup" class="st0" d="M-511.2,397.5c1.1,0,2.2,0,3.3,0c0.1,0,0.3,0,0.4,0l0,0
+			c1.5,0.3,1.5,2.5,0,2.9l0,0c-0.1,0-0.2,0-0.4,0c-1.1,0-2.2,0-3.3,0V397.5L-511.2,397.5L-511.2,397.5L-511.2,397.5z M-506.8,394.1
+			c0.2,0.8-0.3,1.5-1.1,1.7c-0.1,0-0.2,0-0.3,0c-1,0-2,0-3,0v-2.7c1,0,2,0,3,0l0,0c0.1,0,0.2,0,0.3,0l0,0
+			C-507.4,393.2-506.9,393.6-506.8,394.1L-506.8,394.1L-506.8,394.1L-506.8,394.1z M-499.5,408c0,2.6-2.4,4.8-4.9,5.4
+			c-1.2,0.3-10.1,0.1-10.1,0.1v-11c0,0,4.6,0,6.7,0c2,0,5.2,0.1,6.1-2.2c0.8-2.2-1.3-3.5-3.1-3.6v-0.1c1.6-0.2,3.1-1.6,2.4-3.4
+			c-0.4-1.2-1.7-1.6-2.9-1.7c-1.8-0.2-9.3,0-9.3,0v-5.8c0-0.4,0-0.8,0.1-1.1c0.5-2.5,3.3-4.8,5.8-4.9c1.8-0.1,9,0,9,0L-499.5,408z"
+			/>
+		
+			<linearGradient id="Shape_4_" gradientUnits="userSpaceOnUse" x1="-2147.9016" y1="11.399" x2="-2146.9048" y2="11.399" gradientTransform="matrix(14.0423 0 0 33.5536 29614.0273 14.0131)">
+			<stop  offset="0" style="stop-color:#016AB7"/>
+			<stop  offset="1" style="stop-color:#006DBA"/>
+		</linearGradient>
+		<path id="Shape_1_" sketch:type="MSShapeGroup" class="st1" d="M-547.4,399.5c0,0-0.1,0-0.1-0.1v-13.8c0-3,2-5.9,4.9-6.1
+			c1.8-0.1,9.1,0,9.1,0V408c0,3-3,5.4-5.9,5.5c-1.8,0.1-8.1,0-8.1,0v-11.7c3.1,0.8,6.6,1.2,9.6,0.1c1.7-0.7,2.4-2,2.4-3.9v-6.5
+			c-1.6,0-3.4,0-5,0v6.5c0,3.4-3,3-5.1,2.3C-546.2,400-546.8,399.7-547.4,399.5L-547.4,399.5L-547.4,399.5L-547.4,399.5
+			L-547.4,399.5z"/>
+		
+			<linearGradient id="Shape_5_" gradientUnits="userSpaceOnUse" x1="-2147.907" y1="11.3993" x2="-2146.8386" y2="11.3993" gradientTransform="matrix(14.0429 0 0 33.5536 29631.3789 14.0131)">
+			<stop  offset="0" style="stop-color:#DF0237"/>
+			<stop  offset="1" style="stop-color:#E30138"/>
+		</linearGradient>
+		<path id="Shape_2_" sketch:type="MSShapeGroup" class="st2" d="M-531.5,392.9v-7.3c0-2.7,2.5-5.5,5.2-6c1.2-0.2,9.8-0.1,9.8-0.1
+			V408c0,3-2.9,5.3-5.9,5.5c-1.8,0.1-9.1,0-9.1,0v-12.9c2.5,2.1,7.1,2,10.2,1.6c0.9-0.1,1.8-0.3,2.7-0.5v-2.4c-2.1,1-5,1.9-7.2,0.8
+			c-1.2-0.6-1.9-1.7-2-2.9c0-0.3,0-0.6,0-1c0.3-3.7,4.5-3.8,7.2-3c0.7,0.2,1.4,0.5,2,0.8v-2.4c-3.1-0.7-6.5-1.1-9.7-0.2
+			C-529.2,391.8-530.7,392.2-531.5,392.9z"/>
+	</g>
+</g>
+</svg>

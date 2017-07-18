@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BraintreeDemoCardTokenizationViewController">
+            <connections>
+                <outlet property="autofillButton" destination="1Pj-aP-wZO" id="i7j-Oc-s6a"/>
+                <outlet property="cardIOButton" destination="sbj-f8-hlX" id="DhG-kg-nFw"/>
+                <outlet property="cardNumberField" destination="wSt-zV-Evu" id="EaU-n1-J0Q"/>
+                <outlet property="expirationMonthField" destination="QVM-Wc-mWj" id="QvQ-FL-zhD"/>
+                <outlet property="expirationYearField" destination="gts-tt-uxz" id="LJJ-Xl-DUk"/>
+                <outlet property="submitButton" destination="bQQ-5U-f5u" id="EhN-Er-32O"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="4111111111111111" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wSt-zV-Evu">
+                    <rect key="frame" x="90" y="104" width="210" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="12" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QVM-Wc-mWj">
+                    <rect key="frame" x="90" y="142" width="210" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="2038" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gts-tt-uxz">
+                    <rect key="frame" x="90" y="180" width="210" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CC #" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="86H-Wi-M74">
+                    <rect key="frame" x="20" y="111" width="35" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Exp. Mth" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0qf-Fu-hA5">
+                    <rect key="frame" x="20" y="146" width="62" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Exp. Year" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QYT-iV-GwL">
+                    <rect key="frame" x="20" y="184" width="65" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sbj-f8-hlX">
+                    <rect key="frame" x="20" y="245" width="54" height="30"/>
+                    <state key="normal" title="Card.IO">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="presentCardIO" destination="-1" eventType="touchUpInside" id="ofc-ae-QE7"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bQQ-5U-f5u">
+                    <rect key="frame" x="251" y="245" width="49" height="30"/>
+                    <state key="normal" title="Submit">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="submitForm" destination="-1" eventType="touchUpInside" id="Wf5-mr-Rnf"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Pj-aP-wZO">
+                    <rect key="frame" x="136" y="245" width="47" height="30"/>
+                    <state key="normal" title="Autofill">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="setupDemoData" destination="-1" eventType="touchUpInside" id="QFw-tc-COH"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="wSt-zV-Evu" firstAttribute="baseline" secondItem="86H-Wi-M74" secondAttribute="baseline" constant="-2" id="3wg-Qz-Icm"/>
+                <constraint firstItem="bQQ-5U-f5u" firstAttribute="baseline" secondItem="1Pj-aP-wZO" secondAttribute="baseline" id="7Pn-9O-RRo"/>
+                <constraint firstItem="sbj-f8-hlX" firstAttribute="baseline" secondItem="1Pj-aP-wZO" secondAttribute="baseline" id="9XO-ex-QJL"/>
+                <constraint firstItem="0qf-Fu-hA5" firstAttribute="top" secondItem="86H-Wi-M74" secondAttribute="bottom" constant="17" id="AU6-wm-uTE"/>
+                <constraint firstItem="gts-tt-uxz" firstAttribute="leading" secondItem="QVM-Wc-mWj" secondAttribute="leading" id="Bje-1c-RGq"/>
+                <constraint firstItem="0qf-Fu-hA5" firstAttribute="leading" secondItem="86H-Wi-M74" secondAttribute="leading" id="Dcf-HF-aL3"/>
+                <constraint firstAttribute="trailing" secondItem="QVM-Wc-mWj" secondAttribute="trailing" constant="20" id="EuE-uo-jyH"/>
+                <constraint firstItem="86H-Wi-M74" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="111" id="FlE-H3-Tkv"/>
+                <constraint firstItem="QYT-iV-GwL" firstAttribute="top" secondItem="0qf-Fu-hA5" secondAttribute="bottom" constant="17" id="GVS-dC-cEf"/>
+                <constraint firstAttribute="centerX" secondItem="1Pj-aP-wZO" secondAttribute="centerX" constant="1" id="H32-wR-xCK"/>
+                <constraint firstItem="wSt-zV-Evu" firstAttribute="leading" secondItem="86H-Wi-M74" secondAttribute="trailing" constant="35" id="L5p-Wa-E9R"/>
+                <constraint firstAttribute="trailing" secondItem="gts-tt-uxz" secondAttribute="trailing" constant="20" id="LQS-zd-BLw"/>
+                <constraint firstAttribute="trailing" secondItem="wSt-zV-Evu" secondAttribute="trailing" constant="20" id="LXo-BH-HIt"/>
+                <constraint firstItem="bQQ-5U-f5u" firstAttribute="top" secondItem="gts-tt-uxz" secondAttribute="bottom" constant="35" id="MUu-bw-fqx"/>
+                <constraint firstItem="sbj-f8-hlX" firstAttribute="leading" secondItem="QYT-iV-GwL" secondAttribute="leading" id="WVM-KZ-u56"/>
+                <constraint firstItem="gts-tt-uxz" firstAttribute="top" secondItem="QVM-Wc-mWj" secondAttribute="bottom" constant="8" id="Y4Z-Vk-QpP"/>
+                <constraint firstItem="gts-tt-uxz" firstAttribute="baseline" secondItem="QYT-iV-GwL" secondAttribute="baseline" constant="-2" id="ase-OO-p8e"/>
+                <constraint firstItem="0qf-Fu-hA5" firstAttribute="baseline" secondItem="QVM-Wc-mWj" secondAttribute="baseline" constant="2" id="lfz-9a-MyZ"/>
+                <constraint firstItem="bQQ-5U-f5u" firstAttribute="trailing" secondItem="gts-tt-uxz" secondAttribute="trailing" id="mmP-Is-iHJ"/>
+                <constraint firstItem="QVM-Wc-mWj" firstAttribute="top" secondItem="wSt-zV-Evu" secondAttribute="bottom" constant="8" id="oVq-qv-7M2"/>
+                <constraint firstItem="QVM-Wc-mWj" firstAttribute="leading" secondItem="wSt-zV-Evu" secondAttribute="leading" id="vKh-Jb-spw"/>
+                <constraint firstItem="86H-Wi-M74" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="x3A-GQ-lUd"/>
+                <constraint firstItem="0qf-Fu-hA5" firstAttribute="leading" secondItem="QYT-iV-GwL" secondAttribute="leading" id="xjU-SK-Jsv"/>
+            </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+        </view>
+    </objects>
+</document>

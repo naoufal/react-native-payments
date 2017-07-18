@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="88px" height="56px" viewBox="0 0 88 56" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.0.1 (7597) - http://www.bohemiancoding.com/sketch -->
+    <title>BTUICardCVVFront</title>
+    <description>Created with Sketch.</description>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#000000" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="CVV-Front" sketch:type="MSLayerGroup" transform="translate(-0.500000, 0.500000)">
+            <g id="Card-#-2" sketch:type="MSShapeGroup">
+                <g id="CC-numbers">
+                    <g id="CC-number" transform="translate(6.041298, 30.497332)" fill="#CECFCC">
+                        <rect id="Rectangle-2445" x="0.458702233" y="0.00266768293" width="2" height="6"></rect>
+                        <rect id="Rectangle-2445" x="4.45870223" y="0.00266768293" width="2" height="6"></rect>
+                        <rect id="Rectangle-2445" x="8.45870223" y="0.00266768293" width="2" height="6"></rect>
+                        <rect id="Rectangle-2445" x="12.4587022" y="0.00266768293" width="2" height="6"></rect>
+                        <rect id="Rectangle-2445" x="20.4587022" y="0.00266768293" width="2" height="6"></rect>
+                        <rect id="Rectangle-2445" x="24.4587022" y="0.00266768293" width="2" height="6"></rect>
+                        <rect id="Rectangle-2445" x="28.4587022" y="0.00266768293" width="2" height="6"></rect>
+                        <rect id="Rectangle-2445" x="32.4587022" y="0.00266768293" width="2" height="6"></rect>
+                        <rect id="Rectangle-2445" x="40.4587022" y="0.00266768293" width="2" height="6"></rect>
+                        <rect id="Rectangle-2445" x="44.4587022" y="0.00266768293" width="2" height="6"></rect>
+                        <rect id="Rectangle-2445" x="48.4587022" y="0.00266768293" width="2" height="6"></rect>
+                        <rect id="Rectangle-2445" x="52.4587022" y="0.00266768293" width="2" height="6"></rect>
+                        <rect id="Rectangle-2445" x="60.4587022" y="0.00266768293" width="2" height="6"></rect>
+                        <rect id="Rectangle-2445" x="64.4587022" y="0.00266768293" width="2" height="6"></rect>
+                        <rect id="Rectangle-2445" x="68.4587022" y="0.00266768293" width="2" height="6"></rect>
+                        <rect id="Rectangle-2445" x="72.4587022" y="0.00266768293" width="2" height="6"></rect>
+                    </g>
+                    <rect id="Rectangle-2461" fill="#CECFCC" x="26.5" y="42.5" width="14" height="2"></rect>
+                    <rect id="Rectangle-2461" fill="#CECFCC" x="6.5" y="46.5" width="34" height="2"></rect>
+                    <rect id="Rectangle-905" fill="#2A2D2F" x="56.5" y="4.5" width="26" height="18" rx="40"></rect>
+                    <rect id="Rectangle-2446" fill="#FFFFFF" x="62.5" y="10.5" width="2" height="6"></rect>
+                    <rect id="Rectangle-2447" fill="#FFFFFF" x="66.5" y="10.5" width="2" height="6"></rect>
+                    <rect id="Rectangle-2448" fill="#FFFFFF" x="70.5" y="10.5" width="2" height="6"></rect>
+                    <rect id="Rectangle-2449" fill="#FFFFFF" x="74.5" y="10.5" width="2" height="6"></rect>
+                </g>
+                <rect id="Rectangle-52" fill="#CECFCC" x="6.5" y="6.5" width="14" height="14" rx="0.75"></rect>
+                <rect id="Rectangle-52" fill="#CECFCC" x="72.5" y="40.5" width="8" height="8" rx="0.75"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

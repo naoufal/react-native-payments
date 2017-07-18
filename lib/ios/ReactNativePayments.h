@@ -8,11 +8,14 @@
 #import <React/RCTBridgeModule.h>
 #endif
 
+#import "GatewayManager.h"
+
 @interface ReactNativePayments : NSObject <RCTBridgeModule, PKPaymentAuthorizationViewControllerDelegate>
 
 @property (nonatomic, strong) RCTResponseSenderBlock callback;
 @property (nonatomic, strong) PKPaymentRequest *paymentRequest;
 @property (nonatomic, strong) NSDictionary *initialOptions;
+@property (nonatomic, strong) GatewayManager *gatewayManager;
 @property BOOL *hasGatewayParameters;
 @property (nonatomic, strong) PKPaymentAuthorizationViewController *viewController;
 @property (nonatomic, copy) void (^completion)(PKPaymentAuthorizationStatus);
@@ -27,6 +30,6 @@
 - (PKShippingMethod *_Nonnull)convertShippingOptionToShippingMethod:(NSDictionary *_Nonnull)shippingOption;
 - (void)handleUserAccept:(PKPayment *_Nonnull)payment
             paymentToken:(NSString *_Nullable)token;
-- (void)handleGatewayERror:(NSError *_Nonnull)error;
+- (void)handleGatewayError:(NSError *_Nonnull)error;
 
 @end

@@ -1,5 +1,4 @@
 #import "ReactNativePayments.h"
-#import "GatewayManager.h"
 #import <React/RCTEventDispatcher.h>
 
 @implementation ReactNativePayments
@@ -27,12 +26,13 @@ RCT_EXPORT_METHOD(createPaymentRequest: (NSDictionary *)methodData
 {
     NSString *merchantId = methodData[@"merchantIdentifier"];
     NSDictionary *gatewayParameters = methodData[@"paymentMethodTokenizationParameters"][@"parameters"];
-    
+
     if (gatewayParameters) {
         self.hasGatewayParameters = true;
-        [GatewayManager configureGateway:gatewayParameters merchantIdentifier:merchantId];
+        self.gatewayManager = [GatewayManager new];
+        [self.gatewayManager configureGateway:gatewayParameters merchantIdentifier:merchantId];
     }
-    
+
     self.paymentRequest = [[PKPaymentRequest alloc] init];
     self.paymentRequest.merchantIdentifier = merchantId;
     self.paymentRequest.merchantCapabilities = PKMerchantCapability3DS;
@@ -150,13 +150,12 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
     self.completion = completion;
 
     if (self.hasGatewayParameters) {
-        [GatewayManager createTokenWithPayment:payment completion:^(NSString * _Nullable token, NSError * _Nullable error) {
+        [self.gatewayManager createTokenWithPayment:payment completion:^(NSString * _Nullable token, NSError * _Nullable error) {
             if (error) {
-                NSLog(@"WTF");
                 [self handleGatewayError:error];
                 return;
             }
-            
+
             [self handleUserAccept:payment paymentToken:token];
         }];
     } else {
@@ -319,11 +318,11 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
     NSMutableDictionary *paymentResponse = [[NSMutableDictionary alloc]initWithCapacity:3];
     [paymentResponse setObject:transactionId forKey:@"transactionIdentifier"];
     [paymentResponse setObject:paymentData forKey:@"paymentData"];
-    
+
     if (token) {
         [paymentResponse setObject:token forKey:@"paymentToken"];
     }
-    
+
     [self.bridge.eventDispatcher sendDeviceEventWithName:@"NativePayments:onuseraccept"
                                                     body:paymentResponse
      ];
@@ -331,7 +330,6 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
 
 - (void)handleGatewayError:(NSError *_Nonnull)error
 {
-    NSLog(@"ERRROOOORRR");
     [self.bridge.eventDispatcher sendDeviceEventWithName:@"NativePayments:ongatewayerror"
                                                     body: @{
                                                             @"error": [error localizedDescription]
