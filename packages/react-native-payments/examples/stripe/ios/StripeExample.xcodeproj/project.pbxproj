@@ -39,6 +39,7 @@
 		ADB95A811F187D0C007C2365 /* Stripe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB95A801F187D0C007C2365 /* Stripe.framework */; };
 		ADB95A851F187D1D007C2365 /* Stripe.bundle in Resources */ = {isa = PBXBuildFile; fileRef = ADB95A841F187D1D007C2365 /* Stripe.bundle */; };
 		ADB95A861F187D34007C2365 /* libReactNativePayments.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB95A7A1F186005007C2365 /* libReactNativePayments.a */; };
+		ADCE23DB1F20724200A26CB3 /* Stripe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADCE23D81F206F2500A26CB3 /* Stripe.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -267,8 +268,7 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		967FC8CB251746C3B8C1AE76 /* ReactNativePayments.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePayments.xcodeproj; path = "../node_modules/react-native-payments/lib/ios/ReactNativePayments.xcodeproj"; sourceTree = "<group>"; };
 		ADB95A511F185EE7007C2365 /* StripeExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = StripeExample.entitlements; path = StripeExample/StripeExample.entitlements; sourceTree = "<group>"; };
-		ADB95A801F187D0C007C2365 /* Stripe.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Stripe.framework; path = Frameworks/Stripe.framework; sourceTree = "<group>"; };
-		ADB95A841F187D1D007C2365 /* Stripe.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Stripe.bundle; path = Frameworks/Stripe.framework/Stripe.bundle; sourceTree = "<group>"; };
+		ADCE23D81F206F2500A26CB3 /* Stripe.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Stripe.framework; path = "../../../../react-native-payments-addon-stripe/Carthage/Build/iOS/Stripe.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -284,6 +284,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADCE23DB1F20724200A26CB3 /* Stripe.framework in Frameworks */,
 				ADB95A861F187D34007C2365 /* libReactNativePayments.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				ADB95A811F187D0C007C2365 /* Stripe.framework in Frameworks */,
@@ -486,6 +487,7 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* StripeExampleTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
+				ADCE23BD1F206F2500A26CB3 /* Frameworks */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -510,11 +512,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		ADB95A7F1F187CEC007C2365 /* Frameworks */ = {
+		ADCE23BD1F206F2500A26CB3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				ADB95A841F187D1D007C2365 /* Stripe.bundle */,
-				ADB95A801F187D0C007C2365 /* Stripe.framework */,
+				ADCE23D81F206F2500A26CB3 /* Stripe.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -544,6 +545,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "StripeExample" */;
 			buildPhases = (
+				ADCE23DA1F2070AE00A26CB3 /* Copy Carthage Frameworks */,
 				AD0CE2C91E925489006FC317 /* Integrate Haul with React Native */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
@@ -962,6 +964,22 @@
 			shellPath = /bin/sh;
 			shellScript = "bash ../node_modules/haul/src/utils/haul-integrate.sh";
 		};
+		ADCE23DA1F2070AE00A26CB3 /* Copy Carthage Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/../node_modules/react-native-payments-addon-stripe/Carthage/Build/iOS/Stripe.framework",
+			);
+			name = "Copy Carthage Frameworks";
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Stripe.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1082,8 +1100,9 @@
 				DEVELOPMENT_TEAM = 9ZYB6NWYKQ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
+					"$(SRCROOT)/../node_modules/react-native-payments-addon-stripe/Carthage/Build/iOS/",
 				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = StripeExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1106,8 +1125,9 @@
 				DEVELOPMENT_TEAM = 9ZYB6NWYKQ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
+					"$(SRCROOT)/../node_modules/react-native-payments-addon-stripe/Carthage/Build/iOS/",
 				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = StripeExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
