@@ -1,0 +1,10 @@
+{
+  "lerna": "2.0.0",
+  "packages": [
+    "packages/*",
+    "packages/react-native-payments/examples/*",
+    "packages/react-native-payments-addon-stripe/example/*"
+  ],
+  "version": "0.0.0",
+  "npmClient": "yarn"
+}
