@@ -1,18 +1,18 @@
 {
   "name": "react-native-payments-addon-braintree",
-  "version": "0.0.0",
+  "version": "4.8.4",
   "description": "React Native Payments add-on for processing payments with Braintree.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "carthage update --platform ios"
+    "prepublish": "carthage update --platform ios"
   },
   "keywords": [
     "react",
     "react-native",
     "react-native-payments",
     "payments",
-    "stripe"
+    "braintree"
   ],
   "author": "Naoufal Kadhom",
   "license": "MIT"
