@@ -8,6 +8,5 @@ export const INTERNAL_SHIPPING_OPTION_CHANGE_EVENT = `${MODULE_SCOPING}:on${SHIP
 export const USER_DISMISS_EVENT = `${MODULE_SCOPING}:onuserdismiss`;
 export const USER_ACCEPT_EVENT = `${MODULE_SCOPING}:onuseraccept`;
 export const GATEWAY_ERROR_EVENT = `${MODULE_SCOPING}:ongatewayerror`;
-export const SUPPORTED_METHOD_NAME = Platform.OS === 'ios'
-  ? 'apple-pay'
-  : 'android-pay';
+export const SUPPORTED_METHOD_NAME =
+  Platform.OS === 'ios' ? 'apple-pay' : 'android-pay';

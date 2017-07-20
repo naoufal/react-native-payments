@@ -186,9 +186,8 @@ export default class PaymentRequest {
     // 19. Set the value of the shippingAddress attribute on request to null.
     this._shippingAddress = null;
     // 20. If options.requestShipping is set to true, then set the value of the shippingType attribute on request to options.shippingType. Otherwise, set it to null.
-    this._shippingType = options.requestShipping === true
-      ? options.shippingType
-      : null;
+    this._shippingType =
+      options.requestShipping === true ? options.shippingType : null;
 
     // React Native Payments specific 👇
     // ---------------------------------

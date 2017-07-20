@@ -94,9 +94,8 @@ export function getPlatformMethodData(
   methodData: Array<PaymentMethodData>,
   platformOS: 'ios' | 'android'
 ) {
-  const platformSupportedMethod = platformOS === 'ios'
-    ? 'apple-pay'
-    : 'android-pay';
+  const platformSupportedMethod =
+    platformOS === 'ios' ? 'apple-pay' : 'android-pay';
 
   const platformMethod = methodData.find(paymentMethodData =>
     paymentMethodData.supportedMethods.includes(platformSupportedMethod)
