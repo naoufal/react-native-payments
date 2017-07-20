@@ -2,12 +2,12 @@
 
 #import <Foundation/Foundation.h>
 
-#if __has_include("BraintreeApplePay.h")
-#import "BraintreeApplePay.h"
+#if __has_include(<BraintreeApplePay/BraintreeApplePay.h>)
+#import <BraintreeApplePay/BraintreeApplePay.h>
 #endif
 
 @interface GatewayManager : NSObject
-#if __has_include("BraintreeApplePay.h")
+#if __has_include(<BraintreeApplePay/BraintreeApplePay.h>)
 @property (nonatomic, strong) BTAPIClient * _Nullable braintreeClient;
 #endif
 

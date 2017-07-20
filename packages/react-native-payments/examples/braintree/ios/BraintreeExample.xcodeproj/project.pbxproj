@@ -36,7 +36,8 @@
 		2DCD954D1E0B4F2C00145EB5 /* BraintreeExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* BraintreeExampleTests.m */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		ADFB76C71F1D9B8E00E68D1B /* libBraintree.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADFB76A61F1D9B7000E68D1B /* libBraintree.a */; };
+		AD197FD71F2078950070AFE8 /* BraintreeApplePay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD197FD61F2078950070AFE8 /* BraintreeApplePay.framework */; };
+		AD197FE61F207A2B0070AFE8 /* BraintreeCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD197FE51F207A2B0070AFE8 /* BraintreeCore.framework */; };
 		B17C43BC1EA342D0AE353BB0 /* libReactNativePayments.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4A44D3A6FC743D7BF24B564 /* libReactNativePayments.a */; };
 /* End PBXBuildFile section */
 
@@ -237,146 +238,6 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = ReactNativePayments;
 		};
-		ADFB769F1F1D9B7000E68D1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADFB76891F1D9B6F00E68D1B /* Braintree.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A76B198B1B79707700452CFA;
-			remoteInfo = Demo;
-		};
-		ADFB76A11F1D9B7000E68D1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADFB76891F1D9B6F00E68D1B /* Braintree.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A7ABD6531B702FD800A1223C;
-			remoteInfo = IntegrationTests;
-		};
-		ADFB76A31F1D9B7000E68D1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADFB76891F1D9B6F00E68D1B /* Braintree.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 16CD2E9C1B4077FB00E68495;
-			remoteInfo = UnitTests;
-		};
-		ADFB76A51F1D9B7000E68D1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADFB76891F1D9B6F00E68D1B /* Braintree.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 417404491BB084D3008A5DEA;
-			remoteInfo = Braintree;
-		};
-		ADFB76A71F1D9B7000E68D1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADFB76891F1D9B6F00E68D1B /* Braintree.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2D941D881B5D9E8C0016EFB4;
-			remoteInfo = Braintree3DSecure;
-		};
-		ADFB76A91F1D9B7000E68D1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADFB76891F1D9B6F00E68D1B /* Braintree.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A7C889741B5EF5DE007A0E9C;
-			remoteInfo = BraintreeApplePay;
-		};
-		ADFB76AB1F1D9B7000E68D1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADFB76891F1D9B6F00E68D1B /* Braintree.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A7C889901B5F043B007A0E9C;
-			remoteInfo = BraintreeCard;
-		};
-		ADFB76AD1F1D9B7000E68D1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADFB76891F1D9B6F00E68D1B /* Braintree.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2DE12F091B59BE0100EA1BCF;
-			remoteInfo = BraintreeCore;
-		};
-		ADFB76AF1F1D9B7000E68D1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADFB76891F1D9B6F00E68D1B /* Braintree.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A76D7C001BB1CAB00000FA6A;
-			remoteInfo = BraintreeDataCollector;
-		};
-		ADFB76B11F1D9B7000E68D1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADFB76891F1D9B6F00E68D1B /* Braintree.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2D941D381B59C76A0016EFB4;
-			remoteInfo = BraintreePayPal;
-		};
-		ADFB76B31F1D9B7000E68D1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADFB76891F1D9B6F00E68D1B /* Braintree.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A77AA29C1B618C7700217B73;
-			remoteInfo = BraintreeVenmo;
-		};
-		ADFB76B51F1D9B7000E68D1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADFB76891F1D9B6F00E68D1B /* Braintree.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A77344F71B7A93A10083EC8D;
-			remoteInfo = BraintreeUI;
-		};
-		ADFB76B71F1D9B7000E68D1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADFB76891F1D9B6F00E68D1B /* Braintree.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4164B9AC1C9B658E006AE861;
-			remoteInfo = BraintreeUnionPay;
-		};
-		ADFB76B91F1D9B7000E68D1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADFB76891F1D9B6F00E68D1B /* Braintree.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A50C3B051C19F55C00612D90;
-			remoteInfo = "PayPalDataCollector-StaticLibrary";
-		};
-		ADFB76BB1F1D9B7000E68D1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADFB76891F1D9B6F00E68D1B /* Braintree.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A7B463051C3D9C2200048423;
-			remoteInfo = PayPalDataCollector;
-		};
-		ADFB76BD1F1D9B7000E68D1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADFB76891F1D9B6F00E68D1B /* Braintree.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A50C3AD51C19F00600612D90;
-			remoteInfo = "PayPalOneTouch-StaticLibrary";
-		};
-		ADFB76BF1F1D9B7000E68D1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADFB76891F1D9B6F00E68D1B /* Braintree.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A50C3B6F1C1A29C500612D90;
-			remoteInfo = PayPalOneTouch;
-		};
-		ADFB76C11F1D9B7000E68D1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADFB76891F1D9B6F00E68D1B /* Braintree.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7EDE47701CD2C3D00005E22B;
-			remoteInfo = PayPalUtils;
-		};
-		ADFB76C31F1D9B7000E68D1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADFB76891F1D9B6F00E68D1B /* Braintree.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 03F8B2661C23976000FD184B;
-			remoteInfo = UITests;
-		};
-		ADFB76C51F1D9B8900E68D1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADFB76891F1D9B6F00E68D1B /* Braintree.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 417404481BB084D3008A5DEA;
-			remoteInfo = Braintree;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -404,8 +265,9 @@
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		AD197FD61F2078950070AFE8 /* BraintreeApplePay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BraintreeApplePay.framework; path = "../../../../react-native-payments-addon-braintree/Carthage/Build/iOS/BraintreeApplePay.framework"; sourceTree = "<group>"; };
+		AD197FE51F207A2B0070AFE8 /* BraintreeCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BraintreeCore.framework; path = "../../../../react-native-payments-addon-braintree/Carthage/Build/iOS/BraintreeCore.framework"; sourceTree = "<group>"; };
 		ADFB760A1F1D193E00E68D1B /* BraintreeExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = BraintreeExample.entitlements; path = BraintreeExample/BraintreeExample.entitlements; sourceTree = "<group>"; };
-		ADFB76891F1D9B6F00E68D1B /* Braintree.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Braintree.xcodeproj; path = Frameworks/Braintree/Braintree.xcodeproj; sourceTree = "<group>"; };
 		E4A44D3A6FC743D7BF24B564 /* libReactNativePayments.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativePayments.a; sourceTree = "<group>"; };
 		F89F0F8CD375411DBBA3E1DC /* ReactNativePayments.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePayments.xcodeproj; path = "../node_modules/react-native-payments/lib/ios/ReactNativePayments.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -423,7 +285,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADFB76C71F1D9B8E00E68D1B /* libBraintree.a in Frameworks */,
+				AD197FE61F207A2B0070AFE8 /* BraintreeCore.framework in Frameworks */,
+				AD197FD71F2078950070AFE8 /* BraintreeApplePay.framework in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -592,7 +455,6 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				ADFB76891F1D9B6F00E68D1B /* Braintree.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -625,6 +487,7 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* BraintreeExampleTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
+				AD197FBB1F2078950070AFE8 /* Frameworks */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -641,36 +504,19 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		AD197FBB1F2078950070AFE8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AD197FE51F207A2B0070AFE8 /* BraintreeCore.framework */,
+				AD197FD61F2078950070AFE8 /* BraintreeApplePay.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		ADFB75EC1F1D182200E68D1B /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				ADFB76091F1D182200E68D1B /* libReactNativePayments.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		ADFB768A1F1D9B6F00E68D1B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				ADFB76A01F1D9B7000E68D1B /* Demo.app */,
-				ADFB76A21F1D9B7000E68D1B /* IntegrationTests.xctest */,
-				ADFB76A41F1D9B7000E68D1B /* UnitTests.xctest */,
-				ADFB76A61F1D9B7000E68D1B /* libBraintree.a */,
-				ADFB76A81F1D9B7000E68D1B /* Braintree3DSecure.framework */,
-				ADFB76AA1F1D9B7000E68D1B /* BraintreeApplePay.framework */,
-				ADFB76AC1F1D9B7000E68D1B /* BraintreeCard.framework */,
-				ADFB76AE1F1D9B7000E68D1B /* BraintreeCore.framework */,
-				ADFB76B01F1D9B7000E68D1B /* BraintreeDataCollector.framework */,
-				ADFB76B21F1D9B7000E68D1B /* BraintreePayPal.framework */,
-				ADFB76B41F1D9B7000E68D1B /* BraintreeVenmo.framework */,
-				ADFB76B61F1D9B7000E68D1B /* BraintreeUI.framework */,
-				ADFB76B81F1D9B7000E68D1B /* BraintreeUnionPay.framework */,
-				ADFB76BA1F1D9B7000E68D1B /* libPayPalDataCollector-StaticLibrary.a */,
-				ADFB76BC1F1D9B7000E68D1B /* PayPalDataCollector.framework */,
-				ADFB76BE1F1D9B7000E68D1B /* libPayPalOneTouch-StaticLibrary.a */,
-				ADFB76C01F1D9B7000E68D1B /* PayPalOneTouch.framework */,
-				ADFB76C21F1D9B7000E68D1B /* PayPalUtils.framework */,
-				ADFB76C41F1D9B7000E68D1B /* UITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -700,6 +546,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "BraintreeExample" */;
 			buildPhases = (
+				AD197FD81F20789F0070AFE8 /* Copy Carthage Frameworks */,
 				AD0CE2C91E925489006FC317 /* Integrate Haul with React Native */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
@@ -709,7 +556,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				ADFB76C61F1D9B8900E68D1B /* PBXTargetDependency */,
 			);
 			name = BraintreeExample;
 			productName = "Hello World";
@@ -797,10 +643,6 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
-				{
-					ProductGroup = ADFB768A1F1D9B6F00E68D1B /* Products */;
-					ProjectRef = ADFB76891F1D9B6F00E68D1B /* Braintree.xcodeproj */;
-				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -1043,139 +885,6 @@
 			remoteRef = ADFB76081F1D182200E68D1B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		ADFB76A01F1D9B7000E68D1B /* Demo.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = Demo.app;
-			remoteRef = ADFB769F1F1D9B7000E68D1B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ADFB76A21F1D9B7000E68D1B /* IntegrationTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = IntegrationTests.xctest;
-			remoteRef = ADFB76A11F1D9B7000E68D1B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ADFB76A41F1D9B7000E68D1B /* UnitTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = UnitTests.xctest;
-			remoteRef = ADFB76A31F1D9B7000E68D1B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ADFB76A61F1D9B7000E68D1B /* libBraintree.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libBraintree.a;
-			remoteRef = ADFB76A51F1D9B7000E68D1B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ADFB76A81F1D9B7000E68D1B /* Braintree3DSecure.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Braintree3DSecure.framework;
-			remoteRef = ADFB76A71F1D9B7000E68D1B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ADFB76AA1F1D9B7000E68D1B /* BraintreeApplePay.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = BraintreeApplePay.framework;
-			remoteRef = ADFB76A91F1D9B7000E68D1B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ADFB76AC1F1D9B7000E68D1B /* BraintreeCard.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = BraintreeCard.framework;
-			remoteRef = ADFB76AB1F1D9B7000E68D1B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ADFB76AE1F1D9B7000E68D1B /* BraintreeCore.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = BraintreeCore.framework;
-			remoteRef = ADFB76AD1F1D9B7000E68D1B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ADFB76B01F1D9B7000E68D1B /* BraintreeDataCollector.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = BraintreeDataCollector.framework;
-			remoteRef = ADFB76AF1F1D9B7000E68D1B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ADFB76B21F1D9B7000E68D1B /* BraintreePayPal.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = BraintreePayPal.framework;
-			remoteRef = ADFB76B11F1D9B7000E68D1B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ADFB76B41F1D9B7000E68D1B /* BraintreeVenmo.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = BraintreeVenmo.framework;
-			remoteRef = ADFB76B31F1D9B7000E68D1B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ADFB76B61F1D9B7000E68D1B /* BraintreeUI.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = BraintreeUI.framework;
-			remoteRef = ADFB76B51F1D9B7000E68D1B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ADFB76B81F1D9B7000E68D1B /* BraintreeUnionPay.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = BraintreeUnionPay.framework;
-			remoteRef = ADFB76B71F1D9B7000E68D1B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ADFB76BA1F1D9B7000E68D1B /* libPayPalDataCollector-StaticLibrary.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libPayPalDataCollector-StaticLibrary.a";
-			remoteRef = ADFB76B91F1D9B7000E68D1B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ADFB76BC1F1D9B7000E68D1B /* PayPalDataCollector.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = PayPalDataCollector.framework;
-			remoteRef = ADFB76BB1F1D9B7000E68D1B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ADFB76BE1F1D9B7000E68D1B /* libPayPalOneTouch-StaticLibrary.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libPayPalOneTouch-StaticLibrary.a";
-			remoteRef = ADFB76BD1F1D9B7000E68D1B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ADFB76C01F1D9B7000E68D1B /* PayPalOneTouch.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = PayPalOneTouch.framework;
-			remoteRef = ADFB76BF1F1D9B7000E68D1B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ADFB76C21F1D9B7000E68D1B /* PayPalUtils.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = PayPalUtils.framework;
-			remoteRef = ADFB76C11F1D9B7000E68D1B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ADFB76C41F1D9B7000E68D1B /* UITests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = UITests.xctest;
-			remoteRef = ADFB76C31F1D9B7000E68D1B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -1255,6 +964,24 @@
 			shellPath = /bin/sh;
 			shellScript = "bash ../node_modules/haul/src/utils/haul-integrate.sh";
 		};
+		AD197FD81F20789F0070AFE8 /* Copy Carthage Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/../node_modules/react-native-payments-addon-braintree/Carthage/Build/iOS/BraintreeApplePay.framework",
+				"$(SRCROOT)/../node_modules/react-native-payments-addon-braintree/Carthage/Build/iOS/BraintreeCore.framework",
+			);
+			name = "Copy Carthage Frameworks";
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/BraintreeApplePay.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/BraintreeCore.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1304,11 +1031,6 @@
 			isa = PBXTargetDependency;
 			target = 2D02E47A1E0B4A5D006451C7 /* BraintreeExample-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
-		};
-		ADFB76C61F1D9B8900E68D1B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Braintree;
-			targetProxy = ADFB76C51F1D9B8900E68D1B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1378,7 +1100,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 9ZYB6NWYKQ;
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Framworks/Braintree/**";
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-payments-addon-braintree/Carthage/Build/iOS/";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = BraintreeExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1399,7 +1122,8 @@
 				CODE_SIGN_ENTITLEMENTS = BraintreeExample/BraintreeExample.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9ZYB6NWYKQ;
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Framworks/Braintree/**";
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-payments-addon-braintree/Carthage/Build/iOS/";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = BraintreeExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (

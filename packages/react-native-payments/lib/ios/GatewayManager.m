@@ -4,8 +4,8 @@
 #import <Stripe/Stripe.h>
 #endif
 
-#if __has_include("BraintreeApplePay.h")
-#import "BraintreeApplePay.h"
+#if __has_include(<BraintreeApplePay/BraintreeApplePay.h>)
+#import <BraintreeApplePay/BraintreeApplePay.h>
 #endif
 
 @implementation GatewayManager
@@ -18,7 +18,7 @@
     [supportedGateways addObject:@"stripe"];
 #endif
 
-#if __has_include("BraintreeApplePay.h")
+#if __has_include(<BraintreeApplePay/BraintreeApplePay.h>)
     [supportedGateways addObject:@"braintree"];
 #endif
 
@@ -34,7 +34,7 @@
     }
 #endif
 
-#if __has_include("BraintreeApplePay.h")
+#if __has_include(<BraintreeApplePay/BraintreeApplePay.h>)
     if ([gatewayParameters[@"gateway"] isEqualToString:@"braintree"]) {
         [self configureBraintreeGateway:gatewayParameters];
     }
@@ -48,7 +48,7 @@
     [self createStripeTokenWithPayment:payment completion:completion];
 #endif
 
-#if __has_include("BraintreeApplePay.h")
+#if __has_include(<BraintreeApplePay/BraintreeApplePay.h>)
     [self createBraintreeTokenWithPayment:payment completion:completion];
 #endif
 }
@@ -81,7 +81,7 @@
 // Braintree
 - (void)configureBraintreeGateway:(NSDictionary *_Nonnull)gatewayParameters
 {
-#if __has_include("BraintreeApplePay.h")
+#if __has_include(<BraintreeApplePay/BraintreeApplePay.h>)
     NSString *braintreeTokenizationKey = gatewayParameters[@"braintree:tokenizationKey"];
     self.braintreeClient = [[BTAPIClient alloc] initWithAuthorization:braintreeTokenizationKey];
 #endif
@@ -90,7 +90,7 @@
 - (void)createBraintreeTokenWithPayment:(PKPayment *_Nonnull)payment
                     completion:(void (^_Nullable)(NSString * _Nullable token, NSError * _Nullable error))completion
 {
-#if __has_include("BraintreeApplePay.h")
+#if __has_include(<BraintreeApplePay/BraintreeApplePay.h>)
     BTApplePayClient *applePayClient = [[BTApplePayClient alloc]
                                         initWithAPIClient:self.braintreeClient];
 
