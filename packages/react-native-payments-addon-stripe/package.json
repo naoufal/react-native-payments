@@ -1,0 +1,19 @@
+{
+  "name": "react-native-payments-addon-stripe",
+  "version": "0.0.0",
+  "description": "React Native Payments add-on for processing payments with Stripe.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "carthage update --platform ios"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "react-native-payments",
+    "payments",
+    "stripe"
+  ],
+  "author": "Naoufal Kadhom",
+  "license": "MIT"
+}
