@@ -15,5 +15,8 @@
     "stripe"
   ],
   "author": "Naoufal Kadhom",
-  "license": "MIT"
+  "license": "MIT",
+  "reactNativePaymentsAddonConfig": {
+    "frameworks": ["Stripe"]
+  }
 }
