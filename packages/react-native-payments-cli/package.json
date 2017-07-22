@@ -1,6 +1,6 @@
 {
   "name": "react-native-payments-cli",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "",
   "bin": "index.js",
   "main": "index.js",
@@ -17,6 +17,8 @@
     "bluebird": "^3.5.0",
     "chalk": "^2.0.1",
     "cli-table": "^0.3.1",
+    "inquirer": "^3.2.0",
+    "meow": "^3.7.0",
     "xcode": "^0.9.3"
   },
   "devDependencies": {
