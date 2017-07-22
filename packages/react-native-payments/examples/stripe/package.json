@@ -12,7 +12,7 @@
     "react": "~15.4.0-rc.4",
     "react-native": "0.41.0",
     "react-native-payments": "0.1.2",
-    "react-native-payments-addon-stripe": "0.0.0"
+    "react-native-payments-addon-stripe": "11.1.0"
   },
   "devDependencies": {
     "babel-jest": "20.0.3",
