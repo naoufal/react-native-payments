@@ -23,6 +23,9 @@ function addToProject(projectPath, addOnName, addOnFrameworks) {
   const project = xcode.project(projectPath);
   project.parseAsync = Promise.promisify(project.parse);
 
+
+  console.log(path.resolve(__dirname, `../../${addOnName}/Carthage/Build/iOS`));
+
   return project.parseAsync(() => {
     // Add Framework Search Paths
     addFrameworkSearchPaths(
@@ -34,7 +37,7 @@ function addToProject(projectPath, addOnName, addOnFrameworks) {
     const frameworksWithExtension = addOnFrameworks.map(name => `${name}.framework`);
     addFrameworks(
       project,
-      path.resolve(__dirname, `../node_modules/${addOnName}/Carthage/Build/iOS`),
+      path.resolve(__dirname, `../../${addOnName}/Carthage/Build/iOS`),
       frameworksWithExtension
     );
 
@@ -66,7 +69,7 @@ function addToRNP(projectPath, addOnName) {
     // Add Framework Search Paths
     addFrameworkSearchPaths(
       project,
-      [`"$(SRCROOT)/../../../node_modules/${addOnName}/Carthage/Build/iOS/"`]
+      [`"$(SRCROOT)/../../../${addOnName}/Carthage/Build/iOS/"`]
     );
 
     fs.writeFileSync(

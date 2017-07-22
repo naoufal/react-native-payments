@@ -30,11 +30,11 @@ function convertAddOnToPackageName(addon = '') {
 }
 
 function getRNPProjectPath() {
-  return path.resolve(__dirname, 'node_modules/react-native-payments/lib/ios/ReactNativePayments.xcodeproj/project.pbxproj');
+  return path.resolve(__dirname, '../react-native-payments/lib/ios/ReactNativePayments.xcodeproj/project.pbxproj');
 }
 
 function getUserProjectPath(relativeIOSPath) {
-  const iosPath = path.resolve(__dirname, relativeIOSPath)
+  const iosPath = path.resolve(__dirname, `../../${relativeIOSPath}`)
   let userProjectPath;
   if (fs.existsSync(iosPath)) {
     const projectFileName = fs.readdirSync(`${iosPath}`).find(
@@ -89,7 +89,7 @@ function interactiveGetUserProjectPath(maybeUserProject) {
 }
 
 function getPackagePath(packageName) {
-  return path.resolve(__dirname, `node_modules/${packageName}/package.json`);
+  return path.resolve(__dirname, `../${packageName}/package.json`);
 }
 function getPackageConfig(packageName) {
   const config = require(getPackagePath(packageName));
@@ -174,7 +174,7 @@ function unlink(addon) {
 }
 
 function list() {
-  const availableAddons = fs.readdirSync(path.resolve(__dirname, 'node_modules/'))
+  const availableAddons = fs.readdirSync(path.resolve(__dirname, '..'))
     .filter(packageName => packageName.startsWith('react-native-payments-addon'));
 
   if (availableAddons.length === 0) {
