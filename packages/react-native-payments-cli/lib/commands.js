@@ -34,7 +34,7 @@ function addToProject(projectPath, addOnName, addOnFrameworks) {
     const frameworksWithExtension = addOnFrameworks.map(name => `${name}.framework`);
     addFrameworks(
       project,
-      path.resolve(__dirname, `node_modules/${addOnName}/Carthage/Build/iOS'`),
+      path.resolve(__dirname, `../node_modules/${addOnName}/Carthage/Build/iOS`),
       frameworksWithExtension
     );
 

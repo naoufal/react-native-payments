@@ -1,8 +1,8 @@
 {
   "name": "react-native-payments-cli",
   "version": "0.0.0",
-  "description": "The CLI that makes React Native Payments easy to use.",
-  "main": "index.js",
+  "description": "",
+  "bin": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,6 +14,8 @@
   "license": "MIT",
   "dependencies": {
     "bluebird": "^3.5.0",
+    "chalk": "^2.0.1",
+    "cli-table": "^0.3.1",
     "xcode": "^0.9.3"
   },
   "devDependencies": {
