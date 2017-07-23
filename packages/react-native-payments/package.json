@@ -1,7 +1,6 @@
 {
   "name": "react-native-payments",
-  "version": "0.1.2",
-  "bin": "bin.js",
+  "version": "0.2.0-beta",
   "scripts": {
     "precommit": "lint-staged",
     "run:packager": "cd examples/native && yarn run:packager",
@@ -12,7 +11,6 @@
   },
   "dependencies": {
     "es6-error": "^4.0.2",
-    "react-native-payments-cli": "0.0.0",
     "uuid": "^3.1.0",
     "validator": "^7.0.0"
   },
