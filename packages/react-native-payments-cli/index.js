@@ -164,6 +164,16 @@ function link(addon) {
       rnpProjectPath,
       packageConfig
     );
+  })
+  .then(() => {
+    log(chalk.green(`
+      ✅  Successfully linked "${addon}".
+    `));
+  })
+  .catch(() => {
+    log(chalk.red(`
+      ⛔️  Something went wrong, could not link "${addon}".
+    `));
   });
 }
 

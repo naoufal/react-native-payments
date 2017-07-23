@@ -23,9 +23,6 @@ function addToProject(projectPath, addOnName, addOnFrameworks) {
   const project = xcode.project(projectPath);
   project.parseAsync = Promise.promisify(project.parse);
 
-
-  console.log(path.resolve(__dirname, `../../${addOnName}/Carthage/Build/iOS`));
-
   return project.parseAsync(() => {
     // Add Framework Search Paths
     addFrameworkSearchPaths(
