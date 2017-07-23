@@ -46,7 +46,7 @@ function addToProject(projectPath, addOnName, addOnFrameworks) {
       frameworkFile => `"$(SRCROOT)/../node_modules/${addOnName}/Carthage/Build/iOS/${frameworkFile}"`
     );
     const outputPaths = frameworksWithExtension.map(
-      frameworkFile => `"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/${frameworkFile}.framework"`
+      frameworkFile => `"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/${frameworkFile}"`
     );
     addCarthageRunScriptPhase(
       project,
