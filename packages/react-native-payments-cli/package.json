@@ -1,6 +1,6 @@
 {
   "name": "react-native-payments-cli",
-  "version": "0.0.2",
+  "version": "0.1.0-beta",
   "description": "",
   "bin": "index.js",
   "main": "index.js",

@@ -1,6 +1,6 @@
 {
   "name": "react-native-payments-addon-stripe",
-  "version": "11.1.0",
+  "version": "11.1.0-1",
   "description": "React Native Payments add-on for processing payments with Stripe.",
   "main": "index.js",
   "scripts": {
