@@ -1,4 +1,4 @@
-# PaymentRequest
+# PaymentRequestUpdateEvent
 ### constructor(name, paymentRequest)
 Initializes the payment request update event.
 
