@@ -336,9 +336,9 @@ Here's a list of Payment Processors that you can enable via add-ons:
 - [Braintree](https://github.com/naoufal/react-native-payments/blob/master/cli/packages/react-native-payments-addon-braintree)
 
 ## API
-### [PaymentRequest](https://github.com/naoufal/react-native-payments/tree/master/docs/PaymentRequest.md)
-### [PaymentRequestUpdateEvent](https://github.com/naoufal/react-native-payments/tree/master/docs/PaymentRequestUpdateEvent.md)
-### [PaymentResponse](https://github.com/naoufal/react-native-payments/tree/master/docs/PaymentResponse.md)
+### [PaymentRequest](https://github.com/naoufal/react-native-payments/blob/master/cli/packages/react-native-payments/docs/PaymentRequest.md)
+### [PaymentRequestUpdateEvent](https://github.com/naoufal/react-native-payments/blob/master/cli/packages/react-native-payments/docs/PaymentRequestUpdateEvent.md)
+### [PaymentResponse](https://github.com/naoufal/react-native-payments/blob/master/cli/packages/react-native-payments/docs/PaymentResponse.md)
 
 ## Resources
 ### Payment Request
