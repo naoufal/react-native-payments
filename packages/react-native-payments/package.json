@@ -1,6 +1,6 @@
 {
   "name": "react-native-payments",
-  "version": "0.2.0-beta.2",
+  "version": "0.2.0",
   "scripts": {
     "precommit": "lint-staged",
     "run:packager": "cd examples/native && yarn run:packager",
@@ -9,6 +9,17 @@
     "run:demo": "cd examples/native && yarn run:demo",
     "test": "jest"
   },
+  "repository": "https://github.com/naoufal/react-native-payments",
+  "keywords": [
+    "react",
+    "react-native",
+    "apple-pay",
+    "stripe",
+    "braintree",
+    "payments"
+  ],
+  "author": "Naoufal Kadhom",
+  "license": "MIT",
   "dependencies": {
     "es6-error": "^4.0.2",
     "uuid": "^3.1.0",

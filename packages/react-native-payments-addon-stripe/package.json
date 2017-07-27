@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublish": "carthage update --platform ios"
   },
+  "repository": "https://github.com/naoufal/react-native-payments/tree/master/packages/react-native-payments-addon-stripe",
   "keywords": [
     "react",
     "react-native",

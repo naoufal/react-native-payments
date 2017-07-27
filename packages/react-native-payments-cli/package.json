@@ -1,12 +1,12 @@
 {
   "name": "react-native-payments-cli",
-  "version": "0.1.0-beta",
-  "description": "",
+  "version": "0.2.0",
   "bin": "index.js",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": "https://github.com/naoufal/react-native-payments/tree/master/packages/react-native-payments-cli",
   "keywords": [
     "react-native-payments",
     "cli"
