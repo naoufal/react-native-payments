@@ -1,38 +1,11 @@
 {
-  "name": "react-native-payments",
-  "version": "0.1.2",
   "scripts": {
-    "precommit": "lint-staged",
-    "run:packager": "cd examples/native && yarn run:packager",
-    "run:ios": "cd examples/native && yarn run:ios",
-    "run:web": "cd examples/web && yarn run:web",
-    "run:demo": "cd examples/native && yarn run:demo",
-    "test": "jest"
-  },
-  "dependencies": {
-    "es6-error": "^4.0.2",
-    "uuid": "^3.1.0",
-    "validator": "^7.0.0"
+    "precommit": "lint-staged"
   },
   "devDependencies": {
-    "babel-jest": "20.0.3",
-    "babel-preset-react-native": "2.0.0",
-    "husky": "^0.14.1",
-    "jest": "20.0.4",
+    "lerna": "^2.0.0",
     "lint-staged": "^4.0.0",
-    "prettier": "^1.4.4",
-    "react-test-renderer": "16.0.0-alpha.12"
-  },
-  "peerDependencies": {
-    "react": "~15.4.0-rc.4",
-    "react-native": "0.41.0"
-  },
-  "jest": {
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/examples/",
-      "lib/js/__tests__"
-    ]
+    "prettier": "^1.4.4"
   },
   "lint-staged": {
     "*.js": [

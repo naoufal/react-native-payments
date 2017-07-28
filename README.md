@@ -12,9 +12,8 @@ __Features__
 - __Simple.__ No more checkout forms.
 - __Effective__. Faster checkouts that increase conversion.
 - __Future-proof__. Use a W3C Standards API, supported by companies like Google, Firefox and others.
-- __Cross-platform.__ Share payments code between your iOS and web apps.
-- __Payment Processor Support__. Process payments with payment processors like Braintree and Stripe.
-
+- __Cross-platform__. Share payments code between your iOS and web apps.
+- __Add-ons__. Easily enable support for Stripe or Braintree via add-ons.
 
 <img width="280px" src="https://user-images.githubusercontent.com/1627824/27758096-9fc6bf9a-5dc1-11e7-9d8f-b2d409302fc7.gif" />
 
@@ -24,7 +23,7 @@ __Features__
 - [Demo](#demo)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Payment Processors](#payment-processors)
+- [Add-ons](#add-ons)
 - [API](#api)
 - [Resources](#resources)
 - [License](#license)
@@ -59,6 +58,8 @@ $ react-native link react-native-payments
 - [Requesting Contact Information](#requesting-contact-information)
 - [Requesting a Shipping Address](#requesting-a-shipping-address)
 - [Processing Payments](#processing-payments)
+- [Dismissing the Payment Request](#dismissing-the-payment-request)
+
 
 ### Registering as a Merchant
 Before you can start accepting payments with Apple Pay, there are a few steps you'll need to go through:
@@ -301,14 +302,6 @@ paymentRequest.show()
 You can learn more about server-side decrypting of Payment Tokens on Apple's [Payment Token Format Reference](https://developer.apple.com/library/content/documentation/PassKit/Reference/PaymentTokenJSON/PaymentTokenJSON.html) documentation.
 
 #### Processing Payments with a Payment Processor
-React Native Payments also supports processing payments with payment processors. There are three parts to setting up a payment processor:
-
-1. Creating an Apple Pay certificate
-2. Adding and Linking the Payment Processor's SDK
-3. Adding your Payment Processor's Tokens
-
-_NOTE: For payment processor specific documentation, see the [Payment Processors](#payment-processors) section._
-
 When using a payment processor, you'll receive a `paymentToken` field within the `details` of the `PaymentResponse`.  Use this token to charge customers with your payment processor.
 
 ```es6
@@ -328,97 +321,24 @@ paymentRequest.show()
   });
 ```
 
-## Payment Processors
-- [Stripe](#stripe)
-- [Braintree](#braintree)
+For a list of supported payment processors and how to enable them, see the [Add-ons](#add-ons) section.
 
-### Stripe
-#### Creating an Apple Pay certificate
-Follow Stripe's [documentation](https://stripe.com/docs/apple-pay/apps#csr) on how to create and upload the Apple Pay certificate back to Stripe.
+### Dismissing the Payment Request
+Dismissing the Payment Request is as simple as calling the `complete` method on of the `PaymentResponse`.
 
-#### Adding and Linking the Stripe SDK
-Next, you'll need to add Stripe's SDK to your project.  You can install it by following one of the methods [listed in Stripe's documentation](https://stripe.com/docs/mobile/ios#getting-started).
-
-Finally, in Xcode:
-1. Select the `ReactNativePayments` project from the left sidebar (under Libraries)
-2. Select `Build Settings` and search for `Framework Search Paths`
-3. Then add the path to where you added the Framework (remember, it's relative to `/node_modules/react-native-payments/lib/ios`)
-
-<img width="1000" alt="xcode-stripe" src="https://user-images.githubusercontent.com/1627824/28250182-cb47cd1e-6a17-11e7-9d67-47f35f0757bd.png">
-
-#### Adding your Stripe Config
-Now that you've added Stripe's SDK to your app, you're setup to use Stripe as a payment processor.
-
-In order to do so, you'll need to define a `paymentMethodTokenizationParameters` on your `PaymentMethodData` with Stripe specific parameters.  Here's an example of what Stripe `paramaters` look like:
-
-```diff
-  const supportedMethods = [
-    {
-      supportedMethods: ['apple-pay'],
-      data: {
-        merchantIdentifier: 'merchant.com.your-app.namespace',
-        supportedNetworks: ['visa', 'mastercard'],
-        countryCode: 'US',
-        currencyCode: 'USD',
-+       paymentMethodTokenizationParameters: {
-+         parameters: {
-+           'gateway': 'stripe',
-+           'stripe:publishableKey': 'your-publishable-key'
-+         }
-+       }
-      }
-    }
-  ];
+```es6
+paymentResponse.complete('success'); // Alternatively, you can call it with `fail` or `unknown`
 ```
 
-Now you're all set to receive Stripe payment tokens in your `PaymentResponse`.
-
-### Braintree
-#### Creating an Apple Pay certificate
-Follow Braintree's [documentation](https://developers.braintreepayments.com/guides/apple-pay/configuration/ios/v4#apple-pay-certificate-request-and-provisioning) on how to create and upload the Apple Pay certificate back to Braintree.
-
-#### Adding and Linking the Braintree SDK
-Next, you'll need to add Braintree's SDK to your project.  You can install it by following one of the methods [listed in Braintree's documentation](https://github.com/braintree/braintree_ios#installation).
-
-Finally, in Xcode:
-1. Select the `ReactNativePayments` project from the left sidebar (under Libraries)
-2. Select `Build Settings` and search for `Header Search Paths`
-3. Then add the path to where you added the Library (remember, it's relative to `/node_modules/react-native-payments/lib/ios`)
-
-<img width="1000" alt="xcode-braintree" src="https://user-images.githubusercontent.com/1627824/28300092-e5a218d4-6b31-11e7-8234-8f2fdf81081b.png">
-
-
-#### Adding your Braintree Config
-Now that you've added Braintree's SDK to your app, you're setup to use Braintree as a payment processor.
-
-In order to do so, you'll need to define a `paymentMethodTokenizationParameters` on your `PaymentMethodData` with Braintree specific parameters.  Here's an example of what Braintree `paramaters` look like:
-
-```diff
-  const supportedMethods = [
-    {
-      supportedMethods: ['apple-pay'],
-      data: {
-        merchantIdentifier: 'merchant.com.your-app.namespace',
-        supportedNetworks: ['visa', 'mastercard'],
-        countryCode: 'US',
-        currencyCode: 'USD',
-+       paymentMethodTokenizationParameters: {
-+         parameters: {
-+           'gateway': 'braintree',
-+           'braintree:tokenizationKey': 'your-tokenization-key'
-+         }
-+       }
-      }
-    }
-  ];
-```
-
-Now you're all set to receive Braintree payment tokens in your `PaymentResponse`.
+## Add-ons
+Here's a list of Payment Processors that you can enable via add-ons:
+- [Stripe](https://github.com/naoufal/react-native-payments/blob/master/cli/packages/react-native-payments-addon-stripe)
+- [Braintree](https://github.com/naoufal/react-native-payments/blob/master/cli/packages/react-native-payments-addon-braintree)
 
 ## API
-### [PaymentRequest](https://github.com/naoufal/react-native-payments/tree/master/docs/PaymentRequest.md)
-### [PaymentRequestUpdateEvent](https://github.com/naoufal/react-native-payments/tree/master/docs/PaymentRequestUpdateEvent.md)
-### [PaymentResponse](https://github.com/naoufal/react-native-payments/tree/master/docs/PaymentResponse.md)
+### [PaymentRequest](https://github.com/naoufal/react-native-payments/blob/master/cli/packages/react-native-payments/docs/PaymentRequest.md)
+### [PaymentRequestUpdateEvent](https://github.com/naoufal/react-native-payments/blob/master/cli/packages/react-native-payments/docs/PaymentRequestUpdateEvent.md)
+### [PaymentResponse](https://github.com/naoufal/react-native-payments/blob/master/cli/packages/react-native-payments/docs/PaymentResponse.md)
 
 ## Resources
 ### Payment Request
@@ -433,15 +353,6 @@ Now you're all set to receive Braintree payment tokens in your `PaymentResponse`
 - [Configuring your Environment](https://developer.apple.com/library/content/ApplePay_Guide/Configuration.html)
 - [Processing Payments](https://developer.apple.com/library/content/ApplePay_Guide/ProcessPayment.html#//apple_ref/doc/uid/TP40014764-CH5-SW4)
 - [Payment Token Format Reference](https://developer.apple.com/library/content/documentation/PassKit/Reference/PaymentTokenJSON/PaymentTokenJSON.html#//apple_ref/doc/uid/TP40014929)
-
-### Gateways
-#### Stripe
-- [Creating a new Apple Pay certificate](https://stripe.com/docs/apple-pay/apps#csr)
-- [Installing the Stripe SDK](https://stripe.com/docs/mobile/ios#getting-started)
-
-#### Braintree
-- [Creating a new Apple Pay certificate](https://developers.braintreepayments.com/guides/apple-pay/configuration/ios/v4#apple-pay-certificate-request-and-provisioning)
-- [Installing the Braintree SDK](https://github.com/braintree/braintree_ios#installation)
 
 
 # License
