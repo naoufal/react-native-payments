@@ -54,7 +54,7 @@ $ react-native link react-native-payments
 - [Importing the Library](#importing-the-library)
 - [Initializing the Payment Request](#initializing-the-payment-request)
 - [Displaying the Payment Request](#displaying-the-payment-request)
-- [Dismissing the Payment Request](#dismissing-the-payment-request)
+- [Aborting the Payment Request](#aborting-the-payment-request)
 - [Requesting Contact Information](#requesting-contact-information)
 - [Requesting a Shipping Address](#requesting-a-shipping-address)
 - [Processing Payments](#processing-payments)
@@ -137,8 +137,8 @@ paymentRequest.show();
 
 </details>
 
-### Dismissing the Payment Request
-You can dismiss the Payment Request at any point by calling the `abort` method.
+### Aborting the Payment Request
+You can abort the Payment Request at any point by calling the `abort` method.
 
 ```es6
 paymentRequest.abort();
