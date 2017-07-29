@@ -332,7 +332,7 @@ paymentResponse.complete('success'); // Alternatively, you can call it with `fai
 
 ## Add-ons
 Here's a list of Payment Processors that you can enable via add-ons:
-- [Stripe](https://github.com/naoufal/react-native-payments/blob/master/cli/packages/react-native-payments-addon-stripe)
+- [Stripe](https://github.com/naoufal/react-native-payments/blob/master/packages/react-native-payments-addon-stripe)
 - [Braintree](https://github.com/naoufal/react-native-payments/blob/master/cli/packages/react-native-payments-addon-braintree)
 
 ## API
