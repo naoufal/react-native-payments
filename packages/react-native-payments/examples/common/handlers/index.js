@@ -11,9 +11,17 @@ function addStringAmounts(...prices) {
 }
 
 function prDisplayHandler(paymentRequest) {
+
   return paymentRequest
     .show()
-    .then(paymentResponse => paymentResponse.complete('success'))
+    .then(paymentResponse => {
+      if (Platform.OS === 'android') {
+        // Fetch PaymentToken
+        paymentResponse.details.getPaymentToken().then(console.log);
+      }
+
+      paymentResponse.complete('success');
+    })
     .catch(console.warn);
 }
 
@@ -50,8 +58,24 @@ const METHOD_DATA = [
       countryCode: 'US',
       currencyCode: 'USD'
     }
+  },
+  {
+    supportedMethods: ['android-pay'],
+    data: {
+      supportedNetworks: ['visa', 'mastercard', 'amex'],
+      countryCode: 'US',
+      currencyCode: 'USD',
+      environment: 'TEST',
+      paymentMethodTokenizationParameters: {
+        tokenizationType: 'NETWORK_TOKEN',
+        parameters: {
+          publicKey: 'BOdoXP+9Aq473SnGwg3JU1aiNpsd9vH2ognq4PtDtlLGa3Kj8TPf+jaQNPyDSkh3JUhiS0KyrrlWhAgNZKHYF2Y='
+        }
+      }
+    }
   }
 ];
+
 const DISPLAY_ITEMS = [
   {
     label: 'Movie Ticket',
