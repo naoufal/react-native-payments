@@ -1,6 +1,6 @@
 package com.reactnativepaymentsexample;
 
-import com.reactnativepaymentsexample.reactnativepayments.ReactNativePaymentsPackage;
+import com.reactnativepayments.ReactNativePaymentsPackage;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;

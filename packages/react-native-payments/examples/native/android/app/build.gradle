@@ -83,8 +83,8 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '25.0.0'
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
 
     defaultConfig {
         applicationId "com.reactnativepaymentsexample"
@@ -132,6 +132,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-wallet:11.0.4'
     compile 'com.android.support:support-v4:23.0.1'
 
+    compile project(':react-native-payments')
 }
 
 // Run this once to be able to run the application with BUCK
