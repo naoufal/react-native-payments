@@ -4064,8 +4064,13 @@ react-deep-force-update@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-1.0.1.tgz#f911b5be1d2a6fe387507dd6e9a767aa2924b4c7"
 
-"react-native-payments@file:../..":
-  version "0.1.0"
+react-native-payments-addon-stripe@11.1.0:
+  version "11.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-payments-addon-stripe/-/react-native-payments-addon-stripe-11.1.0.tgz#4aec32549fe745a77b8aaf8a5ac46201e427d12b"
+
+react-native-payments@0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-payments/-/react-native-payments-0.1.2.tgz#442be4a927bc9790aa42da5c33560b14109ca832"
   dependencies:
     es6-error "^4.0.2"
     uuid "^3.1.0"

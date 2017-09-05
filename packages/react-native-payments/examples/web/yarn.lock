@@ -672,6 +672,10 @@ error-ex@^1.2.0:
   dependencies:
     is-arrayish "^0.2.1"
 
+es6-error@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/es6-error/-/es6-error-4.0.2.tgz#eec5c726eacef51b7f6b73c20db6e1b13b069c98"
+
 escape-html@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
@@ -1830,9 +1834,11 @@ react-dom@~15.4.0-rc.4:
     object-assign "^4.1.0"
 
 "react-native-payments@file:../..":
-  version "0.41.0"
+  version "0.2.0"
   dependencies:
+    es6-error "^4.0.2"
     uuid "^3.1.0"
+    validator "^7.0.0"
 
 react-native-web@0.0.x:
   version "0.0.103"
@@ -2365,6 +2371,10 @@ validate-npm-package-license@^3.0.1:
   dependencies:
     spdx-correct "~1.0.0"
     spdx-expression-parse "~1.0.0"
+
+validator@^7.0.0:
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-7.2.0.tgz#a63dcbaba51d4350bf8df20988e0d5a54d711791"
 
 vary@~1.1.0, vary@~1.1.1:
   version "1.1.1"
