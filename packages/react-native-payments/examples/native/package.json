@@ -5,10 +5,12 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "run:packager": "yarn run haul start -- --platform ios",
+    "run:packager": "yarn run haul start",
     "run:ios": "react-native run-ios",
+    "run:android": "react-native run-android",
     "run:demo": "yarn && react-native run-ios --configuration=Release",
-    "build:ios": "yarn run haul bundle --platform=ios --bundle-output=ios/main.jsbundle --assets-dest=ios/build/assets"
+    "build:ios": "yarn run haul bundle -- --platform=ios --bundle-output=ios/main.jsbundle --assets-dest=ios/build/assets",
+    "build:android": "yarn run haul bundle -- --platform=android --bundle-output=android/build/index.bundle --assets-dest=android/build/assets"
   },
   "dependencies": {
     "react": "~15.4.0-rc.4",
@@ -24,5 +26,6 @@
   },
   "jest": {
     "preset": "react-native"
-  }
+  },
+  "gitDir": "../../../../"
 }

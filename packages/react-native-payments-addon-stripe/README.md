@@ -36,7 +36,8 @@ const METHOD_DATA = [{
 +   paymentMethodTokenizationParameters: {
 +     parameters: {
 +       gateway: 'stripe',
-+       'stripe:publishableKey': 'your_publishable_key'
++       'stripe:publishableKey': 'your_publishable_key',
++       'stripe:version': '5.0.0' // Only required on Android
 +     }
 +   }
   }

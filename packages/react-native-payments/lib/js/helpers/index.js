@@ -57,8 +57,9 @@ export function convertObjectAmountToString(
   objectWithAmount: PaymentItem | PaymentShippingOption
 ): PaymentItem | PaymentShippingOption {
   return Object.assign({}, objectWithAmount, {
-    amount: Object.assign({}, objectWithAmount, {
-      value: toString(objectWithAmount.amount.value)
+    amount: Object.assign({}, {
+      value: toString(objectWithAmount.amount.value),
+      currency: objectWithAmount.amount.currency
     })
   });
 }
