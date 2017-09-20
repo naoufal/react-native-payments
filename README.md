@@ -446,9 +446,10 @@ Here's a list of Payment Processors that you can enable via add-ons:
 🚨 _Note: On Android, Payment Processors are enabled by default._
 
 ## API
-### [PaymentRequest](https://github.com/naoufal/react-native-payments/blob/master/cli/packages/react-native-payments/docs/PaymentRequest.md)
-### [PaymentRequestUpdateEvent](https://github.com/naoufal/react-native-payments/blob/master/cli/packages/react-native-payments/docs/PaymentRequestUpdateEvent.md)
-### [PaymentResponse](https://github.com/naoufal/react-native-payments/blob/master/cli/packages/react-native-payments/docs/PaymentResponse.md)
+### [NativePayments](https://github.com/naoufal/react-native-payments/blob/master/packages/react-native-payments/docs/NativePayments.md)
+### [PaymentRequest](https://github.com/naoufal/react-native-payments/blob/master/packages/react-native-payments/docs/PaymentRequest.md)
+### [PaymentRequestUpdateEvent](https://github.com/naoufal/react-native-payments/blob/master/packages/react-native-payments/docs/PaymentRequestUpdateEvent.md)
+### [PaymentResponse](https://github.com/naoufal/react-native-payments/blob/master/packages/react-native-payments/docs/PaymentResponse.md)
 
 ## Resources
 ### Payment Request
