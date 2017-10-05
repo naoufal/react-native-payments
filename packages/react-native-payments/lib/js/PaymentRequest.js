@@ -295,25 +295,29 @@ export default class PaymentRequest {
 
   _getPlatformDetailsIOS(details: {
     transactionIdentifier: string,
-    paymentData: string
+    paymentData: string,
+    paymentToken: string,
   }) {
     const {
       transactionIdentifier,
-      paymentData: serializedPaymentData
+      paymentData: serializedPaymentData,
+      paymentToken
     } = details;
     const isSimulator = transactionIdentifier === 'Simulated Identifier';
 
     if (isSimulator) {
       return Object.assign({}, details, {
         paymentData: null,
-        serializedPaymentData
+        paymentToken: null,
+        serializedPaymentData,
       });
     }
 
     return {
       transactionIdentifier,
       paymentData: JSON.parse(serializedPaymentData),
-      serializedPaymentData
+      paymentToken: paymentToken,
+      serializedPaymentData,
     };
   }
 
@@ -345,7 +349,8 @@ export default class PaymentRequest {
     transactionIdentifier: string,
     paymentData: string,
     shippingAddress: object,
-    payerEmail: string
+    payerEmail: string,
+    paymentToken: string
   }) {
     // On Android, we don't have `onShippingAddressChange` events, so we
     // set the shipping address when the user accepts.
@@ -365,6 +370,7 @@ export default class PaymentRequest {
       shippingOption: IS_IOS ? this._shippingOption : null,
       payerName: this._options.requestPayerName ? this._shippingAddress.recipient : null,
       payerPhone: this._options.requestPayerPhone ? this._shippingAddress.phone : null,
+      paymentToken: details.paymentToken,
       payerEmail: IS_ANDROID && this._options.requestPayerEmail
         ? details.payerEmail
         : null
