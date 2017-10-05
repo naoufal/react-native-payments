@@ -318,10 +318,7 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
     NSMutableDictionary *paymentResponse = [[NSMutableDictionary alloc]initWithCapacity:3];
     [paymentResponse setObject:transactionId forKey:@"transactionIdentifier"];
     [paymentResponse setObject:paymentData forKey:@"paymentData"];
-
-    if (token) {
-        [paymentResponse setObject:token forKey:@"paymentToken"];
-    }
+    [paymentResponse setObject:(token) ? (token) : (null) forKey:@"paymentToken"];
 
     [self.bridge.eventDispatcher sendDeviceEventWithName:@"NativePayments:onuseraccept"
                                                     body:paymentResponse
