@@ -54,6 +54,10 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
 
     public static final String REACT_CLASS = "ReactNativePayments";
 
+    private int theme = WalletConstants.THEME_LIGHT;
+
+    private ArrayList<Integer> cardNetworks = new ArrayList<Integer>();
+
     private static ReactApplicationContext reactContext = null;
 
     private final ActivityEventListener mActivityEventListener = new BaseActivityEventListener() {
@@ -141,8 +145,42 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
         return REACT_CLASS;
     }
 
+
+
+    @Override public Map<String, Object> getConstants() {
+        final Map<String, Object> constants = new HashMap<>();
+        constants.put("CARD_NETWORK_AMEX", WalletConstants.CARD_NETWORK_AMEX);
+        constants.put("CARD_NETWORK_MASTERCARD", WalletConstants.CARD_NETWORK_MASTERCARD);
+        constants.put("CARD_NETWORK_VISA", WalletConstants.CARD_NETWORK_VISA);
+        constants.put("CARD_NETWORK_DISCOVER", WalletConstants.CARD_NETWORK_DISCOVER);
+        constants.put("CARD_NETWORK_INTERAC", WalletConstants.CARD_NETWORK_INTERAC);
+        constants.put("CARD_NETWORK_JCB", WalletConstants.CARD_NETWORK_JCB);
+        constants.put("THEME_DARK", WalletConstants.THEME_DARK);
+        constants.put("THEME_LIGHT", WalletConstants.THEME_LIGHT);
+        return constants;
+    }
+
+
     // Public Methods
     // ---------------------------------------------------------------------------------------------
+    @ReactMethod
+    public void setTheme(int theme) {
+        if (theme == WalletConstants.THEME_LIGHT || theme == WalletConstants.THEME_DARK);
+        this.theme = theme;
+    }
+    @ReactMethod
+    public void setLightTheme(int theme) {
+        this.theme = WalletConstants.THEME_LIGHT;
+    }
+    @ReactMethod
+    public void setDarkTheme(int theme) {
+        this.theme = WalletConstants.THEME_DARK;
+    }
+    @ReactMethod
+    public void addAllowedCardNetwork(int network) {
+        cardNetworks.add(network);
+    }
+
     @ReactMethod
     public void getSupportedGateways(Callback errorCallback, Callback successCallback) {
         WritableNativeArray supportedGateways = new WritableNativeArray();
@@ -153,10 +191,12 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
     @ReactMethod
     public void canMakePayments(ReadableMap paymentMethodData, Callback errorCallback, Callback successCallback) {
         final Callback callback = successCallback;
-        IsReadyToPayRequest req = IsReadyToPayRequest.newBuilder()
-                .addAllowedCardNetwork(WalletConstants.CardNetwork.MASTERCARD)
-                .addAllowedCardNetwork(WalletConstants.CardNetwork.VISA)
-                .build();
+
+        IsReadyToPayRequest.Builder builder =  IsReadyToPayRequest.newBuilder();
+        for (int network :cardNetworks) {
+            builder.addAllowedCardNetwork(network);
+        }
+        IsReadyToPayRequest req = builder.build();
 
         int environment = getEnvironmentFromPaymentMethodData(paymentMethodData);
         if (mGoogleApiClient == null) {
@@ -344,7 +384,7 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
                 .addOnConnectionFailedListener(this)
                 .addApi(Wallet.API, new Wallet.WalletOptions.Builder()
                         .setEnvironment(environment)
-                        .setTheme(WalletConstants.THEME_LIGHT)
+                        .setTheme(theme)
                         .build())
                 .build();
         mGoogleApiClient.connect();
