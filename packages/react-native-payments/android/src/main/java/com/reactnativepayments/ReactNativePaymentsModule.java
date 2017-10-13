@@ -177,7 +177,7 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
 
         constants.put("PAYMENT_METHOD_TOKENIZATION_TYPE_PAYMENT_GATEWAY", PaymentMethodTokenizationType.PAYMENT_GATEWAY); // Adyen,Braintree,Stripe,Vantiv
         constants.put("PAYMENT_METHOD_TOKENIZATION_TYPE_NETWORK_TOKEN", PaymentMethodTokenizationType.NETWORK_TOKEN);
-        constants.put("PAYMENT_METHOD_TOKENIZATION_TYPE_DIRECT", WalletConstants.PAYMENT_METHOD_TOKENIZATION_TYPE_DIRECT);
+       // constants.put("PAYMENT_METHOD_TOKENIZATION_TYPE_DIRECT", WalletConstants.PAYMENT_METHOD_TOKENIZATION_TYPE_DIRECT);
 
         return constants;
     }
@@ -315,15 +315,15 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
         ReadableMap tokenizationParameters = paymentMethodData.getMap("paymentMethodTokenizationParameters");
         String publicKey = "";
         switch( tokenizationParameters.getString("tokenizationType")) {
-            case WalletConstants.PAYMENT_METHOD_TOKENIZATION_TYPE_DIRECT:
+            /*case WalletConstants.PAYMENT_METHOD_TOKENIZATION_TYPE_DIRECT:
                 publicKey = tokenizationParameters.getMap("parameters").getString("publicKey");
                 return PaymentMethodTokenizationParameters.newBuilder()
                         .setPaymentMethodTokenizationType(PaymentMethodTokenizationType.PAYMENT_DIRECT)
                         .addParameter("publicKey", publicKey)
                         .build();
 
-            break;
-            case   PaymentMethodTokenizationType.PAYMENT_GATEWAY:
+            break;*/
+            case PaymentMethodTokenizationType.PAYMENT_GATEWAY:
                 ReadableMap parameters = tokenizationParameters.getMap("parameters");
                 PaymentMethodTokenizationParameters.Builder parametersBuilder = PaymentMethodTokenizationParameters.newBuilder()
                         .setPaymentMethodTokenizationType(PaymentMethodTokenizationType.PAYMENT_GATEWAY)
