@@ -238,6 +238,10 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
         [supportedNetworksMapping setObject:PKPaymentNetworkQuicPay forKey:@"quicpay"];
     }
 
+    if (iOSVersion >= 11) {
+        [supportedNetworksMapping setObject:PKPaymentNetworkCarteBancaires forKey:@"cartebancaires"];
+    }
+
     // Setup supportedNetworks
     NSArray *jsSupportedNetworks = methodData[@"supportedNetworks"];
     NSMutableArray *supportedNetworks = [NSMutableArray array];
