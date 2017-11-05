@@ -19,7 +19,7 @@ const NativePayments: {
 } = {
   supportedGateways: IS_ANDROID
     ? ['stripe', 'braintree'] // On Android, Payment Gateways are supported out of the gate.
-    : ReactNativePayments.supportedGateways,
+    : ReactNativePayments ? ReactNativePayments.supportedGateways : [],
 
   canMakePayments(methodData: object) {
     return new Promise((resolve, reject) => {
