@@ -328,18 +328,20 @@ There are two ways to process Apple Pay/Android Pay payments -- on your server o
 #### Processing Payments on Your Server
 If you're equiped to process Apple Pay/Android Pay payments on your server, all you have to do is send the Payment Response data to your server.
 
+> ⚠️ **Note:** When running Apple Pay on simulator, `paymentData` equals to `null`.
+
 ```es6
 import { NativeModules } from 'react-native';
 
 paymentRequest.show()
   .then(paymentResponse => {
-    const { transactionIdentifier, serializedPaymentData } = paymentResponse.details;
+    const { transactionIdentifier, paymentData } = paymentResponse.details;
 
     return fetch('...', {
       method: 'POST',
       body: {
         transactionIdentifier,
-        serializedPaymentData
+        paymentData
       }
     })
     .then(res => res.json())
