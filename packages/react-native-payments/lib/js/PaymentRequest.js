@@ -11,7 +11,9 @@ import type {
   PaymentShippingOption,
   PaymentItem,
   PaymentAddress,
-  PaymentShippingType
+  PaymentShippingType,
+  PaymentDetailsIOS,
+  PaymentDetailsIOSRaw,
 } from './types';
 import type PaymentResponseType from './PaymentResponse';
 
@@ -53,18 +55,6 @@ import {
   GATEWAY_ERROR_EVENT,
   SUPPORTED_METHOD_NAME
 } from './constants';
-
-type PaymentDetailsIOS = {
-  paymentData: ?Object,
-  paymentToken?: string,
-  transactionIdentifier: string,
-};
-
-type PaymentDetailsIOSRaw = {
-  paymentData: string,
-  paymentToken?: string,
-  transactionIdentifier: string,
-};
 
 const noop = () => {};
 const IS_ANDROID = Platform.OS === 'android';

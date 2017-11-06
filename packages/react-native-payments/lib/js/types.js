@@ -85,3 +85,15 @@ export type PaymentShippingOption = {
 
 // https://www.w3.org/TR/payment-request/#paymentcomplete-enum
 export type PaymentComplete = 'fail' | 'success' | 'unknown';
+
+export type PaymentDetailsIOS = {
+  paymentData: ?Object,
+  paymentToken?: string,
+  transactionIdentifier: string,
+};
+
+export type PaymentDetailsIOSRaw = {
+  paymentData: string,
+  paymentToken?: string,
+  transactionIdentifier: string,
+};
