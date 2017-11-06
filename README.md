@@ -26,6 +26,7 @@ __Features__
 - [Demo](#demo)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Testing Payments](#testing-payments)
 - [Add-ons](#add-ons)
 - [API](#api)
 - [Resources](#resources)
@@ -439,6 +440,15 @@ paymentResponse.complete('success'); // Alternatively, you can call it with `fai
 ```
 
 🚨 _Note: On Android, there is no need to call `paymentResponse.complete` -- the PaymentRequest dismisses itself._
+
+## Testing Payments
+
+### Apple Pay
+
+The sandbox environment is a great way to test offline implementation of Apple Pay for apps, websites, and point of sale systems. Apple offers [detailed guide](https://developer.apple.com/support/apple-pay-sandbox/) for setting up sandbox environment.
+> ⚠️ **Note:** It is also important to test Apple Pay in your production environment. Real cards must be used in the production environment. Test cards will not work.
+>
+> ⚠️ **Note:** There are known differences when running Apple Pay on simulator and real device. Make sure you test Apple Pay on real device before going into production.
 
 ## Add-ons
 Here's a list of Payment Processors that you can enable via add-ons:
