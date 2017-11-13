@@ -209,16 +209,16 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
     // https://developer.apple.com/reference/passkit/pkpaymentnetwork
     NSDictionary *supportedNetworksMapping = @{
                                                @"amex": PKPaymentNetworkAmex,
-                                               @"chinaunionpay": PKPaymentNetworkChinaUnionPay,
-                                               @"discover": PKPaymentNetworkDiscover,
-                                               @"jcb": PKPaymentNetworkJCB,
+//                                               @"chinaunionpay": PKPaymentNetworkChinaUnionPay,
+//                                               @"discover": PKPaymentNetworkDiscover,
+//                                               @"jcb": PKPaymentNetworkJCB,
                                                @"mastercard": PKPaymentNetworkMasterCard,
-                                               @"privatelabel": PKPaymentNetworkPrivateLabel,
+//                                               @"privatelabel": PKPaymentNetworkPrivateLabel,
                                                @"visa": PKPaymentNetworkVisa,
-                                               @"interac": PKPaymentNetworkInterac,
-                                               @"suica": PKPaymentNetworkSuica,
-                                               @"quicpay": PKPaymentNetworkQuicPay
-                                            //    @"idcredit": PKPaymentNetworkIDCredit
+//                                               @"interac": PKPaymentNetworkInterac,
+//                                               @"suica": PKPaymentNetworkSuica,
+//                                               @"quicpay": PKPaymentNetworkQuicPay
+//                                                @"idcredit": PKPaymentNetworkIDCredit
                                                };
 
     // Setup supportedNetworks
