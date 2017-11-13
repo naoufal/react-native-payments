@@ -217,8 +217,8 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
                                                @"visa": PKPaymentNetworkVisa,
                                                @"interac": PKPaymentNetworkInterac,
                                                @"suica": PKPaymentNetworkSuica,
-                                               @"quicpay": PKPaymentNetworkQuicPay,
-                                               @"idcredit": PKPaymentNetworkIDCredit
+                                               @"quicpay": PKPaymentNetworkQuicPay
+                                            //    @"idcredit": PKPaymentNetworkIDCredit
                                                };
 
     // Setup supportedNetworks
