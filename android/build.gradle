@@ -20,6 +20,6 @@ android {
 
 dependencies {
     compile 'com.facebook.react:react-native:+'
-    compile 'com.google.android.gms:play-services-wallet:11.0.4'
+    compile 'com.google.android.gms:play-services-wallet:11.4.2'
     compile 'com.android.support:support-v4:23.0.1'
 }
