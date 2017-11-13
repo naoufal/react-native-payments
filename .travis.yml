@@ -2,5 +2,5 @@ language: node_js
 node_js:
   - "node"
 env:
-  - TEST_DIR=packages/react-native-payments
+  - TEST_DIR=./
 script: cd $TEST_DIR && yarn && yarn test -- --verbose --coverage
