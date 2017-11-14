@@ -154,8 +154,9 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
     public void canMakePayments(ReadableMap paymentMethodData, Callback errorCallback, Callback successCallback) {
         final Callback callback = successCallback;
         IsReadyToPayRequest req = IsReadyToPayRequest.newBuilder()
-                .addAllowedCardNetwork(WalletConstants.CardNetwork.MASTERCARD)
-                .addAllowedCardNetwork(WalletConstants.CardNetwork.VISA)
+                .addAllowedCardNetwork(WalletConstants.CardNetwork.CARD_NETWORK_MASTERCARD)
+                .addAllowedCardNetwork(WalletConstants.CardNetwork.CARD_NETWORK_VISA)
+                .addAllowedCardNetwork(WalletConstants.CardNetwork.CARD_NETWORK_AMEX)
                 .build();
 
         int environment = getEnvironmentFromPaymentMethodData(paymentMethodData);
@@ -255,6 +256,7 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
 
 
         if (tokenizationType.equals("GATEWAY_TOKEN")) {
+            Log.i("Gateway token","Gateway token called here");
             ReadableMap parameters = tokenizationParameters.getMap("parameters");
             PaymentMethodTokenizationParameters.Builder parametersBuilder = PaymentMethodTokenizationParameters.newBuilder()
                     .setPaymentMethodTokenizationType(PaymentMethodTokenizationType.PAYMENT_GATEWAY)
@@ -271,6 +273,7 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
             return parametersBuilder.build();
 
         } else {
+            Log.i("Network token","Network token called here");
             String publicKey = tokenizationParameters.getMap("parameters").getString("publicKey");
 
             return PaymentMethodTokenizationParameters.newBuilder()
