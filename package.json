@@ -16,7 +16,8 @@
     "apple-pay",
     "stripe",
     "braintree",
-    "payments"
+    "payments",
+    "worldpay"
   ],
   "author": "Naoufal Kadhom",
   "license": "MIT",
