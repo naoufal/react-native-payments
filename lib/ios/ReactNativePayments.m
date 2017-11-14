@@ -16,7 +16,7 @@ RCT_EXPORT_MODULE()
     return @{
              @"canMakePayments": @([PKPaymentAuthorizationViewController canMakePayments]),
              @"supportedGateways": [GatewayManager getSupportedGateways]
-//             @"canMkePaymentsUsingNetworks": [self canMakePaymentsUsingNetworks];
+            @"canMkePaymentsUsingNetworks": [self canMakePaymentsUsingNetworks];
              };
 }
 
@@ -338,15 +338,15 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
      ];
 }
 
-//-(BOOL)canMakePaymentsUsingNetworks
-//{
-//    BOOL canMakePaymentsUsingNetworks;
-//    NSArray *supportedPaymentNetworks = [PKPaymentNetworkVisa, PKPaymentNetworkMasterCard, PKPaymentNetworkAmex]
-//    
-//    if ([PKPaymentAuthorizationViewController canMakePaymentsUsingNetworks:supportedPaymentNetworks]) {
-//        canMakePaymentsUsingNetworks = YES;
-//    }
-//    return canMakePaymentsUsingNetworks;
-//}
+-(BOOL)canMakePaymentsUsingNetworks
+{
+   BOOL canMakePaymentsUsingNetworks;
+   NSArray *supportedPaymentNetworks = [PKPaymentNetworkVisa, PKPaymentNetworkMasterCard, PKPaymentNetworkAmex]
+   
+   if ([PKPaymentAuthorizationViewController canMakePaymentsUsingNetworks:supportedPaymentNetworks]) {
+       canMakePaymentsUsingNetworks = YES;
+   }
+   return canMakePaymentsUsingNetworks;
+}
 
 @end
