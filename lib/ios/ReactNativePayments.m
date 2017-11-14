@@ -15,8 +15,8 @@ RCT_EXPORT_MODULE()
 {
     return @{
              @"canMakePayments": @([PKPaymentAuthorizationViewController canMakePayments]),
-             @"supportedGateways": [GatewayManager getSupportedGateways]
-            @"canMkePaymentsUsingNetworks": [self canMakePaymentsUsingNetworks];
+             @"supportedGateways": [GatewayManager getSupportedGateways],
+             @"canMakePaymentsUsingNetworks": [self canMakePaymentsUsingNetworks]
              };
 }
 
