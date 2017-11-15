@@ -42,7 +42,7 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
     private static final int LOAD_MASKED_WALLET_REQUEST_CODE = 88;
     private static final int LOAD_FULL_WALLET_REQUEST_CODE = 89;
 
-
+    private PaymentsClient paymentClient = null;
     // Google API Client
     private GoogleApiClient mGoogleApiClient = null;
 
@@ -116,7 +116,50 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
                 case WalletConstants.RESULT_ERROR:activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
 //                    handleError(errorCode);
                     break;
+                case LOAD_PAYMENT_DATA_CONSTANT:
+                    switch (resultCode) {
+                        case Activity.RESULT_OK:
+                            PaymentData paymentData = PaymentData.getFromIntent(data);
+                            String token = paymentData.getPaymentMethodToken().getToken();
 
+                            Log.i("Payment Data OK","Payment Token: "+token);
+                            JSONObject obj = null;
+                            JSONObject signedObj = null;
+                            try {
+                                obj = new JSONObject(token);
+                                // Data below goes into the XML message
+                                String signature = obj.getString("signature");
+                                Log.i("Signature value",signature);
+                                String protocolVersion = obj.getString("protocolVersion");
+                                Log.i("Protocol version value",protocolVersion);
+                                String signedMessage = obj.getString("signedMessage");
+                                Log.i("Signed message value",signedMessage);
+                                signedObj = new JSONObject(obj.getString("signedMessage"));
+                                String encryptedMessage = signedObj.getString("encryptedMessage");
+                                Log.i("encrypted Message value",encryptedMessage);
+                                String ephemeralPublicKey = signedObj.getString("ephemeralPublicKey");
+                                Log.i("ephemeral Public Key",ephemeralPublicKey);
+                                String tag = signedObj.getString("tag");
+                                Log.i("tag value",tag);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            break;
+                        case Activity.RESULT_CANCELED:
+                            Log.i("Payment Data Canceled","Payment Cancelled");
+                            break;
+                        case AutoResolveHelper.RESULT_ERROR:
+                            Status status = AutoResolveHelper.getStatusFromIntent(data);
+                            // Log the status for debugging.
+                            // Generally, there is no need to show an error to
+                            // the user as the Google Payment API will do that.
+                            // mShowErrorCallback.invoke(errorCode);
+                            break;
+                        default:
+                            // Do nothing.
+                    }
+                    break;
                 default:
                     super.onActivityResult(requestCode, resultCode, data);
                     break;
@@ -152,23 +195,34 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
 
     @ReactMethod
     public void canMakePayments(ReadableMap paymentMethodData, Callback errorCallback, Callback successCallback) {
+         Log.i("Can make payments", "Can make payments");
         final Callback callback = successCallback;
         IsReadyToPayRequest req = IsReadyToPayRequest.newBuilder()
-                .addAllowedCardNetwork(WalletConstants.CardNetwork.CARD_NETWORK_MASTERCARD)
-                .addAllowedCardNetwork(WalletConstants.CardNetwork.CARD_NETWORK_VISA)
-                .addAllowedCardNetwork(WalletConstants.CardNetwork.CARD_NETWORK_AMEX)
+                .addAllowedCardNetwork(WalletConstants.CARD_NETWORK_AMEX)
+                .addAllowedCardNetwork(WalletConstants.CARD_NETWORK_VISA)
+                .addAllowedCardNetwork(WalletConstants.CARD_NETWORK_MASTERCARD)
                 .build();
 
         int environment = getEnvironmentFromPaymentMethodData(paymentMethodData);
-        if (mGoogleApiClient == null) {
-            buildGoogleApiClient(getCurrentActivity(), environment);
+        if (paymentClient == null) {
+            buildPaymentClient(getCurrentActivity(), environment);
         }
 
-        Wallet.Payments.isReadyToPay(mGoogleApiClient, req)
-                .setResultCallback(new ResultCallback<BooleanResult>() {
-                    @Override
-                    public void onResult(@NonNull BooleanResult booleanResult) {
-                        callback.invoke(booleanResult.getValue());
+        Task<Boolean> task = paymentClient.isReadyToPay(req);
+        task.addOnCompleteListener(
+                new OnCompleteListener<Boolean>() {
+                    public void onComplete(Task<Boolean> task) {
+                        try {
+                            boolean result = task.getResult(
+                                    ApiException.class);
+                            callback.invoke(result);
+                            /*if (result == true) {
+                                // Show Google as payment option.
+                            } else {
+                                // Hide Google as payment option.
+                            }*/
+                        } catch (ApiException exception) {
+                        }
                     }
                 });
     }
@@ -192,7 +246,53 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
 
         Log.i(REACT_CLASS, "ANDROID PAY SHOW" + options);
 
-        Boolean shouldRequestShipping = options.hasKey("requestShipping") && options.getBoolean("requestShipping")
+        ReadableMap total = details.getMap("total").getMap("amount");
+        PaymentDataRequest.Builder request =
+                PaymentDataRequest.newBuilder()
+                        .setTransactionInfo(
+                                TransactionInfo.newBuilder()
+                                        .setTotalPriceStatus(WalletConstants.TOTAL_PRICE_STATUS_FINAL)
+                                        .setTotalPrice(total.getString("value"))
+                                        .setCurrencyCode(total.getString("currency"))
+                                        .build())
+                        .addAllowedPaymentMethod(WalletConstants.PAYMENT_METHOD_CARD)
+                    //    .addAllowedPaymentMethod(WalletConstants.PAYMENT_METHOD_TOKENIZED_CARD)
+                        .setCardRequirements(
+                                CardRequirements.newBuilder()
+                                        .addAllowedCardNetworks(
+                                                Arrays.asList(
+                                                        WalletConstants.CARD_NETWORK_VISA,
+                                                        WalletConstants.CARD_NETWORK_MASTERCARD,
+                                                        WalletConstants.CARD_NETWORK_AMEX))
+                                        .build());
+
+        final PaymentMethodTokenizationParameters parameters = buildTokenizationParametersFromPaymentMethodData(paymentMethodData);
+        /*PaymentMethodTokenizationParameters params =
+                PaymentMethodTokenizationParameters.newBuilder()
+                        .setPaymentMethodTokenizationType(
+                                WalletConstants.PAYMENT_METHOD_TOKENIZATION_TYPE_PAYMENT_GATEWAY)
+                        .addParameter("gateway", "worldpay")
+                        .addParameter("gatewayMerchantId", "ad877626fde6e5e")
+                        .build(); */
+
+        request.setPaymentMethodTokenizationParameters(parameters);
+
+        int environment = getEnvironmentFromPaymentMethodData(paymentMethodData);
+        if (paymentClient == null) {
+            buildPaymentClient(getCurrentActivity(), getEnvironmentFromPaymentMethodData(paymentMethodData));
+        }
+
+        if (request != null) {
+            AutoResolveHelper.resolveTask(
+                    paymentClient.loadPaymentData(request.build()),
+                    getCurrentActivity(),
+                    // LOAD_PAYMENT_DATA_REQUEST_CODE is a constant value
+                    // you define.
+                    LOAD_PAYMENT_DATA_REQUEST_CODE);
+
+        }
+
+        /*Boolean shouldRequestShipping = options.hasKey("requestShipping") && options.getBoolean("requestShipping")
                         || options.hasKey("requestPayerName") && options.getBoolean("requestPayerName")
                         || options.hasKey("requestPayerPhone") && options.getBoolean("requestPayerPhone");
         Boolean shouldRequestPayerPhone = options.hasKey("requestPayerPhone") && options.getBoolean("requestPayerPhone");
@@ -214,7 +314,7 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
             buildGoogleApiClient(getCurrentActivity(), environment);
         }
 
-        Wallet.Payments.loadMaskedWallet(mGoogleApiClient, maskedWalletRequest, LOAD_MASKED_WALLET_REQUEST_CODE);
+        Wallet.Payments.loadMaskedWallet(mGoogleApiClient, maskedWalletRequest, LOAD_MASKED_WALLET_REQUEST_CODE); */
     }
 
     @ReactMethod
