@@ -17,11 +17,13 @@ import com.facebook.react.bridge.ReactBridge;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.BooleanResult;
-import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.identity.intents.model.UserAddress;
 import com.google.android.gms.wallet.*;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.common.api.ApiException;
 
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.BaseActivityEventListener;
@@ -33,7 +35,11 @@ import com.facebook.react.bridge.WritableNativeArray;
 import com.facebook.react.bridge.WritableNativeMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +47,7 @@ import java.util.Map;
 public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static final int LOAD_MASKED_WALLET_REQUEST_CODE = 88;
     private static final int LOAD_FULL_WALLET_REQUEST_CODE = 89;
+    private static final int LOAD_PAYMENT_DATA_REQUEST_CODE = 90;
 
     private PaymentsClient paymentClient = null;
     // Google API Client
@@ -116,7 +123,7 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
                 case WalletConstants.RESULT_ERROR:activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
 //                    handleError(errorCode);
                     break;
-                case LOAD_PAYMENT_DATA_CONSTANT:
+                case LOAD_PAYMENT_DATA_REQUEST_CODE:
                     switch (resultCode) {
                         case Activity.RESULT_OK:
                             PaymentData paymentData = PaymentData.getFromIntent(data);
@@ -286,35 +293,21 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
             AutoResolveHelper.resolveTask(
                     paymentClient.loadPaymentData(request.build()),
                     getCurrentActivity(),
-                    // LOAD_PAYMENT_DATA_REQUEST_CODE is a constant value
-                    // you define.
                     LOAD_PAYMENT_DATA_REQUEST_CODE);
 
         }
+    }
 
-        /*Boolean shouldRequestShipping = options.hasKey("requestShipping") && options.getBoolean("requestShipping")
-                        || options.hasKey("requestPayerName") && options.getBoolean("requestPayerName")
-                        || options.hasKey("requestPayerPhone") && options.getBoolean("requestPayerPhone");
-        Boolean shouldRequestPayerPhone = options.hasKey("requestPayerPhone") && options.getBoolean("requestPayerPhone");
-
-        final PaymentMethodTokenizationParameters parameters = buildTokenizationParametersFromPaymentMethodData(paymentMethodData);
-
-        // TODO: clean up MaskedWalletRequest
-        ReadableMap total = details.getMap("total").getMap("amount");
-        final MaskedWalletRequest maskedWalletRequest = MaskedWalletRequest.newBuilder()
-                .setPaymentMethodTokenizationParameters(parameters)
-                .setPhoneNumberRequired(shouldRequestPayerPhone)
-                .setShippingAddressRequired(shouldRequestShipping)
-                .setEstimatedTotalPrice(total.getString("value"))
-                .setCurrencyCode(total.getString("currency"))
-                .build();
-
-        int environment = getEnvironmentFromPaymentMethodData(paymentMethodData);
-        if (mGoogleApiClient == null) {
-            buildGoogleApiClient(getCurrentActivity(), environment);
-        }
-
-        Wallet.Payments.loadMaskedWallet(mGoogleApiClient, maskedWalletRequest, LOAD_MASKED_WALLET_REQUEST_CODE); */
+    // Payment Client
+    // ---------------------------------------------------------------------------------------------
+    private void buildPaymentClient(Activity currentActivity, int environment) {
+        Log.i("Build payment client", "Build payment client");
+        paymentClient =
+                Wallet.getPaymentsClient(
+                        currentActivity,
+                        new Wallet.WalletOptions.Builder()
+                                .setEnvironment(environment)
+                                .build());
     }
 
     @ReactMethod
