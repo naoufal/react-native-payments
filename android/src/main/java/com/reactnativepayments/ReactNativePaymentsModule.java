@@ -129,6 +129,7 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
                             PaymentData paymentData = PaymentData.getFromIntent(data);
                             String token = paymentData.getPaymentMethodToken().getToken();
 
+                            mShowSuccessCallback.invoke(token);
                             Log.i("Payment Data OK","Payment Token: "+token);
                             JSONObject obj = null;
                             JSONObject signedObj = null;
@@ -274,13 +275,6 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
                                         .build());
 
         final PaymentMethodTokenizationParameters parameters = buildTokenizationParametersFromPaymentMethodData(paymentMethodData);
-        /*PaymentMethodTokenizationParameters params =
-                PaymentMethodTokenizationParameters.newBuilder()
-                        .setPaymentMethodTokenizationType(
-                                WalletConstants.PAYMENT_METHOD_TOKENIZATION_TYPE_PAYMENT_GATEWAY)
-                        .addParameter("gateway", "worldpay")
-                        .addParameter("gatewayMerchantId", "ad877626fde6e5e")
-                        .build(); */
 
         request.setPaymentMethodTokenizationParameters(parameters);
 
@@ -350,22 +344,27 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
 
         if (tokenizationType.equals("GATEWAY_TOKEN")) {
             Log.i("Gateway token","Gateway token called here");
+
             ReadableMap parameters = tokenizationParameters.getMap("parameters");
-            PaymentMethodTokenizationParameters.Builder parametersBuilder = PaymentMethodTokenizationParameters.newBuilder()
-                    .setPaymentMethodTokenizationType(PaymentMethodTokenizationType.PAYMENT_GATEWAY)
-                    .addParameter("gateway", parameters.getString("gateway"));
+            PaymentMethodTokenizationParameters.Builder parametersBuilder =
+                    PaymentMethodTokenizationParameters.newBuilder()
+                            .setPaymentMethodTokenizationType(
+                                    WalletConstants.PAYMENT_METHOD_TOKENIZATION_TYPE_PAYMENT_GATEWAY)
+                            .addParameter("gateway", parameters.getString("gateway"));
 
             ReadableMapKeySetIterator iterator = parameters.keySetIterator();
 
             while (iterator.hasNextKey()) {
                 String key = iterator.nextKey();
-
                 parametersBuilder.addParameter(key, parameters.getString(key));
             }
 
             return parametersBuilder.build();
 
-        } else {
+        }
+        // FIX ME: It is deprecated and is not required for World pay integration.
+        // We should use WalletConstants.PAYMENT_METHOD_TOKENIZATION_TYPE_DIRECT
+        else {
             Log.i("Network token","Network token called here");
             String publicKey = tokenizationParameters.getMap("parameters").getString("publicKey");
 
