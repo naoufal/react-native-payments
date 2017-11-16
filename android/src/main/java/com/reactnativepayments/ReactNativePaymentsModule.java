@@ -128,8 +128,16 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
                         case Activity.RESULT_OK:
                             PaymentData paymentData = PaymentData.getFromIntent(data);
                             String token = paymentData.getPaymentMethodToken().getToken();
+                            
+                            WritableNativeMap paymentDetails = new WritableNativeMap();
+                                paymentDetails.putString("paymentDescription", "");
+                                paymentDetails.putString("payerEmail", "");
+                                paymentDetails.putMap("shippingAddress", new WritableNativeMap());
+                                paymentDetails.putString("googleTransactionId", "");
+                                paymentDetails.putString("paymentData", token);
 
-                            mShowSuccessCallback.invoke(token);
+                            // mShowSuccessCallback.invoke(token);
+                            sendEvent(reactContext, "NativePayments:onuseraccept", paymentDetails);
                             Log.i("Payment Data OK","Payment Token: "+token);
                             JSONObject obj = null;
                             JSONObject signedObj = null;
@@ -155,6 +163,7 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
 
                             break;
                         case Activity.RESULT_CANCELED:
+                            sendEvent(reactContext, "NativePayments:onuserdismiss", null);
                             Log.i("Payment Data Canceled","Payment Cancelled");
                             break;
                         case AutoResolveHelper.RESULT_ERROR:
@@ -162,7 +171,7 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
                             // Log the status for debugging.
                             // Generally, there is no need to show an error to
                             // the user as the Google Payment API will do that.
-                            // mShowErrorCallback.invoke(errorCode);
+                            mShowErrorCallback.invoke(errorCode);
                             break;
                         default:
                             // Do nothing.
