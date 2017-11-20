@@ -5,15 +5,15 @@ declare module 'react-native-payments' {
   }
 
   interface PaymentResponseAndroid {
-    googleTransactionId: string;
-    paymentDescription: string;
-    getPaymentToken: () => Promise<PaymentTokenAndroid>;
+    googleTransactionId?: string;
+    paymentDescription?: string;
+    getPaymentToken?: () => Promise<PaymentTokenAndroid>;
   }
 
   interface PaymentResponseIOS {
-    transactionIdentifier: string;
-    paymentData: any;
-    serializedPaymentData: string;
+    transactionIdentifier?: string;
+    paymentData?: any;
+    serializedPaymentData?: string;
   }
 
   export interface PaymentMethodData {
@@ -36,6 +36,11 @@ declare module 'react-native-payments' {
     id?: string;
     total: PaymentItem;
   }
+
+  export interface PaymentDetailsAfterResponse
+    extends PaymentDetailsInit,
+      PaymentResponseAndroid,
+      PaymentResponseIOS {}
 
   export interface PaymentDetailsUpdate extends PaymentDetailsBase {
     error: string;
@@ -91,13 +96,13 @@ declare module 'react-native-payments' {
   class PaymentResponse {
     requestId: string;
     methodName: string;
-    details: PaymentDetailsInit;
+    details: PaymentDetailsAfterResponse;
     shippingAddress: null | PaymentAddress;
     shippingOption: null | string;
     payerName: null | string;
     payerPhone: null | string;
     payerEmail: null | string;
-    complete(paymentStatus: PaymentComplete): Promise<void>;
+    complete(paymentStatus: PaymentComplete): Promise<PaymentComplete>;
   }
 
   type PaymentRequestUpdateEventType =
@@ -134,7 +139,7 @@ declare module 'react-native-payments' {
     get shippingAddress(): null | PaymentAddress;
     get shippingOption(): null | string;
 
-    show(): Promise<PaymentResponseAndroid | PaymentResponseIOS>;
+    show(): Promise<PaymentResponse>;
 
     /** Cancels the payment */
     abort(): Promise<void>;
