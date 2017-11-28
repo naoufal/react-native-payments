@@ -245,7 +245,7 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
                                         .addAllowedCardNetworks(
                                                 Arrays.asList(
                                                         WalletConstants.CARD_NETWORK_VISA,
-                                                        WalletConstants.CARD_NETWORK_MASTERCARD
+                                                        WalletConstants.CARD_NETWORK_MASTERCARD))
                                         .build());
 
         final PaymentMethodTokenizationParameters parameters = buildTokenizationParametersFromPaymentMethodData(paymentMethodData);
