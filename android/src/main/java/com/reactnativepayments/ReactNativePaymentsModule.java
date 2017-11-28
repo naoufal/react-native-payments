@@ -190,7 +190,6 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
     public void canMakePayments(ReadableMap paymentMethodData, Callback errorCallback, Callback successCallback) {
         final Callback callback = successCallback;
         IsReadyToPayRequest req = IsReadyToPayRequest.newBuilder()
-                .addAllowedCardNetwork(WalletConstants.CARD_NETWORK_AMEX)
                 .addAllowedCardNetwork(WalletConstants.CARD_NETWORK_VISA)
                 .addAllowedCardNetwork(WalletConstants.CARD_NETWORK_MASTERCARD)
                 .build();
