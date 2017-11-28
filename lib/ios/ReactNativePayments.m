@@ -209,7 +209,7 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
 {
     // https://developer.apple.com/reference/passkit/pkpaymentnetwork
     NSDictionary *supportedNetworksMapping = @{
-                                               @"amex": PKPaymentNetworkAmex,
+//                                               @"amex": PKPaymentNetworkAmex,
 //                                               @"chinaunionpay": PKPaymentNetworkChinaUnionPay,
 //                                               @"discover": PKPaymentNetworkDiscover,
 //                                               @"jcb": PKPaymentNetworkJCB,
@@ -341,7 +341,7 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
 -(BOOL)canMakePaymentsUsingNetworks
 {
    BOOL canMakePaymentsUsingNetworks = NO;
-   NSArray *supportedPaymentNetworks = @[PKPaymentNetworkVisa, PKPaymentNetworkMasterCard, PKPaymentNetworkAmex];
+   NSArray *supportedPaymentNetworks = @[PKPaymentNetworkVisa, PKPaymentNetworkMasterCard];
    
    if ([PKPaymentAuthorizationViewController canMakePaymentsUsingNetworks:supportedPaymentNetworks]) {
        canMakePaymentsUsingNetworks = YES;
