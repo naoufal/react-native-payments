@@ -299,6 +299,7 @@ export default class PaymentRequest {
   }) {
     const {
       transactionIdentifier,
+      paymentToken,
       paymentData: serializedPaymentData
     } = details;
     const isSimulator = transactionIdentifier === 'Simulated Identifier';
@@ -312,6 +313,7 @@ export default class PaymentRequest {
 
     return {
       transactionIdentifier,
+      paymentToken,
       paymentData: JSON.parse(serializedPaymentData),
       serializedPaymentData
     };
