@@ -203,23 +203,44 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
 }
 
 // PRIVATE METHODS
+// https://developer.apple.com/reference/passkit/pkpaymentnetwork
 // ---------------
 - (NSArray *_Nonnull)getSupportedNetworksFromMethodData:(NSDictionary *_Nonnull)methodData
 {
-    // https://developer.apple.com/reference/passkit/pkpaymentnetwork
-    NSDictionary *supportedNetworksMapping = @{
-                                               @"amex": PKPaymentNetworkAmex,
-                                               @"chinaunionpay": PKPaymentNetworkChinaUnionPay,
-                                               @"discover": PKPaymentNetworkDiscover,
-                                               @"jcb": PKPaymentNetworkJCB,
-                                               @"mastercard": PKPaymentNetworkMasterCard,
-                                               @"privatelabel": PKPaymentNetworkPrivateLabel,
-                                               @"visa": PKPaymentNetworkVisa,
-                                               @"interac": PKPaymentNetworkInterac,
-                                               @"suica": PKPaymentNetworkSuica,
-                                               @"quicpay": PKPaymentNetworkQuicPay,
-                                               @"idcredit": PKPaymentNetworkIDCredit
-                                               };
+    NSMutableDictionary *supportedNetworksMapping = [[NSMutableDictionary alloc] init];
+
+    CGFloat iOSVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
+
+    if (iOSVersion >= 8) {
+        [supportedNetworksMapping setObject:PKPaymentNetworkAmex forKey:@"amex"];
+        [supportedNetworksMapping setObject:PKPaymentNetworkMasterCard forKey:@"mastercard"];
+        [supportedNetworksMapping setObject:PKPaymentNetworkVisa forKey:@"visa"];
+    }
+
+    if (iOSVersion >= 9) {
+        [supportedNetworksMapping setObject:PKPaymentNetworkDiscover forKey:@"discover"];
+        [supportedNetworksMapping setObject:PKPaymentNetworkPrivateLabel forKey:@"privatelabel"];
+    }
+
+    if (iOSVersion >= 9.2) {
+        [supportedNetworksMapping setObject:PKPaymentNetworkChinaUnionPay forKey:@"chinaunionpay"];
+        [supportedNetworksMapping setObject:PKPaymentNetworkInterac forKey:@"interac"];
+    }
+
+    if (iOSVersion >= 10.1) {
+        [supportedNetworksMapping setObject:PKPaymentNetworkJCB forKey:@"jcb"];
+        [supportedNetworksMapping setObject:PKPaymentNetworkSuica forKey:@"suica"];
+    }
+
+    if (iOSVersion >= 10.3) {
+        [supportedNetworksMapping setObject:PKPaymentNetworkCarteBancaire forKey:@"cartebancaires"];
+        [supportedNetworksMapping setObject:PKPaymentNetworkIDCredit forKey:@"idcredit"];
+        [supportedNetworksMapping setObject:PKPaymentNetworkQuicPay forKey:@"quicpay"];
+    }
+
+    if (iOSVersion >= 11) {
+        [supportedNetworksMapping setObject:PKPaymentNetworkCarteBancaires forKey:@"cartebancaires"];
+    }
 
     // Setup supportedNetworks
     NSArray *jsSupportedNetworks = methodData[@"supportedNetworks"];
