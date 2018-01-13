@@ -2,7 +2,6 @@
   "name": "react-native-payments",
   "version": "0.3.1",
   "scripts": {
-    "precommit": "lint-staged",
     "run:packager": "cd examples/native && yarn run:packager",
     "run:ios": "cd examples/native && yarn run:ios",
     "run:web": "cd examples/web && yarn run:web",
@@ -30,8 +29,6 @@
     "babel-preset-react-native": "2.0.0",
     "husky": "^0.14.1",
     "jest": "20.0.4",
-    "lint-staged": "^4.0.0",
-    "prettier": "^1.4.4",
     "react-test-renderer": "16.0.0-alpha.12"
   },
   "peerDependencies": {
@@ -43,12 +40,6 @@
       "/node_modules/",
       "/examples/",
       "lib/js/__tests__"
-    ]
-  },
-  "lint-staged": {
-    "*.js": [
-      "prettier --single-quote --write",
-      "git add"
     ]
   }
 }
