@@ -1,5 +1,5 @@
 {
-  "name": "react-native-payments-addon-stripe",
+  "name": "@react-native-payments/stripe",
   "version": "11.1.0-1",
   "description": "React Native Payments add-on for processing payments with Stripe.",
   "main": "index.js",

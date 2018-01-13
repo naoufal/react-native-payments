@@ -1,5 +1,5 @@
 {
-  "name": "react-native-payments-addon-braintree",
+  "name": "@react-native-payments/braintree",
   "version": "4.8.4-1",
   "description": "React Native Payments add-on for processing payments with Braintree.",
   "main": "index.js",
