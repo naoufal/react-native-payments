@@ -11,7 +11,9 @@ import type {
   PaymentShippingOption,
   PaymentItem,
   PaymentAddress,
-  PaymentShippingType
+  PaymentShippingType,
+  PaymentDetailsIOS,
+  PaymentDetailsIOSRaw,
 } from './types';
 import type PaymentResponseType from './PaymentResponse';
 
@@ -287,33 +289,25 @@ export default class PaymentRequest {
     this._shippingOptionChangeFn(event);
   }
 
-  _getPlatformDetails(details) {
+  _getPlatformDetails(details: *) {
     return IS_IOS
       ? this._getPlatformDetailsIOS(details)
       : this._getPlatformDetailsAndroid(details);
   }
 
-  _getPlatformDetailsIOS(details: {
-    transactionIdentifier: string,
-    paymentData: string
-  }) {
+  _getPlatformDetailsIOS(details: PaymentDetailsIOSRaw): PaymentDetailsIOS {
     const {
+      paymentData: serializedPaymentData,
+      paymentToken,
       transactionIdentifier,
-      paymentData: serializedPaymentData
     } = details;
+
     const isSimulator = transactionIdentifier === 'Simulated Identifier';
 
-    if (isSimulator) {
-      return Object.assign({}, details, {
-        paymentData: null,
-        serializedPaymentData
-      });
-    }
-
     return {
+      paymentData: isSimulator ? null : JSON.parse(serializedPaymentData),
+      paymentToken,
       transactionIdentifier,
-      paymentData: JSON.parse(serializedPaymentData),
-      serializedPaymentData
     };
   }
 
@@ -321,7 +315,7 @@ export default class PaymentRequest {
     googleTransactionId: string,
     payerEmail: string,
     paymentDescription: string,
-    shippingAddress: object
+    shippingAddress: Object,
   }) {
     const {
       googleTransactionId,
@@ -344,8 +338,9 @@ export default class PaymentRequest {
   _handleUserAccept(details: {
     transactionIdentifier: string,
     paymentData: string,
-    shippingAddress: object,
-    payerEmail: string
+    shippingAddress: Object,
+    payerEmail: string,
+    paymentToken?: string,
   }) {
     // On Android, we don't have `onShippingAddressChange` events, so we
     // set the shipping address when the user accepts.
@@ -356,12 +351,11 @@ export default class PaymentRequest {
       this._shippingAddress = shippingAddress;
     }
 
-    const platformDetails = this._getPlatformDetails(details);
     const paymentResponse = new PaymentResponse({
       requestId: this.id,
       methodName: IS_IOS ? 'apple-pay' : 'android-pay',
-      details: platformDetails,
       shippingAddress: this._options.requestShipping ? this._shippingAddress : null,
+      details: this._getPlatformDetails(details),
       shippingOption: IS_IOS ? this._shippingOption : null,
       payerName: this._options.requestPayerName ? this._shippingAddress.recipient : null,
       payerPhone: this._options.requestPayerPhone ? this._shippingAddress.phone : null,
@@ -483,3 +477,4 @@ export default class PaymentRequest {
     );
   }
 }
+

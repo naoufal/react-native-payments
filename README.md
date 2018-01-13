@@ -26,6 +26,7 @@ __Features__
 - [Demo](#demo)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Testing Payments](#testing-payments)
 - [Add-ons](#add-ons)
 - [API](#api)
 - [Resources](#resources)
@@ -328,18 +329,20 @@ There are two ways to process Apple Pay/Android Pay payments -- on your server o
 #### Processing Payments on Your Server
 If you're equiped to process Apple Pay/Android Pay payments on your server, all you have to do is send the Payment Response data to your server.
 
+> ⚠️ **Note:** When running Apple Pay on simulator, `paymentData` equals to `null`.
+
 ```es6
 import { NativeModules } from 'react-native';
 
 paymentRequest.show()
   .then(paymentResponse => {
-    const { transactionIdentifier, serializedPaymentData } = paymentResponse.details;
+    const { transactionIdentifier, paymentData } = paymentResponse.details;
 
     return fetch('...', {
       method: 'POST',
       body: {
         transactionIdentifier,
-        serializedPaymentData
+        paymentData
       }
     })
     .then(res => res.json())
@@ -437,6 +440,15 @@ paymentResponse.complete('success'); // Alternatively, you can call it with `fai
 ```
 
 🚨 _Note: On Android, there is no need to call `paymentResponse.complete` -- the PaymentRequest dismisses itself._
+
+## Testing Payments
+
+### Apple Pay
+
+The sandbox environment is a great way to test offline implementation of Apple Pay for apps, websites, and point of sale systems. Apple offers [detailed guide](https://developer.apple.com/support/apple-pay-sandbox/) for setting up sandbox environment.
+> ⚠️ **Note:** It is also important to test Apple Pay in your production environment. Real cards must be used in the production environment. Test cards will not work.
+>
+> ⚠️ **Note:** There are known differences when running Apple Pay on simulator and real device. Make sure you test Apple Pay on real device before going into production.
 
 ## Add-ons
 Here's a list of Payment Processors that you can enable via add-ons:
