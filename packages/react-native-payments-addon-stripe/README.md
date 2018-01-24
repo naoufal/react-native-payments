@@ -13,6 +13,12 @@ Second, install the [React Native Payments CLI](https://www.npmjs.com/package/re
 $ yarn add react-native-payments-cli
 ```
 
+Then, complete the Carthage dependency. Otherwise the next step fails:
+```bash
+$ cd node_modules/react-native-payments-addon-stripe
+$ carthage update
+```
+
 Lastly, link the native dependencies with the React Native Payments CLI:
 ```bash
 $ yarn react-native-payments-cli -- link stripe
