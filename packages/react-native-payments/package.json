@@ -32,11 +32,11 @@
     "react-test-renderer": "16.0.0-alpha.12"
   },
   "peerDependencies": {
-    "react": "~15.4.0-rc.4",
-    "react-native": "0.41.0"
+    "react": ">=15.4.0-rc.4",
+    "react-native": "^0.41.0"
   },
   "jest": {
-    "testPathIgnorePatterns": [
+    "testPathIgnorePatter ns": [
       "/node_modules/",
       "/examples/",
       "lib/js/__tests__"
