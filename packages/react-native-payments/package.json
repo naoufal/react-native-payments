@@ -36,7 +36,7 @@
     "react-native": "^0.52.0"
   },
   "jest": {
-    "testPathIgnorePatter ns": [
+    "testPathIgnorePatterns": [
       "/node_modules/",
       "/examples/",
       "lib/js/__tests__"
