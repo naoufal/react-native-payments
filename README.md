@@ -327,7 +327,7 @@ paymentRequest.show()
 There are two ways to process Apple Pay/Android Pay payments -- on your server or using a payment processor.
 
 #### Processing Payments on Your Server
-If you're equiped to process Apple Pay/Android Pay payments on your server, all you have to do is send the Payment Response data to your server.
+If you're equipped to process Apple Pay/Android Pay payments on your server, all you have to do is send the Payment Response data to your server.
 
 > ⚠️ **Note:** When running Apple Pay on simulator, `paymentData` equals to `null`.
 

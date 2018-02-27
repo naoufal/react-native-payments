@@ -33,7 +33,7 @@ describe('PaymentResponse', () => {
         expect(paymentRequest.requestId).toBe(paymentResponseData.requestId);
       });
 
-      it('should throw if user attemps to assign value', () => {
+      it('should throw if user attempts to assign value', () => {
         expect(() => {
           paymentRequest.requestId = 'foo';
         }).toThrow();
@@ -45,7 +45,7 @@ describe('PaymentResponse', () => {
         expect(paymentRequest.methodName).toBe(paymentResponseData.methodName);
       });
 
-      it('should throw if user attemps to assign value', () => {
+      it('should throw if user attempts to assign value', () => {
         expect(() => {
           paymentRequest.methodName = 'foo';
         }).toThrow();
@@ -57,7 +57,7 @@ describe('PaymentResponse', () => {
         expect(paymentRequest.details).toEqual(paymentResponseData.details);
       });
 
-      it('should throw if user attemps to assign value', () => {
+      it('should throw if user attempts to assign value', () => {
         expect(() => {
           paymentRequest.details = 'foo';
         }).toThrow();
@@ -71,7 +71,7 @@ describe('PaymentResponse', () => {
         );
       });
 
-      it('should throw if user attemps to assign value', () => {
+      it('should throw if user attempts to assign value', () => {
         expect(() => {
           paymentRequest.shippingAddress = 'foo';
         }).toThrow();
@@ -85,7 +85,7 @@ describe('PaymentResponse', () => {
         );
       });
 
-      it('should throw if user attemps to assign value', () => {
+      it('should throw if user attempts to assign value', () => {
         expect(() => {
           paymentRequest.shippingOption = 'foo';
         }).toThrow();
@@ -97,7 +97,7 @@ describe('PaymentResponse', () => {
         expect(paymentRequest.payerName).toBe(paymentResponseData.payerName);
       });
 
-      it('should throw if user attemps to assign value', () => {
+      it('should throw if user attempts to assign value', () => {
         expect(() => {
           paymentRequest.payerName = 'foo';
         }).toThrow();
@@ -109,7 +109,7 @@ describe('PaymentResponse', () => {
         expect(paymentRequest.payerPhone).toBe(paymentResponseData.payerPhone);
       });
 
-      it('should throw if user attemps to assign value', () => {
+      it('should throw if user attempts to assign value', () => {
         expect(() => {
           paymentRequest.payerPhone = 'foo';
         }).toThrow();
@@ -121,7 +121,7 @@ describe('PaymentResponse', () => {
         expect(paymentRequest.payerEmail).toBe(paymentResponseData.payerEmail);
       });
 
-      it('should throw if user attemps to assign value', () => {
+      it('should throw if user attempts to assign value', () => {
         expect(() => {
           paymentRequest.payerEmail = 'foo';
         }).toThrow();
