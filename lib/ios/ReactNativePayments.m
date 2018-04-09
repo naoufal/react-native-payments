@@ -348,11 +348,22 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
 - (void)handleUserAccept:(PKPayment *_Nonnull)payment
                 paymentToken:(NSString *_Nullable)token
 {
+    CNPostalAddress *postalAddress = payment.shippingContact.postalAddress;
+
     NSString *transactionId = payment.token.transactionIdentifier;
     NSString *paymentData = [[NSString alloc] initWithData:payment.token.paymentData encoding:NSUTF8StringEncoding];
     NSMutableDictionary *paymentResponse = [[NSMutableDictionary alloc]initWithCapacity:3];
+    NSMutableDictionary *shippingAddress = [[NSMutableDictionary alloc]initWithCapacity:5];
+
+    shippingAddress[@"addressLine"] = postalAddress.street;
+    shippingAddress[@"city"] = postalAddress.city;
+    shippingAddress[@"region"] = postalAddress.state;
+    shippingAddress[@"country"] = [postalAddress.ISOCountryCode uppercaseString];
+    shippingAddress[@"postalCode"] = postalAddress.postalCode;
+
     [paymentResponse setObject:transactionId forKey:@"transactionIdentifier"];
     [paymentResponse setObject:paymentData forKey:@"paymentData"];
+    [paymentResponse setObject:shippingAddress forKey:@"shippingAddress"];
 
     if (token) {
         [paymentResponse setObject:token forKey:@"paymentToken"];
