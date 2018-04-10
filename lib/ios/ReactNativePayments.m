@@ -170,19 +170,33 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
                                  completion:(nonnull void (^)(PKPaymentAuthorizationStatus, NSArray<PKShippingMethod *> * _Nonnull, NSArray<PKPaymentSummaryItem *> * _Nonnull))completion
 {
     self.shippingContactCompletion = completion;
-
+    
     CNPostalAddress *postalAddress = contact.postalAddress;
+    
+    NSMutableString *recipientName = [NSMutableString string];
+    if (contact.name.givenName != NULL && ![contact.name.givenName isEqualToString:@""]) {
+        recipientName = [NSMutableString stringWithString:contact.name.givenName];
+    }
+    if (contact.name.familyName != NULL && ![contact.name.familyName isEqualToString:@""]) {
+        [recipientName appendString:[NSString stringWithFormat:@" %@", contact.name.familyName]];
+    }
+    
+    NSString *phoneNumber = @"";
+    if (contact.phoneNumber != NULL) {
+        phoneNumber = contact.phoneNumber.stringValue;
+    }
+    
     // street, subAdministrativeArea, and subLocality are supressed for privacy
     [self.bridge.eventDispatcher sendDeviceEventWithName:@"NativePayments:onshippingaddresschange"
                                                     body:@{
-                                                           @"recipient": [NSNull null],
+                                                           @"recipient": recipientName,
                                                            @"organization": [NSNull null],
-                                                           @"addressLine": [NSNull null],
+                                                           @"addressLine": postalAddress.street,
                                                            @"city": postalAddress.city,
                                                            @"region": postalAddress.state,
                                                            @"country": [postalAddress.ISOCountryCode uppercaseString],
                                                            @"postalCode": postalAddress.postalCode,
-                                                           @"phone": [NSNull null],
+                                                           @"phone": phoneNumber,
                                                            @"languageCode": [NSNull null],
                                                            @"sortingCode": [NSNull null],
                                                            @"dependentLocality": [NSNull null]
@@ -334,11 +348,26 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
 - (void)handleUserAccept:(PKPayment *_Nonnull)payment
                 paymentToken:(NSString *_Nullable)token
 {
+    PKContact *shippingContact = payment.shippingContact;
+    CNPostalAddress *postalAddress = payment.shippingContact.postalAddress;
+
     NSString *transactionId = payment.token.transactionIdentifier;
     NSString *paymentData = [[NSString alloc] initWithData:payment.token.paymentData encoding:NSUTF8StringEncoding];
     NSMutableDictionary *paymentResponse = [[NSMutableDictionary alloc]initWithCapacity:3];
+    NSMutableDictionary *shippingAddress = [[NSMutableDictionary alloc]initWithCapacity:5];
+
+    shippingAddress[@"addressLine"] = postalAddress.street;
+    shippingAddress[@"city"] = postalAddress.city;
+    shippingAddress[@"region"] = postalAddress.state;
+    shippingAddress[@"country"] = [postalAddress.ISOCountryCode uppercaseString];
+    shippingAddress[@"postalCode"] = postalAddress.postalCode;
+    shippingAddress[@"recipient"] = shippingContact.name;
+    shippingAddress[@"phone"] = shippingContact.phoneNumber;
+    shippingAddress[@"email"] = shippingContact.emailAddress;
+
     [paymentResponse setObject:transactionId forKey:@"transactionIdentifier"];
     [paymentResponse setObject:paymentData forKey:@"paymentData"];
+    [paymentResponse setObject:shippingAddress forKey:@"shippingAddress"];
 
     if (token) {
         [paymentResponse setObject:token forKey:@"paymentToken"];
