@@ -1,4 +1,5 @@
 #import "ReactNativePayments.h"
+#import <React/RCTUtils.h>
 #import <React/RCTEventDispatcher.h>
 
 @implementation ReactNativePayments
@@ -56,11 +57,11 @@ RCT_EXPORT_METHOD(show:(RCTResponseSenderBlock)callback)
     self.viewController = [[PKPaymentAuthorizationViewController alloc] initWithPaymentRequest: self.paymentRequest];
     self.viewController.delegate = self;
     
-    // TODO - Replace `rootViewController` with a the top rootViewController
-    UIViewController *ctrl = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    [ctrl presentViewController:self.viewController animated:YES completion:nil];
-    
-    callback(@[[NSNull null]]);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIViewController *rootViewController = RCTPresentedViewController();
+        [rootViewController presentViewController:self.viewController animated:YES completion:nil];
+        callback(@[[NSNull null]]);
+    });
 }
 
 RCT_EXPORT_METHOD(abort: (RCTResponseSenderBlock)callback)
