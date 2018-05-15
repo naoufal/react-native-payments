@@ -36,12 +36,23 @@ const ApplePayPaymentButton = requireNativeComponent(
 
 export class ApplePayButton extends React.Component<Props> {
   static defaultProps = {
-    height: 44,
+    height: 88,
     style: 'black',
     type: 'plain',
   };
 
+  onPress = () => {
+    alert('pressed');
+  };
+
   render() {
-    return <ApplePayPaymentButton {...this.props} />;
+    return (
+      <ApplePayPaymentButton
+        {...this.props}
+        height={this.props.enabled ? 44 : 88}
+        onPress={this.onPress}
+        style={{ backgroundColor: 'red' }}
+      />
+    );
   }
 }

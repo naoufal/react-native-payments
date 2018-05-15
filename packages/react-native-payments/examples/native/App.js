@@ -12,7 +12,7 @@ type State = {
 
 export class App extends React.Component<Props, State> {
   state = {
-    enabled: false,
+    enabled: true,
   };
 
   render() {
@@ -20,7 +20,6 @@ export class App extends React.Component<Props, State> {
       <View
         style={{
           margin: 30,
-          height: 100,
           borderWidth: 1,
           borderColor: 'black',
         }}

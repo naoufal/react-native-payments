@@ -9,25 +9,24 @@
 #import <PassKit/PassKit.h>
 #import <React/RCTConvert.h>
 #import "ApplePayPaymentButtonManager.h"
+#import "ApplePayPaymentButton.h"
 
 @implementation ApplePayPaymentButtonManager
-{
-  BOOL _enabled;
-}
 
 RCT_EXPORT_MODULE()
 
-RCT_CUSTOM_VIEW_PROPERTY(enabled, BOOL, PKPaymentButton)
+RCT_CUSTOM_VIEW_PROPERTY(enabled, BOOL, ApplePayPaymentButton)
 {
-  NSLog(@"PKPaymentButton: view prop");
-  [view setEnabled: json ? [RCTConvert BOOL:json] : defaultView.enabled];
+  if (json) {
+    view.button.enabled = [RCTConvert BOOL:json];
+  } else {
+    view.button.enabled = defaultView.button.enabled;
+  }
 }
 
 - (UIView *) view
 {
-  NSLog(@"PKPaymentButton: view");
-  PKPaymentButton *button = [[PKPaymentButton alloc] initWithPaymentButtonType:PKPaymentButtonTypePlain paymentButtonStyle:PKPaymentButtonStyleBlack];
-  return button;
+  return [ApplePayPaymentButton new];
 }
 
 @end
