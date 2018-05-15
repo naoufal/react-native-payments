@@ -6,7 +6,9 @@ import { ApplePayButton } from './ApplePayButton';
 
 export function App() {
   return (
-    <View style={{ margin: 30, borderWidth: 1, borderColor: 'black' }}>
+    <View
+      style={{ margin: 30, height: 100, borderWidth: 1, borderColor: 'black' }}
+    >
       <ApplePayButton />
     </View>
   );

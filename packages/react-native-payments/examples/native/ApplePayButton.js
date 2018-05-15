@@ -3,7 +3,9 @@
 import * as React from 'react';
 import { NativeModules, requireNativeComponent, Text } from 'react-native';
 
-type Props = {};
+type Props = {
+  height: number,
+};
 
 const ApplePayPaymentButton = requireNativeComponent(
   'ApplePayPaymentButton',
@@ -11,11 +13,11 @@ const ApplePayPaymentButton = requireNativeComponent(
 );
 
 export class ApplePayButton extends React.Component<Props> {
+  static defaultProps = {
+    height: 44,
+  };
+
   render() {
-    return (
-      <ApplePayPaymentButton
-        style={{ height: 25, width: 100, backgroundColor: 'red' }}
-      />
-    );
+    return <ApplePayPaymentButton style={{ height: this.props.height }} />;
   }
 }
