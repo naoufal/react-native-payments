@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import { NativeModules, requireNativeComponent, Text } from 'react-native';
+import { NativeModules, requireNativeComponent } from 'react-native';
 
 type PKPaymentButtonType =
   // A button with the Apple Pay logo only.
@@ -31,7 +31,7 @@ type Props = {
 
 const ApplePayPaymentButton = requireNativeComponent(
   'ApplePayPaymentButton',
-  null
+  ApplePayButton
 );
 
 export class ApplePayButton extends React.Component<Props> {
@@ -42,6 +42,6 @@ export class ApplePayButton extends React.Component<Props> {
   };
 
   render() {
-    return <ApplePayPaymentButton style={{ height: this.props.height }} />;
+    return <ApplePayPaymentButton {...this.props} />;
   }
 }
