@@ -36,6 +36,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* ReactNativePaymentsExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ReactNativePaymentsExampleTests.m */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		779CD0AE20AB6A3A00364957 /* ApplePayPaymentButtonManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 779CD0AD20AB6A3A00364957 /* ApplePayPaymentButtonManager.m */; };
+		779CD0AF20AB73DD00364957 /* ApplePayPaymentButtonManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 779CD0AD20AB6A3A00364957 /* ApplePayPaymentButtonManager.m */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADCBDE571F01A6B100DA2FE6 /* libReactNativePayments.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADCBDE561F01A6A000DA2FE6 /* libReactNativePayments.a */; };
 /* End PBXBuildFile section */
@@ -979,6 +980,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				779CD0AF20AB73DD00364957 /* ApplePayPaymentButtonManager.m in Sources */,
 				2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */,
 				2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */,
 			);

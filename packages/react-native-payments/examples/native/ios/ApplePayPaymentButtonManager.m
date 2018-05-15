@@ -6,6 +6,7 @@
 //  Copyright © 2018 Facebook. All rights reserved.
 //
 
+#import <PassKit/PassKit.h>
 #import "ApplePayPaymentButtonManager.h"
 
 @implementation ApplePayPaymentButtonManager
@@ -14,8 +15,7 @@ RCT_EXPORT_MODULE()
 
 - (UIView *)view
 {
-  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  [button setTitle:@"Pay with apple pay" forState:UIControlStateNormal];
+  PKPaymentButton *button = [[PKPaymentButton alloc] initWithPaymentButtonType:PKPaymentButtonTypeBuy paymentButtonStyle:PKPaymentButtonStyleBlack];
   
   return button;
 }
