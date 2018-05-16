@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { Text, View } from 'react-native';
-import { ApplePayButton } from './ApplePayButton';
+import { ApplePayPaymentButton } from './ApplePayPaymentButton';
 
 type Props = {};
 
@@ -15,6 +15,10 @@ export class App extends React.Component<Props, State> {
     enabled: true,
   };
 
+  onPress = () => {
+    alert('Init payment request');
+  };
+
   render() {
     return (
       <View
@@ -24,7 +28,10 @@ export class App extends React.Component<Props, State> {
           borderColor: 'black',
         }}
       >
-        <ApplePayButton enabled={this.state.enabled} />
+        <ApplePayPaymentButton
+          enabled={this.state.enabled}
+          onPress={this.onPress}
+        />
         <View style={{ padding: 20 }}>
           <Text
             onPress={() =>

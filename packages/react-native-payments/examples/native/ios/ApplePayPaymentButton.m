@@ -6,7 +6,6 @@
 //  Copyright © 2018 Facebook. All rights reserved.
 //
 
-#import <PassKit/PassKit.h>
 #import "ApplePayPaymentButton.h"
 
 @implementation ApplePayPaymentButton
@@ -26,6 +25,7 @@
 - (PKPaymentButton *)makeButton {
   if (!_button) {
     _button = [[PKPaymentButton alloc] initWithPaymentButtonType:PKPaymentButtonTypePlain paymentButtonStyle:PKPaymentButtonStyleBlack];
+    [_button addTarget:self action:@selector(touchUpInside:) forControlEvents:UIControlEventTouchUpInside];
   }
   
   return _button;
@@ -36,6 +36,12 @@
   [super layoutSubviews];
   
   self.button.frame = self.bounds;
+}
+
+- (void)touchUpInside:(PKPaymentButton *)button {
+  if (self.onPress) {
+    self.onPress(nil);
+  }
 }
 
 @end

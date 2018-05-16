@@ -6,14 +6,14 @@
 //  Copyright © 2018 Facebook. All rights reserved.
 //
 
-#import <PassKit/PassKit.h>
-#import <React/RCTConvert.h>
 #import "ApplePayPaymentButtonManager.h"
 #import "ApplePayPaymentButton.h"
 
 @implementation ApplePayPaymentButtonManager
 
 RCT_EXPORT_MODULE()
+
+RCT_EXPORT_VIEW_PROPERTY(onPress, RCTBubblingEventBlock)
 
 RCT_CUSTOM_VIEW_PROPERTY(enabled, BOOL, ApplePayPaymentButton)
 {

@@ -25,33 +25,29 @@ type PKPaymentButtonStyle =
 
 type Props = {
   height: number,
+  onPress?: Function,
   style: PKPaymentButtonStyle,
   type: PKPaymentButtonType,
 };
 
-const ApplePayPaymentButton = requireNativeComponent(
+const RNTApplePayPaymentButton = requireNativeComponent(
   'ApplePayPaymentButton',
-  ApplePayButton
+  null,
+  { nativeOnly: { onPress: true } }
 );
 
-export class ApplePayButton extends React.Component<Props> {
+export class ApplePayPaymentButton extends React.Component<Props> {
   static defaultProps = {
     height: 88,
     style: 'black',
     type: 'plain',
   };
 
-  onPress = () => {
-    alert('pressed');
-  };
-
   render() {
     return (
-      <ApplePayPaymentButton
+      <RNTApplePayPaymentButton
         {...this.props}
         height={this.props.enabled ? 44 : 88}
-        onPress={this.onPress}
-        style={{ backgroundColor: 'red' }}
       />
     );
   }

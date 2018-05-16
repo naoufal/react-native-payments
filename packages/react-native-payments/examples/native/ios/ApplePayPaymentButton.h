@@ -6,11 +6,12 @@
 //  Copyright © 2018 Facebook. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <React/RCTView.h>
 #import <PassKit/PassKit.h>
 
-@interface ApplePayPaymentButton : UIView
+@interface ApplePayPaymentButton : RCTView
 
 @property (nonatomic, readonly) PKPaymentButton *button;
+@property (nonatomic, copy) RCTBubblingEventBlock onPress;
 
 @end
