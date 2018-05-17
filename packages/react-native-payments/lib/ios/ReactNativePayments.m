@@ -406,6 +406,8 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
     
     NSString *deviceAccountNumberSuffix = paymentPass.deviceAccountNumberSuffix;
     [result setObject:deviceAccountNumberSuffix forKey:@"deviceAccountNumberSuffix"];
+    
+    return result;
 }
 - (NSString *)convertPaymentPassActivationState:(PKPaymentMethodType)paymentPassActivationState
 {
