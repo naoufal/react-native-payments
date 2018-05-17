@@ -1,3 +1,7 @@
 node_modules/
 npm-debug.log
 lerna-debug.log
+
+# Intellij IDEA
+.idea
+*.iml

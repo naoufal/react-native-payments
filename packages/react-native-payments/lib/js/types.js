@@ -90,10 +90,12 @@ export type PaymentDetailsIOS = {
   paymentData: ?Object,
   paymentToken?: string,
   transactionIdentifier: string,
+  paymentMethod: Object
 };
 
 export type PaymentDetailsIOSRaw = {
   paymentData: string,
   paymentToken?: string,
   transactionIdentifier: string,
+  paymentMethod: Object
 };

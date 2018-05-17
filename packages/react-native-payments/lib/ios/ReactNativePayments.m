@@ -337,9 +337,11 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
 {
     NSString *transactionId = payment.token.transactionIdentifier;
     NSString *paymentData = [[NSString alloc] initWithData:payment.token.paymentData encoding:NSUTF8StringEncoding];
-    NSMutableDictionary *paymentResponse = [[NSMutableDictionary alloc]initWithCapacity:3];
+    NSMutableDictionary *paymentResponse = [[NSMutableDictionary alloc]initWithCapacity:4];
+    NSDictionary *paymentMethod = [self convertPaymentMethod:payment.token.paymentMethod];
     [paymentResponse setObject:transactionId forKey:@"transactionIdentifier"];
     [paymentResponse setObject:paymentData forKey:@"paymentData"];
+    [paymentResponse setObject:paymentMethod forKey:@"paymentMethod"];
     
     if (token) {
         [paymentResponse setObject:token forKey:@"paymentToken"];
@@ -357,6 +359,62 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
                                                             @"error": [error localizedDescription]
                                                             }
      ];
+}
+
+- (NSDictionary *)convertPaymentMethod:(PKPaymentMethod *_Nonnull)paymentMethod
+{
+    NSMutableDictionary *result = [[NSMutableDictionary alloc]initWithCapacity:4];
+
+    if(paymentMethod.displayName) {
+        [result setObject:paymentMethod.displayName forKey:@"displayName"];
+    }
+    if (paymentMethod.network) {
+        [result setObject:paymentMethod.network forKey:@"network"];
+    }
+    NSString *type = [self convertPaymentMethodType:paymentMethod.type];
+    [result setObject:type forKey:@"type"];
+    if(paymentMethod.paymentPass) {
+        NSDictionary *paymentPass = [self convertPaymentPass:paymentMethod.paymentPass];
+        [result setObject:paymentPass forKey:@"paymentPass"];
+    }
+    
+    return result;
+}
+
+- (NSString *)convertPaymentMethodType:(PKPaymentMethodType)paymentMethodType
+{
+    NSArray *arr = @[@"PKPaymentMethodTypeUnknown",
+                     @"PKPaymentMethodTypeDebit",
+                     @"PKPaymentMethodTypeCredit",
+                     @"PKPaymentMethodTypePrepaid",
+                     @"PKPaymentMethodTypeStore"];
+    return (NSString *)[arr objectAtIndex:paymentMethodType];
+}
+
+- (NSDictionary *)convertPaymentPass:(PKPaymentPass *_Nonnull)paymentPass
+{
+     NSMutableDictionary *result = [[NSMutableDictionary alloc]initWithCapacity:5];
+    
+    NSString *displayName = paymentPass.primaryAccountIdentifier;
+    [result setObject:displayName forKey:@"primaryAccountIdentifier"];
+    
+    NSString *primaryAccountNumberSuffix = paymentPass.primaryAccountNumberSuffix;
+    [result setObject:primaryAccountNumberSuffix forKey:@"primaryAccountNumberSuffix"];
+    
+    NSString *deviceAccountIdentifier = paymentPass.deviceAccountIdentifier;
+    [result setObject:deviceAccountIdentifier forKey:@"deviceAccountIdentifier"];
+    
+    NSString *deviceAccountNumberSuffix = paymentPass.deviceAccountNumberSuffix;
+    [result setObject:deviceAccountNumberSuffix forKey:@"deviceAccountNumberSuffix"];
+}
+- (NSString *)convertPaymentPassActivationState:(PKPaymentMethodType)paymentPassActivationState
+{
+    NSArray *arr = @[@"PKPaymentPassActivationStateActivated",
+                     @"PKPaymentPassActivationStateRequiresActivation",
+                     @"PKPaymentPassActivationStateActivating",
+                     @"PKPaymentPassActivationStateSuspended",
+                     @"PKPaymentPassActivationStateDeactivated"];
+    return (NSString *)[arr objectAtIndex:paymentPassActivationState];
 }
 
 @end
