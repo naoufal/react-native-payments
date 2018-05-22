@@ -86,8 +86,10 @@ export default class PaymentResponse {
     this._completeCalled = true;
 
     return new Promise((resolve, reject) => {
-      return NativePayments.complete(paymentStatus, () => {
-        return resolve(undefined);
+      return NativePayments.complete(paymentStatus).then(() => {
+        resolve(undefined);
+      }).catch((error) => {
+        reject(error)
       });
     });
   }
