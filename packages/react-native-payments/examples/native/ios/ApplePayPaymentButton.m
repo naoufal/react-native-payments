@@ -10,32 +10,43 @@
 
 @implementation ApplePayPaymentButton
 
-@synthesize button = _button;
+@synthesize pkPaymentBtn = _pkPaymentBtn;
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
-  if ((self = [super initWithFrame:frame])) {
-    [self addSubview:[self makeButton]];
-    return self;
+- (instancetype) init {
+  self = [super init];
+  
+  if (self) {
+    [self setStyle:PKPaymentButtonStyleBlack andType:PKPaymentButtonTypePlain];
   }
   
-  return nil;
+  return self;
 }
 
-- (PKPaymentButton *)makeButton {
-  if (!_button) {
-    _button = [[PKPaymentButton alloc] initWithPaymentButtonType:PKPaymentButtonTypePlain paymentButtonStyle:PKPaymentButtonStyleBlack];
-    [_button addTarget:self action:@selector(touchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+- (void)setStyle:(PKPaymentButtonStyle) buttonStyle andType:(PKPaymentButtonType) buttonType {
+  NSLog(@"make button");
+  _pkPaymentBtn = [[PKPaymentButton alloc] initWithPaymentButtonType:PKPaymentButtonTypePlain paymentButtonStyle:PKPaymentButtonStyleBlack];
+  [_pkPaymentBtn addTarget:self action:@selector(touchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+  [self addSubview:_pkPaymentBtn];
+}
+
+- (void) destroyButton {
+  if (_pkPaymentBtn && _pkPaymentBtn.superview) {
+    [_pkPaymentBtn removeFromSuperview];
+    _pkPaymentBtn = nil;
   }
-  
-  return _button;
+}
+
+- (id) updateButtonStyle: (NSString *) buttonStyle buttonType:(NSString *) buttonType {
+  [self destroyButton];
+  [self setStyle:PKPaymentButtonStyleWhiteOutline andType:PKPaymentButtonTypeSetUp];
+  return nil;
 }
 
 - (void)layoutSubviews
 {
   [super layoutSubviews];
-  
-  self.button.frame = self.bounds;
+  NSLog(@"layout");
+  _pkPaymentBtn.frame = self.bounds;
 }
 
 - (void)touchUpInside:(PKPaymentButton *)button {
