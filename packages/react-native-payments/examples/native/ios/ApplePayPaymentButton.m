@@ -13,12 +13,7 @@
 @synthesize pkPaymentBtn = _pkPaymentBtn;
 
 - (instancetype) init {
-  self = [super init];
-  
-//  if (self) {
-//    [self setButtonType:@"whiteOutline" andStyle:@"donate"];
-//  }
-  
+  self = [super init]; 
   return self;
 }
 
