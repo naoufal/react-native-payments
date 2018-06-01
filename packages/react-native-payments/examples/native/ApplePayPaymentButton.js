@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { NativeModules, requireNativeComponent } from 'react-native';
 
-type PKPaymentButtonType =
+export type PKPaymentButtonType =
   // A button with the Apple Pay logo only.
   | 'plain'
   // A button with the text “Buy with” and the Apple Pay logo.
@@ -15,7 +15,7 @@ type PKPaymentButtonType =
   // A button with the text "Donate with" and the Apple Pay logo.
   | 'donate';
 
-type PKPaymentButtonStyle =
+export type PKPaymentButtonStyle =
   //   A white button with black lettering (shown here against a gray background to ensure visibility).
   | 'white'
   //   A white button with black lettering and a black outline.
@@ -23,12 +23,13 @@ type PKPaymentButtonStyle =
   //   A black button with white lettering.
   | 'black';
 
-type Props = {
-  height: number,
-  onPress?: Function,
-  style: PKPaymentButtonStyle,
-  type: PKPaymentButtonType,
-};
+type Props = $Exact<{
+  buttonStyle: PKPaymentButtonStyle,
+  buttonType: PKPaymentButtonType,
+  width?: number,
+  height?: number,
+  onPress: Function,
+}>;
 
 const RNTApplePayPaymentButton = requireNativeComponent(
   'ApplePayPaymentButton',
@@ -38,16 +39,19 @@ const RNTApplePayPaymentButton = requireNativeComponent(
 
 export class ApplePayPaymentButton extends React.Component<Props> {
   static defaultProps = {
-    height: 88,
-    style: 'black',
-    type: 'plain',
+    buttonStyle: 'black',
+    buttonType: 'plain',
+    height: 44,
   };
 
   render() {
     return (
       <RNTApplePayPaymentButton
-        {...this.props}
-        height={this.props.enabled ? 44 : 88}
+        buttonStyle={this.props.buttonStyle}
+        buttonType={this.props.buttonType}
+        onPress={this.props.onPress}
+        width={this.props.width}
+        height={this.props.height}
       />
     );
   }
