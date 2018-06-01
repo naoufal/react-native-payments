@@ -14,6 +14,6 @@
 @property (nonatomic, readonly) PKPaymentButton *pkPaymentBtn;
 @property (nonatomic, copy) RCTBubblingEventBlock onPress;
 
-- (void)setStyle:(PKPaymentButtonStyle) buttonStyle andType:(PKPaymentButtonType) buttonType;
+- (void)setButtonType:(NSString *) buttonType andStyle:(NSString *) buttonStyle;
 
 @end
