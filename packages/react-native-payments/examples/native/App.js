@@ -7,7 +7,6 @@ import { ApplePayPaymentButton, type PKPaymentButtonType, type PKPaymentButtonSt
 type Props = {};
 
 type State = {
-  enabled: boolean,
   type: PKPaymentButtonType,
   style: PKPaymentButtonStyle,
 };

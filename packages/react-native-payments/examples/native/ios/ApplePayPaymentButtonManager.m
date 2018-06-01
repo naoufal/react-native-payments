@@ -37,15 +37,6 @@ RCT_CUSTOM_VIEW_PROPERTY(buttonType, NSString, ApplePayPaymentButton)
   }
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(enabled, BOOL, ApplePayPaymentButton)
-{
-  if (json) {
-    view.pkPaymentBtn.enabled = [RCTConvert BOOL:json];
-  } else {
-    view.pkPaymentBtn.enabled = defaultView.pkPaymentBtn.enabled;
-  }
-}
-
 - (UIView *) view
 {
   self.buttonType = DEFAULT_BUTTON_TYPE;

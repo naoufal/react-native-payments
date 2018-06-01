@@ -59,6 +59,7 @@
 
   _pkPaymentBtn = [[PKPaymentButton alloc] initWithPaymentButtonType:type paymentButtonStyle:style];
   [_pkPaymentBtn addTarget:self action:@selector(touchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+  
   [self addSubview:_pkPaymentBtn];
 }
 
