@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		770B1FE620C48E72009115EF /* PKPaymentButtonManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 770B1FE220C48E71009115EF /* PKPaymentButtonManager.m */; };
+		770B1FE720C48E72009115EF /* PKPaymentButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 770B1FE420C48E72009115EF /* PKPaymentButtonView.m */; };
 		ADB95AAF1F199853007C2365 /* GatewayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ADB95AAE1F199853007C2365 /* GatewayManager.m */; };
 		B3E7B58A1CC2AC0600A0062D /* ReactNativePayments.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* ReactNativePayments.m */; };
 /* End PBXBuildFile section */
@@ -25,6 +27,10 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libReactNativePayments.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libReactNativePayments.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		770B1FE220C48E71009115EF /* PKPaymentButtonManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKPaymentButtonManager.m; sourceTree = "<group>"; };
+		770B1FE320C48E71009115EF /* PKPaymentButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKPaymentButtonView.h; sourceTree = "<group>"; };
+		770B1FE420C48E72009115EF /* PKPaymentButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKPaymentButtonView.m; sourceTree = "<group>"; };
+		770B1FE520C48E72009115EF /* PKPaymentButtonManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKPaymentButtonManager.h; sourceTree = "<group>"; };
 		ADB95AAD1F199853007C2365 /* GatewayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GatewayManager.h; sourceTree = "<group>"; };
 		ADB95AAE1F199853007C2365 /* GatewayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GatewayManager.m; sourceTree = "<group>"; };
 		B3E7B5881CC2AC0600A0062D /* ReactNativePayments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReactNativePayments.h; sourceTree = "<group>"; };
@@ -53,6 +59,10 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				770B1FE520C48E72009115EF /* PKPaymentButtonManager.h */,
+				770B1FE220C48E71009115EF /* PKPaymentButtonManager.m */,
+				770B1FE320C48E71009115EF /* PKPaymentButtonView.h */,
+				770B1FE420C48E72009115EF /* PKPaymentButtonView.m */,
 				ADB95AAD1F199853007C2365 /* GatewayManager.h */,
 				ADB95AAE1F199853007C2365 /* GatewayManager.m */,
 				B3E7B5881CC2AC0600A0062D /* ReactNativePayments.h */,
@@ -117,6 +127,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				770B1FE720C48E72009115EF /* PKPaymentButtonView.m in Sources */,
+				770B1FE620C48E72009115EF /* PKPaymentButtonManager.m in Sources */,
 				ADB95AAF1F199853007C2365 /* GatewayManager.m in Sources */,
 				B3E7B58A1CC2AC0600A0062D /* ReactNativePayments.m in Sources */,
 			);
