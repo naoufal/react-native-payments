@@ -24,8 +24,8 @@ type PKPaymentButtonStyle =
   | 'black';
 
 type Props = $Exact<{
-  buttonStyle: ButtonStyle,
-  buttonType: ButtonType,
+  style: ButtonStyle,
+  type: ButtonType,
   width?: number,
   height?: number,
   onPress: Function,
@@ -49,8 +49,8 @@ export class PKPaymentButton extends React.Component<Props> {
   render() {
     return (
       <RNPKPaymentButton
-        buttonStyle={this.props.buttonStyle}
-        buttonType={this.props.buttonType}
+        buttonStyle={this.props.style}
+        buttonType={this.props.type}
         onPress={this.props.onPress}
         width={this.props.width}
         height={this.props.height}
