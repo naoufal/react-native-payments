@@ -17,9 +17,9 @@ type State = {
 
 export class App extends React.Component<Props, State> {
   state = {
-    type: 'donate',
-    type2: 'donate',
     style: 'black',
+    style2: 'whiteOutline',
+    type: 'donate',
   };
 
   onPress = () => {
@@ -34,7 +34,17 @@ export class App extends React.Component<Props, State> {
         }}
       >
         <ApplePayPaymentButton
+          key="first"
           buttonStyle={this.state.style}
+          buttonType={this.state.type}
+          onPress={this.onPress}
+        />
+
+        <View style={{ height: 50 }} />
+
+        <ApplePayPaymentButton
+          key="second"
+          buttonStyle={this.state.style2}
           buttonType={this.state.type}
           onPress={this.onPress}
         />
@@ -80,40 +90,7 @@ export class App extends React.Component<Props, State> {
               donate
             </Text>
           </View>
-          <View style={{ marginVertical: 50 }}>
-            <Text
-              style={{ color: this.state.type2 === 'plain' ? 'red' : 'black' }}
-              onPress={() => this.setState({ type2: 'plain' })}
-            >
-              plain
-            </Text>
-            <Text
-              style={{ color: this.state.type2 === 'buy' ? 'red' : 'black' }}
-              onPress={() => this.setState({ type2: 'buy' })}
-            >
-              buy
-            </Text>
-            <Text
-              style={{ color: this.state.type2 === 'setUp' ? 'red' : 'black' }}
-              onPress={() => this.setState({ type2: 'setUp' })}
-            >
-              setUp
-            </Text>
-            <Text
-              style={{
-                color: this.state.type2 === 'inStore' ? 'red' : 'black',
-              }}
-              onPress={() => this.setState({ type2: 'inStore' })}
-            >
-              inStore
-            </Text>
-            <Text
-              style={{ color: this.state.type2 === 'donate' ? 'red' : 'black' }}
-              onPress={() => this.setState({ type2: 'donate' })}
-            >
-              donate
-            </Text>
-          </View>
+
           <View style={{ marginVertical: 50 }}>
             <Text
               style={{ color: this.state.style === 'white' ? 'red' : 'black' }}
@@ -132,6 +109,29 @@ export class App extends React.Component<Props, State> {
             <Text
               style={{ color: this.state.style === 'black' ? 'red' : 'black' }}
               onPress={() => this.setState({ style: 'black' })}
+            >
+              black
+            </Text>
+          </View>
+
+          <View style={{ marginVertical: 50 }}>
+            <Text
+              style={{ color: this.state.style2 === 'white' ? 'red' : 'black' }}
+              onPress={() => this.setState({ style2: 'white' })}
+            >
+              white
+            </Text>
+            <Text
+              style={{
+                color: this.state.style2 === 'whiteOutline' ? 'red' : 'black',
+              }}
+              onPress={() => this.setState({ style2: 'whiteOutline' })}
+            >
+              whiteOutline
+            </Text>
+            <Text
+              style={{ color: this.state.style2 === 'black' ? 'red' : 'black' }}
+              onPress={() => this.setState({ style2: 'black' })}
             >
               black
             </Text>

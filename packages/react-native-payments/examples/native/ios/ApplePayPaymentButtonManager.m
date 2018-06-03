@@ -6,34 +6,32 @@
 //  Copyright © 2018 Facebook. All rights reserved.
 //
 
+#import <PassKit/PassKit.h>
 #import "ApplePayPaymentButtonManager.h"
 #import "ApplePayPaymentButton.h"
-#import <PassKit/PassKit.h>
 
 NSString * const DEFAULT_BUTTON_STYLE = @"black";
 NSString * const DEFAULT_BUTTON_TYPE = @"plain";
 
 @implementation ApplePayPaymentButtonManager
 
-@synthesize _btnView = _btnView;
-
 RCT_EXPORT_MODULE()
 
 RCT_EXPORT_VIEW_PROPERTY(onPress, RCTBubblingEventBlock)
-
-RCT_CUSTOM_VIEW_PROPERTY(buttonStyle, NSString, ApplePayPaymentButton)
-{
-  if (json) {
-    self.buttonStyle = [RCTConvert NSString:json];
-    [_btnView setButtonType:self.buttonType andStyle:self.buttonStyle];
-  }
-}
 
 RCT_CUSTOM_VIEW_PROPERTY(buttonType, NSString, ApplePayPaymentButton)
 {
   if (json) {
     self.buttonType = [RCTConvert NSString:json];
-    [_btnView setButtonType:self.buttonType andStyle:self.buttonStyle];
+    [view setButtonType:self.buttonType andStyle:self.buttonStyle];
+  }
+}
+
+RCT_CUSTOM_VIEW_PROPERTY(buttonStyle, NSString, ApplePayPaymentButton)
+{
+  if (json) {
+    self.buttonStyle = [RCTConvert NSString:json];
+    [view setButtonType:self.buttonType andStyle:self.buttonStyle];
   }
 }
 
@@ -42,10 +40,7 @@ RCT_CUSTOM_VIEW_PROPERTY(buttonType, NSString, ApplePayPaymentButton)
   self.buttonType = DEFAULT_BUTTON_TYPE;
   self.buttonStyle = DEFAULT_BUTTON_STYLE;
   
-  _btnView = [ApplePayPaymentButton new];
-  [_btnView setButtonType:self.buttonType andStyle:self.buttonStyle];
-  
-  return _btnView;
+  return [ApplePayPaymentButton new];
 }
 
 @end

@@ -13,7 +13,8 @@
 @synthesize pkPaymentBtn = _pkPaymentBtn;
 
 - (instancetype) init {
-  self = [super init]; 
+  self = [super init];
+  
   return self;
 }
 
@@ -28,7 +29,7 @@
     [_pkPaymentBtn removeFromSuperview];
     _pkPaymentBtn = nil;
   }
-  
+
   PKPaymentButtonType type;
   PKPaymentButtonStyle style;
 
@@ -54,7 +55,7 @@
 
   _pkPaymentBtn = [[PKPaymentButton alloc] initWithPaymentButtonType:type paymentButtonStyle:style];
   [_pkPaymentBtn addTarget:self action:@selector(touchUpInside:) forControlEvents:UIControlEventTouchUpInside];
-  
+
   [self addSubview:_pkPaymentBtn];
 }
 
