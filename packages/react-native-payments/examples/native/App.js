@@ -6,7 +6,7 @@ import {
   ApplePayButton,
   type ButtonStyle,
   type ButtonType,
-} from './ApplePayPaymentButton';
+} from 'react-native-payments';
 
 type Props = {};
 
