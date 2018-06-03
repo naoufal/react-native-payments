@@ -8,14 +8,37 @@
 
 #import "ApplePayPaymentButton.h"
 
+NSString * const DEFAULT_BUTTON_TYPE = @"plain";
+NSString * const DEFAULT_BUTTON_STYLE = @"black";
+
 @implementation ApplePayPaymentButton
 
-@synthesize pkPaymentBtn = _pkPaymentBtn;
+@synthesize buttonType = _buttonType;
+@synthesize buttonStyle = _buttonStyle;
+@synthesize button = _button;
 
 - (instancetype) init {
   self = [super init];
   
+  [self setButtonType:DEFAULT_BUTTON_TYPE andStyle:DEFAULT_BUTTON_STYLE];
+  
   return self;
+}
+
+- (void)setButtonType:(NSString *) value {
+  if (_buttonType != value) {
+    [self setButtonType:value andStyle:_buttonStyle];
+  }
+  
+  _buttonType = value;
+}
+
+- (void)setButtonStyle:(NSString *) value {
+  if (_buttonStyle != value) {
+    [self setButtonType:_buttonType andStyle:value];
+  }
+  
+  _buttonStyle = value;
 }
 
 /**
@@ -24,39 +47,37 @@
  * type is changed.
  */
 - (void)setButtonType:(NSString *) buttonType andStyle:(NSString *) buttonStyle {
-  
-  if (_pkPaymentBtn && _pkPaymentBtn.superview) {
-    [_pkPaymentBtn removeFromSuperview];
-    _pkPaymentBtn = nil;
+  for (UIView *view in self.subviews) {
+    [view removeFromSuperview];
   }
 
   PKPaymentButtonType type;
   PKPaymentButtonStyle style;
-
-  if ([buttonType isEqual: @"buy"]) {
+  
+  if ([buttonType isEqualToString: @"buy"]) {
     type = PKPaymentButtonTypeBuy;
-  } else if ([buttonType isEqual: @"setUp"]) {
+  } else if ([buttonType isEqualToString: @"setUp"]) {
     type = PKPaymentButtonTypeSetUp;
-  } else if ([buttonType isEqual: @"inStore"]) {
+  } else if ([buttonType isEqualToString: @"inStore"]) {
     type = PKPaymentButtonTypeInStore;
-  } else if ([buttonType isEqual: @"donate"]) {
+  } else if ([buttonType isEqualToString: @"donate"]) {
     type = PKPaymentButtonTypeDonate;
   } else {
     type = PKPaymentButtonTypePlain;
   }
 
-  if ([buttonStyle isEqual: @"white"]) {
+  if ([buttonStyle isEqualToString: @"white"]) {
     style = PKPaymentButtonStyleWhite;
-  } else if ([buttonStyle isEqual: @"whiteOutline"]) {
+  } else if ([buttonStyle isEqualToString: @"whiteOutline"]) {
     style = PKPaymentButtonStyleWhiteOutline;
   } else {
     style = PKPaymentButtonStyleBlack;
   }
 
-  _pkPaymentBtn = [[PKPaymentButton alloc] initWithPaymentButtonType:type paymentButtonStyle:style];
-  [_pkPaymentBtn addTarget:self action:@selector(touchUpInside:) forControlEvents:UIControlEventTouchUpInside];
-
-  [self addSubview:_pkPaymentBtn];
+  _button = [[PKPaymentButton alloc] initWithPaymentButtonType:type paymentButtonStyle:style];
+  [_button addTarget:self action:@selector(touchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+  
+  [self addSubview:_button];
 }
 
 /**
@@ -68,10 +89,13 @@
   }
 }
 
+/**
+ * Set button frame to what React sets for parent view.
+ */
 - (void)layoutSubviews
 {
   [super layoutSubviews];
-  _pkPaymentBtn.frame = self.bounds;
+  _button.frame = self.bounds;
 }
 
 @end

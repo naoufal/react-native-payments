@@ -10,7 +10,4 @@
 
 @interface ApplePayPaymentButtonManager : RCTViewManager
 
-@property NSString *buttonStyle;
-@property NSString *buttonType;
-
 @end

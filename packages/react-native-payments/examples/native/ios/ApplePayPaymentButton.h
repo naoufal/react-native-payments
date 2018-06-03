@@ -11,9 +11,9 @@
 
 @interface ApplePayPaymentButton : RCTView
 
-@property (nonatomic, readonly) PKPaymentButton *pkPaymentBtn;
+@property (strong, nonatomic) NSString *buttonStyle;
+@property (strong, nonatomic) NSString *buttonType;
+@property (nonatomic, readonly) PKPaymentButton *button;
 @property (nonatomic, copy) RCTBubblingEventBlock onPress;
-
-- (void)setButtonType:(NSString *) buttonType andStyle:(NSString *) buttonStyle;
 
 @end
