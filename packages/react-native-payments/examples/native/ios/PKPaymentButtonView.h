@@ -9,7 +9,7 @@
 #import <React/RCTView.h>
 #import <PassKit/PassKit.h>
 
-@interface ApplePayPaymentButton : RCTView
+@interface PKPaymentButtonView : RCTView
 
 @property (strong, nonatomic) NSString *buttonStyle;
 @property (strong, nonatomic) NSString *buttonType;

@@ -3,16 +3,17 @@
 import * as React from 'react';
 import { Text, View } from 'react-native';
 import {
-  ApplePayPaymentButton,
-  type PKPaymentButtonType,
-  type PKPaymentButtonStyle,
+  ApplePayButton,
+  type ButtonStyle,
+  type ButtonType,
 } from './ApplePayPaymentButton';
 
 type Props = {};
 
 type State = {
-  type: PKPaymentButtonType,
-  style: PKPaymentButtonStyle,
+  style: ButtonStyle,
+  style2: ButtonStyle,
+  type: ButtonType,
 };
 
 export class App extends React.Component<Props, State> {
@@ -22,10 +23,6 @@ export class App extends React.Component<Props, State> {
     type: 'donate',
   };
 
-  onPress = () => {
-    alert('Init payment request');
-  };
-
   render() {
     return (
       <View
@@ -33,29 +30,21 @@ export class App extends React.Component<Props, State> {
           margin: 30,
         }}
       >
-        <ApplePayPaymentButton
+        <ApplePayButton
           key="first"
           buttonStyle={this.state.style}
           buttonType={this.state.type}
-          onPress={this.onPress}
+          onPress={() => alert('btn 1')}
         />
 
         <View style={{ height: 50 }} />
 
-        <ApplePayPaymentButton
+        <ApplePayButton
           key="second"
           buttonStyle={this.state.style2}
           buttonType={this.state.type}
-          onPress={this.onPress}
+          onPress={() => alert('btn 2')}
         />
-
-        {/* <View style={{ width: 150, marginVertical: 50 }}>
-          <ApplePayPaymentButton
-            buttonStyle={this.state.style}
-            buttonType={this.state.type}
-            onPress={() => alert('2')}
-          />
-        </View> */}
 
         <View style={{ padding: 20 }}>
           <View style={{ marginVertical: 50 }}>

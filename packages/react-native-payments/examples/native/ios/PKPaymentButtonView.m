@@ -6,12 +6,12 @@
 //  Copyright © 2018 Facebook. All rights reserved.
 //
 
-#import "ApplePayPaymentButton.h"
+#import "PKPaymentButtonView.h"
 
 NSString * const DEFAULT_BUTTON_TYPE = @"plain";
 NSString * const DEFAULT_BUTTON_STYLE = @"black";
 
-@implementation ApplePayPaymentButton
+@implementation PKPaymentButtonView
 
 @synthesize buttonType = _buttonType;
 @synthesize buttonStyle = _buttonStyle;

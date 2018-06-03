@@ -7,23 +7,23 @@
 //
 
 #import <PassKit/PassKit.h>
-#import "ApplePayPaymentButtonManager.h"
-#import "ApplePayPaymentButton.h"
+#import "PKPaymentButtonManager.h"
+#import "PKPaymentButtonView.h"
 
-@implementation ApplePayPaymentButtonManager
+@implementation PKPaymentButtonManager
 
 RCT_EXPORT_MODULE()
 
 RCT_EXPORT_VIEW_PROPERTY(onPress, RCTBubblingEventBlock)
 
-RCT_CUSTOM_VIEW_PROPERTY(buttonType, NSString, ApplePayPaymentButton)
+RCT_CUSTOM_VIEW_PROPERTY(buttonType, NSString, PKPaymentButtonView)
 {
   if (json) {
     [view setButtonType:[RCTConvert NSString:json]];
   }
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(buttonStyle, NSString, ApplePayPaymentButton)
+RCT_CUSTOM_VIEW_PROPERTY(buttonStyle, NSString, PKPaymentButtonView)
 {
   if (json) {
     [view setButtonStyle:[RCTConvert NSString:json]];
@@ -32,7 +32,7 @@ RCT_CUSTOM_VIEW_PROPERTY(buttonStyle, NSString, ApplePayPaymentButton)
 
 - (UIView *) view
 {
-  return [ApplePayPaymentButton new];
+  return [PKPaymentButtonView new];
 }
 
 @end

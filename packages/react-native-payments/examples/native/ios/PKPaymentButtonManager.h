@@ -8,6 +8,6 @@
 
 #import <React/RCTViewManager.h>
 
-@interface ApplePayPaymentButtonManager : RCTViewManager
+@interface PKPaymentButtonManager : RCTViewManager
 
 @end
