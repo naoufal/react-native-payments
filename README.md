@@ -27,6 +27,7 @@ __Features__
 - [Installation](#installation)
 - [Usage](#usage)
 - [Testing Payments](#testing-payments)
+- [Apple Pay button](#apple-pay-button)
 - [Add-ons](#add-ons)
 - [API](#api)
 - [Resources](#resources)
@@ -449,6 +450,11 @@ The sandbox environment is a great way to test offline implementation of Apple P
 > ⚠️ **Note:** It is also important to test Apple Pay in your production environment. Real cards must be used in the production environment. Test cards will not work.
 >
 > ⚠️ **Note:** There are known differences when running Apple Pay on simulator and real device. Make sure you test Apple Pay on real device before going into production.
+
+## Apple Pay Button
+
+Provides a button that is used either to trigger payments through Apple Pay or to prompt the user to set up a card.
+[Detailed docs and examples](packages/react-native-payments/docs/ApplePayButton.md)
 
 ## Add-ons
 Here's a list of Payment Processors that you can enable via add-ons:
