@@ -5,47 +5,53 @@
  */
 
 import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
-import { ApplePayButton } from 'react-native-payments';
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import { View } from 'react-native';
+import { ApplePayButton, PaymentRequest } from 'react-native-payments';
 
 type Props = {};
+
 export default class App extends Component<Props> {
+  showPaymentSheet = () => {
+    const paymentRequest = new PaymentRequest(METHOD_DATA, DETAILS);
+    paymentRequest.show();
+  };
   render() {
     return (
-      <View style={styles.container}>
-        <View style={{ height: 44, backgroundColor: 'red'}}>
-          <ApplePayButton type="plain" style="black" />
+      <View style={{ margin: 50 }}>
+        <View style={{ height: 44 }}>
+          <ApplePayButton
+            type="plain"
+            style="black"
+            onPress={this.showPaymentSheet}
+          />
         </View>
-
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
+const METHOD_DATA = [
+  {
+    supportedMethods: ['apple-pay'],
+    data: {
+      merchantIdentifier: 'merchant.com.your-app.namespace',
+      supportedNetworks: ['visa', 'mastercard', 'amex'],
+      countryCode: 'US',
+      currencyCode: 'USD',
+    },
+  },
+];
 
+const DETAILS = {
+  id: 'basic-example',
+  displayItems: [
+    {
+      label: 'Movie Ticket',
+      amount: { currency: 'USD', value: '15.00' },
+    },
+  ],
+  total: {
+    label: 'Merchant Name',
+    amount: { currency: 'USD', value: '15.00' },
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+};
