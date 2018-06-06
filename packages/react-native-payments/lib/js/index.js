@@ -1,7 +1,7 @@
 // @flow
 
-import PaymentRequest from './PaymentRequest';
+import _PaymentRequest from './PaymentRequest';
 import { PKPaymentButton } from './PKPaymentButton';
 
 export const ApplePayButton = PKPaymentButton;
-export default PaymentRequest;
+export const PaymentRequest = _PaymentRequest;

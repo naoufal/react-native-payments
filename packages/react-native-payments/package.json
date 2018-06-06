@@ -1,6 +1,6 @@
 {
   "name": "react-native-payments",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "scripts": {
     "run:packager": "cd examples/native && yarn run:packager",
     "run:ios": "cd examples/native && yarn run:ios",
@@ -32,8 +32,8 @@
     "react-test-renderer": "16.0.0-alpha.12"
   },
   "peerDependencies": {
-    "react": "~15.4.0-rc.4",
-    "react-native": "0.41.0"
+    "react": ">=15",
+    "react-native": ">=0.41"
   },
   "jest": {
     "testPathIgnorePatterns": [
