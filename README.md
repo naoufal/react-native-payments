@@ -484,9 +484,9 @@ Here's a list of Payment Processors that you can enable via add-ons:
 - [Payment Token Format Reference](https://developer.apple.com/library/content/documentation/PassKit/Reference/PaymentTokenJSON/PaymentTokenJSON.html#//apple_ref/doc/uid/TP40014929)
 
 ### Android Pay
-- [Setup Android Pay](https://developers.google.com/android-pay/setup)
-- [User Flows](https://developers.google.com/android-pay/payment-flows)
-- [Best Practices](https://developers.google.com/android-pay/best-practices)
+- [Setup Android Pay](https://developers.google.com/pay/api/android/guides/setup)
+- [Tutorial](https://developers.google.com/pay/api/android/guides/tutorial)
+- [Brand Guidelines](https://developers.google.com/pay/api/android/guides/brand-guidelines)
 - [Gateway Token Approach](https://developers.google.com/web/fundamentals/discovery-and-monetization/payment-request/android-pay#gateway_token_approach)
 - [Network Token Approach](https://developers.google.com/web/fundamentals/discovery-and-monetization/payment-request/android-pay#network_token_approach)
 
