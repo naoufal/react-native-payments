@@ -442,7 +442,7 @@ export default class PaymentRequest {
       const normalizedDetails = convertDetailAmountsToString(this._details);
       const options = this._options;
 
-      return NativePayments.show(platformMethodData, normalizedDetails, options);
+      NativePayments.show(platformMethodData, normalizedDetails, options).catch(reject);
     });
 
     return this._acceptPromise;
