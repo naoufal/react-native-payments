@@ -27,6 +27,7 @@ __Features__
 - [Installation](#installation)
 - [Usage](#usage)
 - [Testing Payments](#testing-payments)
+- [Apple Pay button](#apple-pay-button)
 - [Add-ons](#add-ons)
 - [API](#api)
 - [Resources](#resources)
@@ -80,7 +81,7 @@ Apple has a documentation on how to do this in their _[Configuring your Environm
 1. Add Android Pay and Google Play Services to your dependencies
 1. Enable Android Pay in your Manifest
 
-Google has documentation on how to do this in their _[Setup Android Pay](https://developers.google.com/android-pay/setup)_ guide.
+Google has documentation on how to do this in their _[Setup Android Pay](https://developers.google.com/pay/api/android/guides/setup)_ guide.
 
 ### Importing the Library
 Once Apple Pay/Android Pay is enabled in your app, jump into your app's entrypoint and make the `PaymentRequest` globally available to your app.
@@ -450,6 +451,11 @@ The sandbox environment is a great way to test offline implementation of Apple P
 >
 > ⚠️ **Note:** There are known differences when running Apple Pay on simulator and real device. Make sure you test Apple Pay on real device before going into production.
 
+## Apple Pay Button
+
+Provides a button that is used either to trigger payments through Apple Pay or to prompt the user to set up a card.
+[Detailed docs and examples](packages/react-native-payments/docs/ApplePayButton.md)
+
 ## Add-ons
 Here's a list of Payment Processors that you can enable via add-ons:
 - [Stripe](https://github.com/naoufal/react-native-payments/blob/master/packages/react-native-payments-addon-stripe)
@@ -478,9 +484,9 @@ Here's a list of Payment Processors that you can enable via add-ons:
 - [Payment Token Format Reference](https://developer.apple.com/library/content/documentation/PassKit/Reference/PaymentTokenJSON/PaymentTokenJSON.html#//apple_ref/doc/uid/TP40014929)
 
 ### Android Pay
-- [Setup Android Pay](https://developers.google.com/android-pay/setup)
-- [User Flows](https://developers.google.com/android-pay/payment-flows)
-- [Best Practices](https://developers.google.com/android-pay/best-practices)
+- [Setup Android Pay](https://developers.google.com/pay/api/android/guides/setup)
+- [Tutorial](https://developers.google.com/pay/api/android/guides/tutorial)
+- [Brand Guidelines](https://developers.google.com/pay/api/android/guides/brand-guidelines)
 - [Gateway Token Approach](https://developers.google.com/web/fundamentals/discovery-and-monetization/payment-request/android-pay#gateway_token_approach)
 - [Network Token Approach](https://developers.google.com/web/fundamentals/discovery-and-monetization/payment-request/android-pay#network_token_approach)
 
