@@ -133,6 +133,31 @@ NativePayments.canMakePayments();
 
 ---
 
+### canMakePaymentsUsingNetworks()
+**(IOS only)** Returns if user has available cards at Apple Pay that matches passed networks.
+
+__Arguments__
+- usingNetworks - `Array`
+
+
+<details>
+<summary>
+<strong>Example</strong>
+</summary>
+
+```es6
+NativePayments
+    .canMakePaymentsUsingNetworks(['Visa', 'AmEx', 'MasterCard'])
+    .then(canMakePayments => {
+        if (canMakePayments) {
+            // do some stuff
+        }
+    });
+```
+
+</details>
+
+
 ### show()
 Displays Apple Pay/Android Pay to the user.
 

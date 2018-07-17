@@ -476,5 +476,7 @@ export default class PaymentRequest {
       getPlatformMethodData(JSON.parse(this._serializedMethodData), Platform.OS)
     );
   }
+
+  static canMakePaymentsUsingNetworks = NativePayments.canMakePaymentsUsingNetworks;
 }
 
