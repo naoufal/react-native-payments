@@ -4,7 +4,8 @@
 import type {
   PaymentComplete,
   PaymentDetailsInit,
-  PaymentAddress
+  PaymentAddress,
+  PaymentContact
 } from './types';
 
 // Modules
@@ -21,6 +22,8 @@ export default class PaymentResponse {
   _payerPhone: null | string;
   _payerEmail: null | string;
   _completeCalled: boolean;
+  _shippingContact: null | PaymentContact;
+  _billingContact: null | PaymentContact;
 
   constructor(paymentResponse: Object) {
     // Set properties as readOnly
@@ -32,6 +35,8 @@ export default class PaymentResponse {
     this._payerName = paymentResponse.payerName;
     this._payerPhone = paymentResponse.payerPhone;
     this._payerEmail = paymentResponse.payerEmail;
+    this._shippingContact = paymentResponse.shippingContact;
+    this._billingContact = paymentResponse.billingContact;
 
     // Internal Slots
     this._completeCalled = false;
@@ -75,6 +80,14 @@ export default class PaymentResponse {
   // https://www.w3.org/TR/payment-request/#payeremail-attribute
   get payerEmail(): null | string {
     return this._payerEmail;
+  }
+
+  get shippingContact(): PaymentContact {
+    return this._shippingContact;
+  }
+
+  get billingContact(): PaymentContact {
+    return this._billingContact;
   }
 
   // https://www.w3.org/TR/payment-request/#complete-method

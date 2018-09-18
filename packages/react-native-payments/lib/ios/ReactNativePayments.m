@@ -318,6 +318,10 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
     if (options[@"requestShipping"]) {
         self.paymentRequest.requiredShippingAddressFields = PKAddressFieldPostalAddress;
     }
+
+    if (options[@"requestBilling"]) {
+        self.paymentRequest.requiredBillingAddressFields = PKAddressFieldPostalAddress;
+    }
     
     if (options[@"requestPayerName"]) {
         self.paymentRequest.requiredShippingAddressFields = self.paymentRequest.requiredShippingAddressFields | PKAddressFieldName;
@@ -332,17 +336,64 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
     }
 }
 
+- (NSString *_Nonnull)contactToString:(PKContact *_Nonnull)contact
+{
+    NSString *street = contact.postalAddress.street;
+    NSString *subLocality = contact.postalAddress.subLocality;
+    NSString *city = contact.postalAddress.city;
+    NSString *subAdministrativeArea = contact.postalAddress.subAdministrativeArea;
+    NSString *state = contact.postalAddress.state;
+    NSString *postalCode = contact.postalAddress.postalCode;
+    NSString *country = contact.postalAddress.country;
+    NSString *ISOCountryCode = contact.postalAddress.ISOCountryCode;
+    NSString *phoneNumber = contact.phoneNumber.stringValue;
+    NSString *emailAddress = contact.emailAddress;
+    
+    NSDictionary *contactDict = @{
+         @"postalAddress" : @{
+                 @"street" : street ?: @"",
+                 @"subLocality" : subLocality ?: @"",
+                 @"city" : city ?: @"",
+                 @"subAdministrativeArea" : subAdministrativeArea ?: @"",
+                 @"state" : state ?: @"",
+                 @"postalCode" : postalCode ?: @"",
+                 @"country" : country ?: @"",
+                 @"ISOCountryCode" : ISOCountryCode ?: @""
+         },
+         @"phoneNumber" : phoneNumber ? phoneNumber : @"",
+         @"emailAddress" : emailAddress ? emailAddress : @""
+    };
+    
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:contactDict options:0 error:&error];
+    
+    if (! jsonData) {
+       return @"";
+    } else {
+       return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    }
+    
+}
+
 - (void)handleUserAccept:(PKPayment *_Nonnull)payment
             paymentToken:(NSString *_Nullable)token
 {
     NSString *transactionId = payment.token.transactionIdentifier;
     NSString *paymentData = [[NSString alloc] initWithData:payment.token.paymentData encoding:NSUTF8StringEncoding];
-    NSMutableDictionary *paymentResponse = [[NSMutableDictionary alloc]initWithCapacity:3];
+    NSMutableDictionary *paymentResponse = [[NSMutableDictionary alloc]initWithCapacity:5];
     [paymentResponse setObject:transactionId forKey:@"transactionIdentifier"];
     [paymentResponse setObject:paymentData forKey:@"paymentData"];
-    
+
     if (token) {
         [paymentResponse setObject:token forKey:@"paymentToken"];
+    }
+    
+    if (payment.billingContact) {
+        paymentResponse[@"billingContact"] = [self contactToString:payment.billingContact];
+    }
+   
+    if (payment.shippingContact) {
+        paymentResponse[@"shippingContact"] = [self contactToString:payment.shippingContact];
     }
     
     [self.bridge.eventDispatcher sendDeviceEventWithName:@"NativePayments:onuseraccept"
