@@ -338,6 +338,12 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
 
 - (NSString *_Nonnull)contactToString:(PKContact *_Nonnull)contact
 {
+    NSString *namePrefix = contact.name.namePrefix;
+    NSString *givenName = contact.name.givenName;
+    NSString *middleName = contact.name.middleName;
+    NSString *familyName = contact.name.familyName;
+    NSString *nameSuffix = contact.name.nameSuffix;
+    NSString *nickname = contact.name.nickname;
     NSString *street = contact.postalAddress.street;
     NSString *subLocality = contact.postalAddress.subLocality;
     NSString *city = contact.postalAddress.city;
@@ -350,6 +356,14 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
     NSString *emailAddress = contact.emailAddress;
     
     NSDictionary *contactDict = @{
+         @"name" : @{
+                 @"namePrefix" : namePrefix ?: @"",
+                 @"givenName" : givenName ?: @"",
+                 @"middleName" : middleName ?: @"",
+                 @"familyName" : familyName ?: @"",
+                 @"nameSuffix" : nameSuffix ?: @"",
+                 @"nickname" : nickname ?: @"",
+         },
          @"postalAddress" : @{
                  @"street" : street ?: @"",
                  @"subLocality" : subLocality ?: @"",
@@ -360,8 +374,8 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
                  @"country" : country ?: @"",
                  @"ISOCountryCode" : ISOCountryCode ?: @""
          },
-         @"phoneNumber" : phoneNumber ? phoneNumber : @"",
-         @"emailAddress" : emailAddress ? emailAddress : @""
+         @"phoneNumber" : phoneNumber ?: @"",
+         @"emailAddress" : emailAddress ?: @""
     };
     
     NSError *error;

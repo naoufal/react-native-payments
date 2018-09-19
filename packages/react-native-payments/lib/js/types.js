@@ -102,9 +102,3 @@ export type PaymentDetailsIOSRaw = {
   paymentToken?: string,
   transactionIdentifier: string,
 };
-
-export type PaymentContact = {
-  postalAddress?: ?Object,
-  emailAddress?: string,
-  phoneNumber?: string
-};
