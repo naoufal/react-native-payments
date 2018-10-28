@@ -489,8 +489,3 @@ Here's a list of Payment Processors that you can enable via add-ons:
 - [Brand Guidelines](https://developers.google.com/pay/api/android/guides/brand-guidelines)
 - [Gateway Token Approach](https://developers.google.com/web/fundamentals/discovery-and-monetization/payment-request/android-pay#gateway_token_approach)
 - [Network Token Approach](https://developers.google.com/web/fundamentals/discovery-and-monetization/payment-request/android-pay#network_token_approach)
-
-# License
-Licensed under the MIT License, Copyright © 2017, [Naoufal Kadhom](https://twitter.com/naoufal).
-
-See [LICENSE](https://github.com/naoufal/react-native-payments/blob/master/LICENSE) for more information.
