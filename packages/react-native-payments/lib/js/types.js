@@ -50,6 +50,7 @@ export type PaymentOptions = {
   requestPayerEmail: boolean,
   requestPayerPhone: boolean,
   requestShipping: boolean,
+  requestBilling: boolean,
   shippingType: PaymentShippingType
 };
 
@@ -88,6 +89,8 @@ export type PaymentComplete = 'fail' | 'success' | 'unknown';
 
 export type PaymentDetailsIOS = {
   paymentData: ?Object,
+  billingContact?: ?Object,
+  shippingContact?: ?Object,
   paymentToken?: string,
   transactionIdentifier: string,
   paymentMethod: Object
@@ -95,6 +98,8 @@ export type PaymentDetailsIOS = {
 
 export type PaymentDetailsIOSRaw = {
   paymentData: string,
+  billingContact?: string,
+  shippingContact?: string,
   paymentToken?: string,
   transactionIdentifier: string,
   paymentMethod: Object
