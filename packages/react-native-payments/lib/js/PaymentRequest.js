@@ -306,22 +306,7 @@ export default class PaymentRequest {
     } = details;
 
     const isSimulator = transactionIdentifier === 'Simulated Identifier';
-
-    let billingContact = null;
-    let shippingContact = null;
-
-    if (serializedBillingContact && serializedBillingContact !== ""){
-      try{
-        billingContact = JSON.parse(serializedBillingContact);
-      }catch(e){}
-    }
-
-    if (serializedShippingContact && serializedShippingContact !== ""){
-      try{
-        shippingContact = JSON.parse(serializedShippingContact);
-      }catch(e){}
-    }
-
+    
     return {
       paymentData: isSimulator ? null : JSON.parse(serializedPaymentData),
       billingContact,
