@@ -118,7 +118,7 @@ export function validateTotal(total, errorType = Error): void {
     throw new errorType(`required member total is undefined.`);
   }
 
-  const hasTotal = total && total.amount && total.amount.value;
+  const hasTotal = total && total.amount && (total.amount.value || total.amount.value === 0)
   // Check that there is a total
   if (!hasTotal) {
     throw new errorType(`Missing required member(s): amount, label.`);
