@@ -124,7 +124,8 @@ export default class PaymentRequest {
   constructor(
     methodData: Array<PaymentMethodData> = [],
     details?: PaymentDetailsInit = [],
-    options?: PaymentOptions = {}
+    options?: PaymentOptions = {},
+    diableInitialUpdate?: bool,
   ) {
     // 1. If the current settings object's responsible document is not allowed to use the feature indicated by attribute name allowpaymentrequest, then throw a " SecurityError" DOMException.
     noop();
@@ -158,6 +159,7 @@ export default class PaymentRequest {
 
     // 9. Let serializedModifierData be an empty list.
     let serializedModifierData = [];
+    // 
 
     // 10. Process payment details modifiers:
     // TODO
@@ -197,6 +199,8 @@ export default class PaymentRequest {
       ? options.shippingType
       : null;
 
+    // 21. Add option to disable the initial update (to have the ability to trigger it yourself)
+    this._diableInitialUpdate = diableInitialUpdate
     // React Native Payments specific 👇
     // ---------------------------------
 
@@ -268,7 +272,9 @@ export default class PaymentRequest {
     // On iOS, this event fires when the PKPaymentRequest is initialized.
     // So on iOS, we track the amount of times `_handleShippingAddressChange` gets called
     // and noop the first call.
-    if (IS_IOS && this._shippingAddressChangesCount === 1) {
+
+    // If the disableInitialUpdate is true, we gonna pass down the event on 1st update.
+    if (IS_IOS && this._shippingAddressChangesCount === 1 && !this._diableInitialUpdate) {
       return event.updateWith(this._details);
     }
 
