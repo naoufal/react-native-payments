@@ -1,5 +1,3 @@
-# Removed the initial update, to let the user update the initial details.
-
 > This project is currently in __beta and APIs are subject to change.__
 
 # React Native Payments
