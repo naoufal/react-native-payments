@@ -306,11 +306,11 @@ export default class PaymentRequest {
     } = details;
 
     const isSimulator = transactionIdentifier === 'Simulated Identifier';
-    
+
     return {
       paymentData: isSimulator ? null : JSON.parse(serializedPaymentData),
-      billingContact,
-      shippingContact,
+      billingContact: serializedBillingContact ? JSON.parse(serializedBillingContact) : null,
+      shippingContact: serializedShippingContact ? JSON.parse(serializedShippingContact) : null,
       paymentToken,
       transactionIdentifier,
       paymentMethod
