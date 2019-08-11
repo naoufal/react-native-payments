@@ -40,6 +40,7 @@ RCT_EXPORT_METHOD(createPaymentRequest: (NSDictionary *)methodData
     }
     
     self.paymentRequest = [[PKPaymentRequest alloc] init];
+    self.paymentRequest.requiredBillingAddressFields = PKAddressFieldPostalAddress;
     self.paymentRequest.merchantIdentifier = merchantId;
     self.paymentRequest.merchantCapabilities = PKMerchantCapability3DS;
     self.paymentRequest.countryCode = methodData[@"countryCode"];
@@ -145,7 +146,10 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
     callback(@[[NSNull null]]);
     
 }
-
+- (void) paymentAuthorizationViewController:(PKPaymentAuthorizationViewController *)controller
+                        didAuthorizePayment:(PKPayment *)payment {
+    NSLog(@"CURI");
+}
 // DELEGATES
 // ---------------
 - (void) paymentAuthorizationViewController:(PKPaymentAuthorizationViewController *)controller
@@ -154,6 +158,66 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
 {
     // Store completion for later use
     self.completion = completion;
+    
+    PKContact *billingContact = payment.billingContact;
+    NSMutableDictionary *billing = [NSMutableDictionary dictionary];
+    [billing setValue:[NSNull null] forKey:@"firstName"];
+    [billing setValue:[NSNull null] forKey:@"lastName"];
+    [billing setValue:[NSNull null] forKey:@"street"];
+    [billing setValue:[NSNull null] forKey:@"city"];
+    [billing setValue:[NSNull null] forKey:@"state"];
+    [billing setValue:[NSNull null] forKey:@"country"];
+    [billing setValue:[NSNull null] forKey:@"postalCode"];
+
+    
+    if(billingContact != nil) {
+        NSPersonNameComponents *name = billingContact.name;
+        
+        if(name != nil) {
+            billing[@"firstName"] = name.givenName;
+            billing[@"lastName"] = name.familyName;
+        }
+        
+        CNPostalAddress *billingAddr = billingContact.postalAddress;
+        if(billingAddr != nil) {
+            NSString *street = billingAddr.street;
+            NSString *city = billingAddr.city;
+            NSString *state = billingAddr.state;
+             NSString *country = billingAddr.country;
+             NSString *postalCode = billingAddr.postalCode;
+            billing[@"street"] = street;
+            billing[@"city"] = city;
+            billing[@"state"] = state;
+            billing[@"country"] = country;
+            billing[@"postalCode"] = postalCode;
+        }
+    }
+    
+    
+    PKContact *shippingContact = payment.shippingContact;
+    
+    NSMutableDictionary *contact = [NSMutableDictionary dictionary];
+    [contact setValue:[NSNull null] forKey:@"email"];
+    [contact setValue:[NSNull null] forKey:@"phoneNumber"];
+    
+    if(shippingContact != nil) {
+        if(shippingContact.phoneNumber != nil ){
+            CNPhoneNumber *phoneNumber = shippingContact.phoneNumber;
+            NSString *phoneNumberString = phoneNumber.stringValue;
+            contact[@"phoneNumber"] = phoneNumberString;
+            
+            NSString *email = shippingContact.emailAddress;
+            contact[@"email"] = email;
+        }
+    }
+    
+
+    [self.bridge.eventDispatcher sendDeviceEventWithName:@"NativePayments:nativePaymentInformation"
+                                                    body:@{
+                                                             @"contact": contact,
+                                                             @"billing": billing
+                                                           }];
+    
     
     if (self.hasGatewayParameters) {
         [self.gatewayManager createTokenWithPayment:payment completion:^(NSString * _Nullable token, NSError * _Nullable error) {
@@ -341,6 +405,7 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
             paymentToken:(NSString *_Nullable)token
 {
     NSString *transactionId = payment.token.transactionIdentifier;
+    
     NSString *paymentData = [[NSString alloc] initWithData:payment.token.paymentData encoding:NSUTF8StringEncoding];
     NSMutableDictionary *paymentResponse = [[NSMutableDictionary alloc]initWithCapacity:3];
     [paymentResponse setObject:transactionId forKey:@"transactionIdentifier"];

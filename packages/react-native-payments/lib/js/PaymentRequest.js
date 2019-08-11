@@ -178,6 +178,9 @@ export default class PaymentRequest {
     // 15. Set request.[[details]] to details.
     this._details = details;
 
+    this._contact = null;
+    this._billing = null;
+
     // 16. Set request.[[serializedModifierData]] to serializedModifierData.
     this._serializedModifierData = serializedModifierData;
 
@@ -253,12 +256,24 @@ export default class PaymentRequest {
         INTERNAL_SHIPPING_ADDRESS_CHANGE_EVENT,
         this._handleShippingAddressChange.bind(this)
       );
+
+
+      this._gatherPaymentDetailsSubscription = DeviceEventEmitter.addListener(
+        'NativePayments:nativePaymentInformation',
+        this._receiveNativePaymentInformation.bind(this)
+      )
+      
     }
+  }
+
+  _receiveNativePaymentInformation(data) {
+    const { contact, billing } = data;
+    this._contact = contact;
+    this._billing = billing;
   }
 
   _handleShippingAddressChange(postalAddress: PaymentAddress) {
     this._shippingAddress = postalAddress;
-
     const event = new PaymentRequestUpdateEvent(
       SHIPPING_ADDRESS_CHANGE_EVENT,
       this
@@ -351,6 +366,7 @@ export default class PaymentRequest {
       this._shippingAddress = shippingAddress;
     }
 
+
     const paymentResponse = new PaymentResponse({
       requestId: this.id,
       methodName: IS_IOS ? 'apple-pay' : 'android-pay',
@@ -358,10 +374,16 @@ export default class PaymentRequest {
       details: this._getPlatformDetails(details),
       shippingOption: IS_IOS ? this._shippingOption : null,
       payerName: this._options.requestPayerName ? this._shippingAddress.recipient : null,
-      payerPhone: this._options.requestPayerPhone ? this._shippingAddress.phone : null,
-      payerEmail: IS_ANDROID && this._options.requestPayerEmail
-        ? details.payerEmail
-        : null
+      
+      //velev added
+      billing: this._billing,
+      contact: this._contact,
+
+      payerPhone: this._options.requestPayerPhone ? this._contact.phoneNumber : null,
+      payerEmail: this._options.requestPayerEmail ? this._contact.email : null
+      // payerEmail: IS_ANDROID && this._options.requestPayerEmail
+      //   ? details.payerEmail
+      //   : null
     });
 
     return this._acceptPromiseResolver(paymentResponse);
