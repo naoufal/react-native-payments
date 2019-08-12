@@ -345,6 +345,32 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
     NSMutableDictionary *paymentResponse = [[NSMutableDictionary alloc]initWithCapacity:3];
     [paymentResponse setObject:transactionId forKey:@"transactionIdentifier"];
     [paymentResponse setObject:paymentData forKey:@"paymentData"];
+                
+    PKContact *shippingContact = payment.shippingContact;
+    if(shippingContact) {
+        
+        NSMutableDictionary *shippingAddress = [NSMutableDictionary new];
+        NSPersonNameComponents *presonNameComponent = shippingContact.name;
+        
+        if (presonNameComponent) {
+            [shippingAddress setObject:presonNameComponent.namePrefix forKey:@"namePrefix"];
+            [shippingAddress setObject:presonNameComponent.nameSuffix forKey:@"nameSuffix"];
+            [shippingAddress setObject:presonNameComponent.givenName forKey:@"givenName"];
+            [shippingAddress setObject:presonNameComponent.middleName forKey:@"middleName"];
+            [shippingAddress setObject:presonNameComponent.nickname forKey:@"nickname"];
+            [shippingAddress setObject:presonNameComponent.familyName forKey:@"familyName"];
+        }
+        
+        CNPostalAddress *postalAddess = shippingContact.postalAddress;
+        if (postalAddess) {
+            [shippingAddress setObject:postalAddess.street forKey:@"street"];
+            [shippingAddress setObject:postalAddess.city forKey:@"city"];
+            [shippingAddress setObject:postalAddess.state forKey:@"state"];
+            [shippingAddress setObject:postalAddess.postalCode forKey:@"postalCode"];
+        }
+
+        [paymentResponse setObject:shippingAddress forKey:@"shippingAddress"];
+    }
     
     if (token) {
         [paymentResponse setObject:token forKey:@"paymentToken"];
