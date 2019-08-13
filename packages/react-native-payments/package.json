@@ -1,6 +1,6 @@
 {
   "name": "react-native-payments",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "scripts": {
     "run:packager": "cd examples/native && yarn run:packager",
     "run:ios": "cd examples/native && yarn run:ios",
