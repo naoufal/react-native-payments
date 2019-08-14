@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 28
     buildToolsVersion "23.0.1"
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         ndk {
@@ -19,7 +19,8 @@ android {
 }
 
 dependencies {
-    compile 'com.facebook.react:react-native:+'
-    compile 'com.google.android.gms:play-services-wallet:11.0.4'
-    compile 'com.android.support:support-v4:23.0.1'
+    implementation 'com.facebook.react:react-native:+'
+    implementation 'com.google.android.gms:play-services-wallet:17.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
 }
