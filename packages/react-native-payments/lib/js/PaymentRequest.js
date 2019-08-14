@@ -314,24 +314,17 @@ export default class PaymentRequest {
   _getPlatformDetailsAndroid(details: {
     googleTransactionId: string,
     payerEmail: string,
-    paymentDescription: string,
+    paymentToken: Object,
     shippingAddress: Object,
   }) {
     const {
       googleTransactionId,
-      paymentDescription
+      paymentToken,
     } = details;
 
     return {
       googleTransactionId,
-      paymentDescription,
-      // On Android, the recommended flow is to have user's confirm prior to
-      // retrieving the full wallet.
-      getPaymentToken: () => NativePayments.getFullWalletAndroid(
-        googleTransactionId,
-        getPlatformMethodData(JSON.parse(this._serializedMethodData, Platform.OS)),
-        convertDetailAmountsToString(this._details)
-      )
+      paymentToken,
     };
   }
 

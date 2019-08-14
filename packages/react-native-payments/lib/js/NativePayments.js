@@ -14,11 +14,10 @@ const NativePayments: {
   handleDetailsUpdate: PaymentDetailsBase => Promise<any>,
   show: () => Promise<any>,
   abort: () => Promise<any>,
-  complete: PaymentComplete => Promise<any>,
-  getFullWalletAndroid: string => Promise<any>
+  complete: PaymentComplete => Promise<any>
 } = {
   supportedGateways: IS_ANDROID
-    ? ['stripe', 'braintree'] // On Android, Payment Gateways are supported out of the gate.
+    ? ['stripe', 'braintree', 'checkoutltd'] // On Android, Payment Gateways are supported out of the gate.
     : ReactNativePayments ? ReactNativePayments.supportedGateways : [],
 
   canMakePayments(methodData: object) {
@@ -27,7 +26,7 @@ const NativePayments: {
         ReactNativePayments.canMakePayments(
           methodData,
           (err) => reject(err),
-          (canMakePayments) => resolve(true)
+          () => resolve(true)
         );
 
         return;
@@ -132,30 +131,6 @@ const NativePayments: {
 
         resolve(true);
       });
-    });
-  },
-
-  getFullWalletAndroid(googleTransactionId: string, paymentMethodData: object, details: object): Promise<string> {
-    return new Promise((resolve, reject) => {
-      if (!IS_ANDROID) {
-        reject(new Error('This method is only available on Android.'));
-
-        return;
-      }
-
-      ReactNativePayments.getFullWalletAndroid(
-        googleTransactionId,
-        paymentMethodData,
-        details,
-        (err) => reject(err),
-        (serializedPaymentToken) => resolve({
-          serializedPaymentToken,
-          paymentToken: JSON.parse(serializedPaymentToken),
-          /** Leave previous typo in order not to create a breaking change **/
-          serializedPaymenToken: serializedPaymentToken,
-          paymenToken: JSON.parse(serializedPaymentToken)
-        })
-      );
     });
   }
 };
