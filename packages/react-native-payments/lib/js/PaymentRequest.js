@@ -312,28 +312,33 @@ export default class PaymentRequest {
   }
 
   _getPlatformDetailsAndroid(details: {
+    cardInfo: Object,
     googleTransactionId: string,
     payerEmail: string,
     paymentToken: Object,
-    shippingAddress: Object,
+    shippingAddress?: Object,
   }) {
     const {
+      cardInfo,
       googleTransactionId,
       paymentToken,
     } = details;
 
     return {
+      cardInfo,
       googleTransactionId,
       paymentToken,
     };
   }
 
   _handleUserAccept(details: {
-    transactionIdentifier: string,
-    paymentData: string,
-    shippingAddress: Object,
-    payerEmail: string,
-    paymentToken?: string,
+    cardInfo?: Object,
+    googleTransactionId?: string,
+    transactionIdentifier?: string,
+    paymentData?: Object,
+    shippingAddress?: Object,
+    payerEmail?: string,
+    paymentToken: Object | string,
   }) {
     // On Android, we don't have `onShippingAddressChange` events, so we
     // set the shipping address when the user accepts.

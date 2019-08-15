@@ -89,6 +89,10 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
                                 paymentDetails.putString("payerEmail", paymentData.getEmail());
                                 paymentDetails.putMap("shippingAddress", shippingAddress);
                                 paymentDetails.putString("googleTransactionId", paymentData.getGoogleTransactionId());
+
+                                WritableNativeMap cardInfo = buildCardInfo(paymentData.getCardInfo());
+                                paymentDetails.putMap("cardInfo", cardInfo);
+
                                 String serializedPaymentToken = paymentData.getPaymentMethodToken().getToken();
                                 try {
                                     JSONObject paymentTokenJson = new JSONObject(serializedPaymentToken);
@@ -332,6 +336,21 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
                     result.add(WalletConstants.CARD_NETWORK_OTHER);
             }
         }
+
+        return result;
+    }
+
+    protected static WritableNativeMap buildCardInfo(CardInfo cardInfo) {
+
+        if (cardInfo == null) return null;
+
+
+        WritableNativeMap result = new WritableNativeMap();
+
+        result.putInt("cardClass", cardInfo.getCardClass());
+        result.putString("cardDescription", cardInfo.getCardDescription());
+        result.putString("cardDetails", cardInfo.getCardDetails());
+        result.putString("cardNetwork", cardInfo.getCardNetwork());
 
         return result;
     }
