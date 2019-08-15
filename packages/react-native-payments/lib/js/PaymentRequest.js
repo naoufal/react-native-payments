@@ -211,7 +211,7 @@ export default class PaymentRequest {
     const normalizedDetails = convertDetailAmountsToString(details);
 
     // Validate gateway config if present
-    if (hasGatewayConfig(platformMethodData)) {
+    if (IS_IOS && hasGatewayConfig(platformMethodData)) {
       validateGateway(
         getGatewayName(platformMethodData),
         NativePayments.supportedGateways
