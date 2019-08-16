@@ -467,12 +467,5 @@ export default class PaymentRequest {
       });
     });
   }
-
-  // https://www.w3.org/TR/payment-request/#canmakepayment-method
-  canMakePayments(): Promise<boolean> {
-    return NativePayments.canMakePayments(
-      getPlatformMethodData(JSON.parse(this._serializedMethodData), Platform.OS)
-    );
-  }
 }
 

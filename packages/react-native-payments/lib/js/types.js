@@ -97,3 +97,8 @@ export type PaymentDetailsIOSRaw = {
   paymentToken?: string,
   transactionIdentifier: string,
 };
+
+export type CanMakePayments = {
+  supportedNetworks: Array<string>,
+  allowedPaymentMethods: Array<number>
+};

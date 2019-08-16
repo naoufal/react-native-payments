@@ -1,6 +1,6 @@
 // @flow
 
-import type { PaymentDetailsBase, PaymentComplete } from './types';
+import type { CanMakePayments, PaymentDetailsBase, PaymentComplete } from './types';
 
 import { NativeModules, Platform } from 'react-native';
 const { ReactNativePayments } = NativeModules;
@@ -8,7 +8,7 @@ const { ReactNativePayments } = NativeModules;
 const IS_ANDROID = Platform.OS === 'android';
 
 const NativePayments: {
-  canMakePayments: boolean,
+  canMakePayments: CanMakePayments => Promise<boolean>,
   supportedGateways: Array<string>,
   createPaymentRequest: PaymentDetailsBase => Promise<any>,
   handleDetailsUpdate: PaymentDetailsBase => Promise<any>,
@@ -20,7 +20,7 @@ const NativePayments: {
     ? [] // On Android, Payment Gateways are supported out of the gate.
     : ReactNativePayments ? ReactNativePayments.supportedGateways : [],
 
-  canMakePayments(methodData: object) {
+  canMakePayments(methodData?: CanMakePayments) {
     return new Promise((resolve, reject) => {
       if (IS_ANDROID) {
         ReactNativePayments.canMakePayments(
