@@ -4,7 +4,9 @@
 import type {
   PaymentComplete,
   PaymentDetailsInit,
-  PaymentAddress
+  PaymentAddress,
+  BillingInfo,
+  ContactInfo
 } from './types';
 
 // Modules
@@ -21,6 +23,8 @@ export default class PaymentResponse {
   _payerPhone: null | string;
   _payerEmail: null | string;
   _completeCalled: boolean;
+  _billing: BillingInfo;
+  _contact: ContactInfo;
 
   constructor(paymentResponse: Object) {
     // Set properties as readOnly
@@ -32,9 +36,18 @@ export default class PaymentResponse {
     this._payerName = paymentResponse.payerName;
     this._payerPhone = paymentResponse.payerPhone;
     this._payerEmail = paymentResponse.payerEmail;
-
+    this._billing = paymentResponse.billing
+    this._contact = paymentResponse.contact
     // Internal Slots
     this._completeCalled = false;
+  }
+
+  get billing(): BillingInfo {
+    return this._billing;
+  }
+
+  get contact(): ContactInfo {
+    return this._contact;
   }
 
   // https://www.w3.org/TR/payment-request/#requestid-attribute

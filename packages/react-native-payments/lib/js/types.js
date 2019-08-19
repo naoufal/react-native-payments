@@ -6,6 +6,22 @@ export type PaymentMethodData = {
   data: Object
 };
 
+export type BillingInfo = {
+  street: null | string,
+  city: null | string,
+  state: null | string,
+  country: null | string,
+  postalCode: null | string,
+  firstName: null | string,
+  lastName: null | string
+}
+
+export type ContactInfo = {
+  email: null | string,
+  phoneNumber: null| string
+}
+
+
 // https://www.w3.org/TR/payment-request/#dom-paymentcurrencyamount
 export type PaymentCurrencyAmount = {
   currency: string,
