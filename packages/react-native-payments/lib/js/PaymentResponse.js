@@ -42,6 +42,14 @@ export default class PaymentResponse {
     this._completeCalled = false;
   }
 
+  get billing(): BillingInfo {
+    return this._billing;
+  }
+
+  get contact(): ContactInfo {
+    return this._contact;
+  }
+
   // https://www.w3.org/TR/payment-request/#requestid-attribute
   get requestId(): string {
     return this._requestId;
