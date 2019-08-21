@@ -100,5 +100,6 @@ export type PaymentDetailsIOSRaw = {
 
 export type CanMakePayments = {
   supportedNetworks: Array<string>,
-  allowedPaymentMethods: Array<number>
+  allowedPaymentMethods: Array<number>,
+  environment: string
 };
