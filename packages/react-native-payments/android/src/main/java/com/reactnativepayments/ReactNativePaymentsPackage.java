@@ -13,7 +13,7 @@ import com.facebook.react.bridge.JavaScriptModule;
 public class ReactNativePaymentsPackage implements ReactPackage {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-      return Arrays.<NativeModule>asList(new ReactNativePaymentsModule(reactContext));
+      return Arrays.<NativeModule>asList(new GPay(reactContext));
     }
 
     // Deprecated RN 0.47
