@@ -2,7 +2,7 @@ import { NativeModules } from 'react-native'
 const { GPay } = NativeModules;
 
 export default class GPayProxy {
-    static ENVIRONMENT_TEST = 2;
+    static ENVIRONMENT_TEST = GPay.ENVIRONMENT_TEST;
     static ENVIRONMENT_PRODUCTION = GPay.ENVIRONMENT_PRODUCTION;
     
     get test_env () {
