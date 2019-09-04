@@ -24,13 +24,14 @@ In addition to button's type, you can set button's visual appearance. For iOS an
 ![Apple pay button - styles](https://user-images.githubusercontent.com/829963/40891711-daca8ff8-678a-11e8-89f2-26a0c3dcf9ed.png)
 
 ## Props
-| Prop name | required | Type        | Default Value |
-|-----------|----------|-------------|---------------|
-| type      | yes      | ButtonType  |               |
-| style     | yes      | ButtonStyle |               |
-| onPress   | yes      | Function    |               |
-| width     | no       | number      |               |
-| height    | no       | number      | 44            |
+| Prop name    | required | Type        | Default Value |
+|--------------|----------|-------------|---------------|
+| type         | yes      | ButtonType  |               |
+| style        | yes      | ButtonStyle |               |
+| onPress      | yes      | Function    |               |
+| width        | no       | number      |               |
+| height       | no       | number      | 44            |
+| cornerRadius | no       | number      | 4             |
 
 ## Types
 ```javascript
