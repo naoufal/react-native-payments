@@ -5,15 +5,12 @@ import android.view.WindowManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.annotation.NonNull;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.support.annotation.RequiresPermission;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.facebook.react.bridge.Callback;
-import com.facebook.react.bridge.ReactBridge;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -34,9 +31,7 @@ import com.facebook.react.bridge.WritableNativeMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static final int LOAD_MASKED_WALLET_REQUEST_CODE = 88;
@@ -336,8 +331,6 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
                 : WalletConstants.ENVIRONMENT_PRODUCTION;
     }
 
-    // Google API Client
-    // ---------------------------------------------------------------------------------------------
     private void buildGoogleApiClient(Activity currentActivity, int environment) {
         mGoogleApiClient = new GoogleApiClient.Builder(currentActivity)
                 .addConnectionCallbacks(this)
@@ -352,19 +345,16 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
 
     @Override
     public void onConnected(Bundle connectionHint) {
-//        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
     }
 
 
     @Override
     public void onConnectionFailed(ConnectionResult result) {
-        // Refer to Google Play documentation for what errors can be logged
         Log.i(REACT_CLASS, "Connection failed: ConnectionResult.getErrorCode() = " + result.getErrorCode());
     }
 
     @Override
     public void onConnectionSuspended(int cause) {
-        // Attempts to reconnect if a disconnect occurs
         Log.i(REACT_CLASS, "Connection suspended");
         mGoogleApiClient.connect();
     }

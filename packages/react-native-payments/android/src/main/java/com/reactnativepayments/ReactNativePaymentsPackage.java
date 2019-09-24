@@ -1,4 +1,3 @@
-
 package com.reactnativepayments;
 
 import java.util.Arrays;
