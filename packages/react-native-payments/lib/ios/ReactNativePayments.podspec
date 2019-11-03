@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.description  = <<-DESC
                   Native Payments (Google and Apple Pay) from React-Native
                    DESC
-  s.homepage     = giturl
+  s.homepage     = "giturl"
   s.license      = "MIT"
   s.author       = "Naoufal Kadhom"
   s.platform     = :ios, "7.0"
