@@ -396,6 +396,7 @@ export default class PaymentRequest {
   _closePaymentRequest() {
     this._state = 'closed';
 
+    this._acceptPromiseRejecter && 
     this._acceptPromiseRejecter(new Error('AbortError'));
 
     // Remove event listeners before aborting.
