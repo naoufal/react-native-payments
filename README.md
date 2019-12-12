@@ -53,6 +53,7 @@ Second, link the native dependencies:
 ```shell
 $ react-native link react-native-payments
 ```
+🚨 Note: If you are using react-native version 0.60 or higher you don't need to link [lottie-react-native](https://github.com/react-native-community/lottie-react-native).
 
 ## Usage
 - [Setting up Apple Pay/Android Pay](#setting-up-apple-payandroid-pay)
