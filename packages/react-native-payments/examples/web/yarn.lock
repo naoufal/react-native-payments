@@ -1340,8 +1340,8 @@ loader-utils@^1.0.2:
     json5 "^0.5.0"
 
 lodash@^4.14.0, lodash@^4.17.2:
-  version "4.17.4"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
+  version "4.17.19"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
 
 longest@^1.0.1:
   version "1.0.1"
@@ -1834,7 +1834,7 @@ react-dom@~15.4.0-rc.4:
     object-assign "^4.1.0"
 
 "react-native-payments@file:../..":
-  version "0.2.0"
+  version "0.7.1"
   dependencies:
     es6-error "^4.0.2"
     uuid "^3.1.0"
