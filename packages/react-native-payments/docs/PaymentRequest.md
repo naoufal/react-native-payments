@@ -91,6 +91,29 @@ paymentRequest.canMakePayments()
 
 ---
 
+### static canMakePaymentsUsingNetworks()
+**(IOS only)** Determines if user has active cards in Apple pay that matches passed networks.
+
+__Arguments__
+- usingNetworks - `Array`
+
+<details>
+<summary><strong>Example</strong></summary>
+
+```es6
+PaymentRequest
+    .canMakePaymentsUsingNetworks(['Visa', 'AmEx', 'MasterCard'])
+    .then(canMakePayments => {
+        if (canMakePayments) {
+            // do some stuff
+        }
+    });
+```
+
+</details>
+
+---
+
 ### show()
 Displays the payment request to the user.
 
