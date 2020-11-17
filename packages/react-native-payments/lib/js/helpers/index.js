@@ -118,7 +118,7 @@ export function validateTotal(total, errorType = Error): void {
     throw new errorType(`required member total is undefined.`);
   }
 
-  const hasTotal = total && total.amount && total.amount.value;
+  const hasTotal = total && total.amount && (total.amount.value || total.amount.value === 0)
   // Check that there is a total
   if (!hasTotal) {
     throw new errorType(`Missing required member(s): amount, label.`);
@@ -176,13 +176,14 @@ export function validatePaymentMethods(methodData): Array {
   return serializedMethodData;
 }
 
+
 export function validateDisplayItems(displayItems, errorType = Error): void {
   // Check that the value of each display item is a valid decimal monetary value
   if (displayItems) {
     displayItems.forEach((item: PaymentItem) => {
       const amountValue = item && item.amount && item.amount.value;
 
-      if (!amountValue) {
+      if (!amountValue && amountValue !== 0) {
         throw new errorType(`required member value is undefined.`);
       }
 
