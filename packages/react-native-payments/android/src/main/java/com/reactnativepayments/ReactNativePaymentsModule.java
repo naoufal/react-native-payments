@@ -21,7 +21,19 @@ import com.google.android.gms.common.api.BooleanResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.identity.intents.model.UserAddress;
-import com.google.android.gms.wallet.*;
+import com.google.android.gms.wallet.Cart;
+import com.google.android.gms.wallet.FullWallet;
+import com.google.android.gms.wallet.FullWalletRequest;
+import com.google.android.gms.wallet.MaskedWallet;
+import com.google.android.gms.wallet.MaskedWalletRequest;
+import com.google.android.gms.wallet.PaymentMethodTokenizationParameters;
+import com.google.android.gms.wallet.PaymentMethodTokenizationType;
+import com.google.android.gms.wallet.Wallet;
+import com.google.android.gms.wallet.WalletConstants;
+import com.google.android.gms.wallet.IsReadyToPayRequest;
+import com.google.android.gms.wallet.LineItem;
+
+
 
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.BaseActivityEventListener;
@@ -53,6 +65,10 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
     private static Callback mGetFullWalletErrorCallback = null;
 
     public static final String REACT_CLASS = "ReactNativePayments";
+
+    private int theme = WalletConstants.THEME_LIGHT;
+
+    private ArrayList<Integer> cardNetworks = new ArrayList<Integer>();
 
     private static ReactApplicationContext reactContext = null;
 
@@ -141,8 +157,52 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
         return REACT_CLASS;
     }
 
+
+
+    @Override public Map<String, Object> getConstants() {
+        final Map<String, Object> constants = new HashMap<>();
+        constants.put("ENVIRONMENT_TEST", WalletConstants.ENVIRONMENT_TEST);
+        constants.put("ENVIRONMENT_PRODUCTION", WalletConstants.ENVIRONMENT_PRODUCTION);
+
+        constants.put("THEME_DARK", WalletConstants.THEME_DARK);
+        constants.put("THEME_LIGHT", WalletConstants.THEME_LIGHT);
+
+        constants.put("CARD_NETWORK_AMEX", WalletConstants.CardNetwork.AMEX);
+        constants.put("CARD_NETWORK_MASTERCARD", WalletConstants.CardNetwork.MASTERCARD);
+        constants.put("CARD_NETWORK_VISA", WalletConstants.CardNetwork.VISA);
+        constants.put("CARD_NETWORK_DISCOVER", WalletConstants.CardNetwork.DISCOVER);
+        constants.put("CARD_NETWORK_INTERAC", WalletConstants.CardNetwork.INTERAC);
+        constants.put("CARD_NETWORK_JCB", WalletConstants.CardNetwork.JCB);
+        constants.put("CARD_NETWORK_OTHER", WalletConstants.CardNetwork.OTHER);
+
+        constants.put("PAYMENT_METHOD_TOKENIZATION_TYPE_PAYMENT_GATEWAY", PaymentMethodTokenizationType.PAYMENT_GATEWAY); // Adyen,Braintree,Stripe,Vantiv
+        constants.put("PAYMENT_METHOD_TOKENIZATION_TYPE_NETWORK_TOKEN", PaymentMethodTokenizationType.NETWORK_TOKEN);
+       // constants.put("PAYMENT_METHOD_TOKENIZATION_TYPE_DIRECT", WalletConstants.PAYMENT_METHOD_TOKENIZATION_TYPE_DIRECT);
+
+        return constants;
+    }
+
+
     // Public Methods
     // ---------------------------------------------------------------------------------------------
+    @ReactMethod
+    public void setTheme(int theme) {
+        if (theme == WalletConstants.THEME_LIGHT || theme == WalletConstants.THEME_DARK);
+        this.theme = theme;
+    }
+    @ReactMethod
+    public void setLightTheme(int theme) {
+        this.theme = WalletConstants.THEME_LIGHT;
+    }
+    @ReactMethod
+    public void setDarkTheme(int theme) {
+        this.theme = WalletConstants.THEME_DARK;
+    }
+    @ReactMethod
+    public void addAllowedCardNetwork(int network) {
+        cardNetworks.add(network);
+    }
+
     @ReactMethod
     public void getSupportedGateways(Callback errorCallback, Callback successCallback) {
         WritableNativeArray supportedGateways = new WritableNativeArray();
@@ -153,10 +213,12 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
     @ReactMethod
     public void canMakePayments(ReadableMap paymentMethodData, Callback errorCallback, Callback successCallback) {
         final Callback callback = successCallback;
-        IsReadyToPayRequest req = IsReadyToPayRequest.newBuilder()
-                .addAllowedCardNetwork(WalletConstants.CardNetwork.MASTERCARD)
-                .addAllowedCardNetwork(WalletConstants.CardNetwork.VISA)
-                .build();
+
+        IsReadyToPayRequest.Builder builder =  IsReadyToPayRequest.newBuilder();
+        for (int network :cardNetworks) {
+            builder.addAllowedCardNetwork(network);
+        }
+        IsReadyToPayRequest req = builder.build();
 
         int environment = getEnvironmentFromPaymentMethodData(paymentMethodData);
         if (mGoogleApiClient == null) {
@@ -251,33 +313,44 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
     // ---------------------------------------------------------------------------------------------
     private static PaymentMethodTokenizationParameters buildTokenizationParametersFromPaymentMethodData(ReadableMap paymentMethodData) {
         ReadableMap tokenizationParameters = paymentMethodData.getMap("paymentMethodTokenizationParameters");
-        String tokenizationType = tokenizationParameters.getString("tokenizationType");
+        String publicKey = "";
+        switch( tokenizationParameters.getString("tokenizationType")) {
+            /*case WalletConstants.PAYMENT_METHOD_TOKENIZATION_TYPE_DIRECT:
+                publicKey = tokenizationParameters.getMap("parameters").getString("publicKey");
+                return PaymentMethodTokenizationParameters.newBuilder()
+                        .setPaymentMethodTokenizationType(PaymentMethodTokenizationType.PAYMENT_DIRECT)
+                        .addParameter("publicKey", publicKey)
+                        .build();
 
+            break;*/
+            case PaymentMethodTokenizationType.PAYMENT_GATEWAY:
+                ReadableMap parameters = tokenizationParameters.getMap("parameters");
+                PaymentMethodTokenizationParameters.Builder parametersBuilder = PaymentMethodTokenizationParameters.newBuilder()
+                        .setPaymentMethodTokenizationType(PaymentMethodTokenizationType.PAYMENT_GATEWAY)
+                        .addParameter("gateway", parameters.getString("gateway"));
 
-        if (tokenizationType.equals("GATEWAY_TOKEN")) {
-            ReadableMap parameters = tokenizationParameters.getMap("parameters");
-            PaymentMethodTokenizationParameters.Builder parametersBuilder = PaymentMethodTokenizationParameters.newBuilder()
-                    .setPaymentMethodTokenizationType(PaymentMethodTokenizationType.PAYMENT_GATEWAY)
-                    .addParameter("gateway", parameters.getString("gateway"));
+                ReadableMapKeySetIterator iterator = parameters.keySetIterator();
+                while (iterator.hasNextKey()) {
+                    String key = iterator.nextKey();
 
-            ReadableMapKeySetIterator iterator = parameters.keySetIterator();
+                    parametersBuilder.addParameter(key, parameters.getString(key));
+                }
 
-            while (iterator.hasNextKey()) {
-                String key = iterator.nextKey();
+                return parametersBuilder.build();
+            break;
+            case  PaymentMethodTokenizationType.NETWORK_TOKEN:
+                publicKey = tokenizationParameters.getMap("parameters").getString("publicKey");
 
-                parametersBuilder.addParameter(key, parameters.getString(key));
-            }
-
-            return parametersBuilder.build();
-
-        } else {
-            String publicKey = tokenizationParameters.getMap("parameters").getString("publicKey");
-
-            return PaymentMethodTokenizationParameters.newBuilder()
-                    .setPaymentMethodTokenizationType(PaymentMethodTokenizationType.NETWORK_TOKEN)
-                    .addParameter("publicKey", publicKey)
-                    .build();
+                return PaymentMethodTokenizationParameters.newBuilder()
+                        .setPaymentMethodTokenizationType(PaymentMethodTokenizationType.NETWORK_TOKEN)
+                        .addParameter("publicKey", publicKey)
+                        .build();
+                break;
+            default:
+              // TODO warning
         }
+
+
     }
 
     private static List buildLineItems(ReadableArray displayItems) {
@@ -331,7 +404,7 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
     }
 
     private int getEnvironmentFromPaymentMethodData(ReadableMap paymentMethodData) {
-        return paymentMethodData.hasKey("environment") && paymentMethodData.getString("environment").equals("TEST")
+        return paymentMethodData.hasKey("environment") && paymentMethodData.getInt("environment") == WalletConstants.ENVIRONMENT_TEST
                 ? WalletConstants.ENVIRONMENT_TEST
                 : WalletConstants.ENVIRONMENT_PRODUCTION;
     }
@@ -344,7 +417,7 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule implem
                 .addOnConnectionFailedListener(this)
                 .addApi(Wallet.API, new Wallet.WalletOptions.Builder()
                         .setEnvironment(environment)
-                        .setTheme(WalletConstants.THEME_LIGHT)
+                        .setTheme(theme)
                         .build())
                 .build();
         mGoogleApiClient.connect();
