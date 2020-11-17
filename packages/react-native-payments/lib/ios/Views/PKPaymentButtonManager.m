@@ -30,6 +30,13 @@ RCT_CUSTOM_VIEW_PROPERTY(buttonStyle, NSString, PKPaymentButtonView)
   }
 }
 
+RCT_CUSTOM_VIEW_PROPERTY(cornerRadius, CGFloat, PKPaymentButtonView)
+{
+  if (json) {
+    [view setCornerRadius:[RCTConvert CGFloat:json]];
+  }
+}
+
 - (UIView *) view
 {
   return [PKPaymentButtonView new];
