@@ -34,17 +34,27 @@ pod install
 
 # Guides
 
-We're working on clear guides for common workflows. In the meantime, follow this 15 minute video by @naoufal.
+## Example projects
+
+- [iOS](https://github.com/freeman-industries/react-native-payments-example-ios)
+
+## Live demo
+
+For a step by step guide, check out this talk by @naoufal.
 
 https://www.youtube.com/watch?v=XrmUuir9OHc&t=652
 
-Then, down below we have a detailed specification for PaymentRequest which is hopefully enough to get you started. We also have semi-working example projects in the `examples` directory.
+## API Spec
+
+Down below we have a detailed specification for PaymentRequest and instructions for configuring Apple Pay and Google Pay, which is hopefully enough to get you started.
+
+We also have some legacy example projects in the `examples` directory that will be updated soon and linked above.
 
 Bear with us while we organize things a bit.
 
 # Roadmap
 
-## Fully supported
+## Completed
 
 - Apple Pay Stripe
 
@@ -91,6 +101,8 @@ Our plan for this library is for it to be useful to all React Native developers 
 These amazing people use `react-native-payments` in their projects.
 
 - [@lesalonapp](https://github.com/lesalonapp)
+
+To add your organization, open a PR updating this list.
 
 ---
 
