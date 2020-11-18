@@ -259,6 +259,10 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
         [supportedNetworksMapping setObject:PKPaymentNetworkMada forKey:@"mada"];
     }
     
+    if (iOSVersion >= 12.1) {
+        [supportedNetworksMapping setObject:PKPaymentNetworkMada forKey:@"mada"];
+    }
+    
     // Setup supportedNetworks
     NSArray *jsSupportedNetworks = methodData[@"supportedNetworks"];
     NSMutableArray *supportedNetworks = [NSMutableArray array];
@@ -413,11 +417,19 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
     NSMutableDictionary *paymentResponse = [[NSMutableDictionary alloc]initWithCapacity:5];
     [paymentResponse setObject:transactionId forKey:@"transactionIdentifier"];
     [paymentResponse setObject:paymentData forKey:@"paymentData"];
-    
+
     if (token) {
         [paymentResponse setObject:token forKey:@"paymentToken"];
     }
 
+    if (payment.billingContact) {
+        paymentResponse[@"billingContact"] = [self contactToString:payment.billingContact];
+    }
+   
+    if (payment.shippingContact) {
+        paymentResponse[@"shippingContact"] = [self contactToString:payment.shippingContact];
+    }
+    
     if (payment.billingContact) {
         paymentResponse[@"billingContact"] = [self contactToString:payment.billingContact];
     }

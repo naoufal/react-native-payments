@@ -176,6 +176,7 @@ export function validatePaymentMethods(methodData): Array {
   return serializedMethodData;
 }
 
+
 export function validateDisplayItems(displayItems, errorType = Error): void {
   // Check that the value of each display item is a valid decimal monetary value
   if (displayItems) {
