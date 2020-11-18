@@ -1,2 +1,4 @@
+import { PKPaymentButton } from './PKPaymentButton';
+
 export { default as PaymentRequest } from './PaymentRequest';
-export { PKPaymentButton } from './PKPaymentButton';
+export const ApplePayButton = PKPaymentButton;
