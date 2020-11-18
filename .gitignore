@@ -1,3 +1,45 @@
+# System
+#
+.DS_Store
+
+# Xcode
+#
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+
+# Android
+**/android/**/.idea
+**/android/**/*.iml
+**/android/**/gradlew*
+**/android/**/*.properties
+**/android/**/.gradle
+**/android/**/gradle
+**/android/**/.settings
+**/android/**/.project
+
+# npm
+#
 node_modules/
-npm-debug.log
-lerna-debug.log
+
+# editors
+#
+jsconfig.json
+.vscode/*
+
+# project
+#
+coverage

@@ -1,16 +1,63 @@
 {
+  "name": "react-native-payments",
+  "version": "0.8.0",
   "scripts": {
-    "precommit": "lint-staged"
+    "run:packager": "cd examples/native && yarn run:packager",
+    "run:ios": "cd examples/native && yarn run:ios",
+    "run:web": "cd examples/web && yarn run:web",
+    "run:demo": "cd examples/native && yarn run:demo",
+    "lint": "eslint ./lib/js",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "jest"
+  },
+  "homepage": "https://github.com/naoufal/react-native-payments",
+  "repository": "https://github.com/naoufal/react-native-payments",
+  "keywords": [
+    "react",
+    "react-native",
+    "apple-pay",
+    "stripe",
+    "braintree",
+    "payments",
+    "payment-request",
+    "sca",
+    "strong customer authentication",
+    "2 factor",
+    "2fa",
+    "android",
+    "ios",
+    "payment intents",
+    "cross platform"
+  ],
+  "author": "Naoufal Kadhom & Freeman Industries",
+  "license": "MIT",
+  "dependencies": {
+    "es6-error": "^4.0.2",
+    "uuid": "^3.1.0",
+    "validator": "^7.0.0"
   },
   "devDependencies": {
-    "lerna": "^2.0.0",
-    "lint-staged": "^4.0.0",
-    "prettier": "^1.4.4"
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "20.0.3",
+    "babel-preset-react-native": "2.0.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-flowtype": "^4.7.0",
+    "eslint-plugin-import": "^2.17.3",
+    "husky": "^0.14.1",
+    "jest": "20.0.4",
+    "react-native": "^0.63.3",
+    "react-test-renderer": "16.0.0-alpha.12"
   },
-  "lint-staged": {
-    "*.js": [
-      "prettier --single-quote --write",
-      "git add"
+  "peerDependencies": {
+    "react": ">=15",
+    "react-native": ">=0.60"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/examples/"
     ]
-  }
+  },
+  "main": "js/index.js"
 }

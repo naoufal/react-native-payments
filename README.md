@@ -1,3 +1,123 @@
+# react-native-payments
+
+[![Build Status](https://travis-ci.org/naoufal/react-native-payments.svg?branch=master)](https://travis-ci.org/naoufal/react-native-payments) [![Codeship Status for freeman-industries/react-native-payments](https://app.codeship.com/projects/d6d17e65-23f0-4154-b7ce-33ce59471b08/status?branch=master)](https://app.codeship.com/projects/418096)
+
+Welcome to the best and most comprehensive library for integrating payments like Apple Pay and Google Pay into your React Native app.
+
+This library is designed to be fully compatible with React Native 0.61 and onwards.
+
+<div>
+<img width="200px" src="https://user-images.githubusercontent.com/1627824/27758096-9fc6bf9a-5dc1-11e7-9d8f-b2d409302fc7.gif" />
+<img width="200px" src="https://user-images.githubusercontent.com/1627824/30039983-d75d1b3e-91d8-11e7-9ac9-71d2ed12958c.png" />
+</div>
+
+# Installation
+
+```
+npm install --save react-native-payments
+```
+
+You'll need to autolink on each platform:
+
+### Android
+
+```
+npx jetify
+```
+
+### iOS
+
+```
+cd ios
+pod install
+```
+
+# Guides
+
+## Example projects
+
+- [iOS](https://github.com/freeman-industries/react-native-payments-example-ios)
+
+## Live demo
+
+For a step by step guide, check out this talk by @naoufal.
+
+https://www.youtube.com/watch?v=XrmUuir9OHc&t=652
+
+## API Spec
+
+Down below we have a detailed specification for PaymentRequest and instructions for configuring Apple Pay and Google Pay, which is hopefully enough to get you started.
+
+We also have some legacy example projects in the `examples` directory that will be rewritten soon and linked above.
+
+Bear with us while we organize things a bit.
+
+# Roadmap
+
+## Completed
+
+- Apple Pay Stripe
+
+## Completed, untested
+
+- Apple Pay Braintree
+- Google Pay (Stripe, Braintree)
+- Web
+
+## In progress
+
+- Stripe: Payment Intents (for SCA)
+
+## Planned
+
+- Tutorial docs
+
+Naoufal, the original author of this library, has done a lot of the hard work integrating iOS, Android, Web platforms and Stripe and Braintree gateways.
+
+The library has fallen out of regular maintenance and we're working to test and update all parts to be compatible for RN in the 2020s.
+
+If you're feeling brave give the untested platforms a try and let us know how it worked.
+
+# Contributors
+
+Many people have contributed to the development of `react-native-payments` over time. The people below are currently available to help.
+
+- [@nabilfreeman](https://github.com/nabilfreeman) ⚙️ ✏️
+- [@runticle](https://github.com/runticle) ✏️
+
+---
+Merge PRs: ⚙️ | Review issues: ✏️
+
+## Join us!
+
+All contributions, big or small are welcomed.
+
+For large PRs, please open an issue and have a discussion with us first before you dive in.
+
+Our plan for this library is for it to be useful to all React Native developers so we want to architect it carefully.
+
+# In the wild
+
+These amazing people use `react-native-payments` in their projects.
+
+- [LeSalon (@lesalonapp)](https://github.com/lesalonapp)
+
+To add your organization, open a PR updating this list.
+
+---
+
+🚧
+
+🚧
+
+🚧
+
+🚧
+
+🚧
+
+---
+
 > This project is currently in __beta and APIs are subject to change.__
 
 # React Native Payments
@@ -14,11 +134,6 @@ __Features__
 - __Future-proof__. Use a W3C Standards API, supported by companies like Google, Firefox and others.
 - __Cross-platform__. Share payments code between your iOS, Android, and web apps.
 - __Add-ons__. Easily enable support for Stripe or Braintree via add-ons.
-
-<div>
-<img width="280px" src="https://user-images.githubusercontent.com/1627824/27758096-9fc6bf9a-5dc1-11e7-9d8f-b2d409302fc7.gif" />
-<img width="280px" src="https://user-images.githubusercontent.com/1627824/30039983-d75d1b3e-91d8-11e7-9ac9-71d2ed12958c.png" />
-</div>
 
 ---
 
