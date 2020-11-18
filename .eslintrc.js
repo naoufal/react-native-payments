@@ -4,7 +4,7 @@ const ERROR = 2;
 
 module.exports = {
   "extends": "airbnb-base",
-  "parser": "babel-parser",
+  "parser": "babel-eslint",
   "plugins": [
     "flowtype"
   ],
