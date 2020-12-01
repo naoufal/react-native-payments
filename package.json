@@ -31,6 +31,7 @@
   ],
   "author": "Naoufal Kadhom & Freeman Industries",
   "license": "MIT",
+  "description":"react-native-payment description",
   "dependencies": {
     "es6-error": "^4.0.2",
     "uuid": "^3.1.0",
