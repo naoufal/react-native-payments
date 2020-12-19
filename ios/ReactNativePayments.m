@@ -172,7 +172,13 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
             [self handleUserAccept:payment paymentToken:token];
         }];
     } else {
-        [self handleUserAccept:payment paymentToken:nil];
+		// if there's not gateway parameters defined we should return the default cryptogram for advanced users to send to server and decrypt for processing.
+		// this is a viable way to support other gateways but will take a lot more work.
+		PKPaymentToken *paymentToken = payment.token;
+        NSData *data = paymentToken.paymentData;
+        NSString *base64Encoded = [data base64EncodedStringWithOptions:0];
+        
+        [self handleUserAccept:payment paymentToken:base64Encoded];
     }
 }
 
