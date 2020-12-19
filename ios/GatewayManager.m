@@ -4,8 +4,8 @@
 #import <Stripe/Stripe.h>
 #endif
 
-#if __has_include(<BraintreeApplePay/BraintreeApplePay.h>)
-#import <BraintreeApplePay/BraintreeApplePay.h>
+#if __has_include("BraintreeApplePay.h")
+#import "BraintreeApplePay.h"
 #endif
 
 @implementation GatewayManager
@@ -18,7 +18,7 @@
     [supportedGateways addObject:@"stripe"];
 #endif
 
-#if __has_include(<BraintreeApplePay/BraintreeApplePay.h>)
+#if __has_include("BraintreeApplePay.h")
     [supportedGateways addObject:@"braintree"];
 #endif
 
@@ -34,7 +34,7 @@
     }
 #endif
 
-#if __has_include(<BraintreeApplePay/BraintreeApplePay.h>)
+#if __has_include("BraintreeApplePay.h")
     if ([gatewayParameters[@"gateway"] isEqualToString:@"braintree"]) {
         [self configureBraintreeGateway:gatewayParameters];
     }
