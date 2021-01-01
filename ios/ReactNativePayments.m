@@ -485,7 +485,7 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
     if (payment.shippingContact) {
         paymentResponse[@"shippingContact"] = [self contactToString:payment.shippingContact];
     }
-
+    
     [self.bridge.eventDispatcher sendDeviceEventWithName:@"NativePayments:onuseraccept"
                                                     body:paymentResponse
      ];
