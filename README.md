@@ -101,6 +101,7 @@ Our plan for this library is for it to be useful to all React Native developers 
 These amazing people use `react-native-payments` in their projects.
 
 - [LeSalon (@lesalonapp)](https://github.com/lesalonapp)
+- [Truphone (My Truphone App)](https://truphone.com/consumer/esim-for-smartphone)
 
 To add your organization, open a PR updating this list.
 
