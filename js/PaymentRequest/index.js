@@ -307,6 +307,7 @@ export default class PaymentRequest {
       shippingContact: serializedShippingContact,
       paymentToken,
       transactionIdentifier,
+      paymentMethod
     } = details;
 
     const isSimulator = transactionIdentifier === 'Simulated Identifier';
@@ -332,6 +333,7 @@ export default class PaymentRequest {
       shippingContact,
       paymentToken,
       transactionIdentifier,
+      paymentMethod
     };
   }
 
@@ -365,6 +367,7 @@ export default class PaymentRequest {
     shippingAddress: Object,
     payerEmail: string,
     paymentToken?: string,
+    paymentMethod: Object
   }) {
     // On Android, we don't have `onShippingAddressChange` events, so we
     // set the shipping address when the user accepts.

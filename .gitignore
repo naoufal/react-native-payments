@@ -34,11 +34,15 @@ DerivedData
 # npm
 #
 node_modules/
+npm-debug.log
+lerna-debug.log
 
 # editors
 #
 jsconfig.json
 .vscode/*
+.idea
+*.iml
 
 # project
 #

@@ -93,6 +93,7 @@ export type PaymentDetailsIOS = {
   shippingContact?: ?Object,
   paymentToken?: string,
   transactionIdentifier: string,
+  paymentMethod: Object
 };
 
 export type PaymentDetailsIOSRaw = {
@@ -101,4 +102,5 @@ export type PaymentDetailsIOSRaw = {
   shippingContact?: string,
   paymentToken?: string,
   transactionIdentifier: string,
+  paymentMethod: Object
 };

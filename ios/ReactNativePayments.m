@@ -5,16 +5,16 @@
 @implementation ReactNativePayments
 @synthesize bridge = _bridge;
 
+RCT_EXPORT_MODULE()
+
 - (dispatch_queue_t)methodQueue
 {
     return dispatch_get_main_queue();
 }
 
-RCT_EXPORT_MODULE()
-
 + (BOOL)requiresMainQueueSetup
 {
-  return YES;
+    return YES;
 }
 
 - (NSDictionary *)constantsToExport
@@ -409,27 +409,75 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
     
 }
 
+- (NSDictionary *_Nonnull)paymentMethodToString:(PKPaymentMethod *_Nonnull)paymentMethod
+{
+    NSMutableDictionary *result = [[NSMutableDictionary alloc]initWithCapacity:4];
+
+    if(paymentMethod.displayName) {
+        [result setObject:paymentMethod.displayName forKey:@"displayName"];
+    }
+    if (paymentMethod.network) {
+        [result setObject:paymentMethod.network forKey:@"network"];
+    }
+    NSString *type = [self paymentMethodTypeToString:paymentMethod.type];
+    [result setObject:type forKey:@"type"];
+    if(paymentMethod.paymentPass) {
+        NSDictionary *paymentPass = [self paymentPassToDictionary:paymentMethod.paymentPass];
+        [result setObject:paymentPass forKey:@"paymentPass"];
+    }
+
+    return result;
+}
+
+- (NSString *_Nonnull)paymentMethodTypeToString:(PKPaymentMethodType)paymentMethodType
+{
+    NSArray *arr = @[@"PKPaymentMethodTypeUnknown",
+                     @"PKPaymentMethodTypeDebit",
+                     @"PKPaymentMethodTypeCredit",
+                     @"PKPaymentMethodTypePrepaid",
+                     @"PKPaymentMethodTypeStore"];
+    return (NSString *)[arr objectAtIndex:paymentMethodType];
+}
+
+- (NSDictionary *_Nonnull)paymentPassToDictionary:(PKPaymentPass *_Nonnull)paymentPass
+{
+    return @{
+        @"primaryAccountIdentifier" : paymentPass.primaryAccountIdentifier,
+        @"primaryAccountNumberSuffix" : paymentPass.primaryAccountNumberSuffix,
+        @"deviceAccountIdentifier" : paymentPass.deviceAccountIdentifier,
+        @"deviceAccountNumberSuffix" : paymentPass.deviceAccountNumberSuffix,
+        @"activationState" : [self paymentPassActivationStateToString:paymentPass.activationState]
+    };
+}
+
+- (NSString *_Nonnull)paymentPassActivationStateToString:(PKPaymentPassActivationState)paymentPassActivationState
+{
+    NSArray *arr = @[@"PKPaymentPassActivationStateActivated",
+                     @"PKPaymentPassActivationStateRequiresActivation",
+                     @"PKPaymentPassActivationStateActivating",
+                     @"PKPaymentPassActivationStateSuspended",
+                     @"PKPaymentPassActivationStateDeactivated"];
+    return (NSString *)[arr objectAtIndex:paymentPassActivationState];
+}
+
 - (void)handleUserAccept:(PKPayment *_Nonnull)payment
             paymentToken:(NSString *_Nullable)token
 {
+    NSMutableDictionary *paymentResponse = [[NSMutableDictionary alloc]initWithCapacity:6];
+
     NSString *transactionId = payment.token.transactionIdentifier;
-    NSString *paymentData = [[NSString alloc] initWithData:payment.token.paymentData encoding:NSUTF8StringEncoding];
-    NSMutableDictionary *paymentResponse = [[NSMutableDictionary alloc]initWithCapacity:5];
     [paymentResponse setObject:transactionId forKey:@"transactionIdentifier"];
+
+    NSString *paymentData = [[NSString alloc] initWithData:payment.token.paymentData encoding:NSUTF8StringEncoding];
     [paymentResponse setObject:paymentData forKey:@"paymentData"];
+
+    NSDictionary *paymentMethod = [self paymentMethodToString:payment.token.paymentMethod];
+    [paymentResponse setObject:paymentMethod forKey:@"paymentMethod"];
 
     if (token) {
         [paymentResponse setObject:token forKey:@"paymentToken"];
     }
 
-    if (payment.billingContact) {
-        paymentResponse[@"billingContact"] = [self contactToString:payment.billingContact];
-    }
-   
-    if (payment.shippingContact) {
-        paymentResponse[@"shippingContact"] = [self contactToString:payment.shippingContact];
-    }
-    
     if (payment.billingContact) {
         paymentResponse[@"billingContact"] = [self contactToString:payment.billingContact];
     }
