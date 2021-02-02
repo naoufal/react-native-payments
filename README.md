@@ -574,7 +574,7 @@ Provides a button that is used either to trigger payments through Apple Pay or t
 
 ## Add-ons
 Here's a list of Payment Processors that you can enable via add-ons:
-- [Stripe](https://github.com/naoufal/react-native-payments/blob/master/packages/react-native-payments-addon-stripe)
+- [Stripe](https://github.com/coreware-labs/react-native-payments-addon-stripe)
 - [Braintree](https://github.com/naoufal/react-native-payments/blob/master/packages/react-native-payments-addon-braintree)
 
 🚨 _Note: On Android, Payment Processors are enabled by default._
