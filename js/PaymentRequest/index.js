@@ -442,8 +442,7 @@ export default class PaymentRequest {
     return this._id;
   }
 
-  // https://www.w3.org/TR/payment-request/#shippingaddress-attribute
-  get shippingAddress(): null | PaymentAddress {
+: null | PaymentAddress {
     return this._shippingAddress;
   }
 
@@ -480,21 +479,18 @@ export default class PaymentRequest {
   abort(): Promise<void> {
     return new Promise((resolve, reject) => {
       // We can't abort if the PaymentRequest isn't shown or already closed
-      if (this._state !== 'interactive') {
-        return reject(new Error('InvalidStateError'));
+      if (this._state !== "interactive") {
+        return reject(new Error("InvalidStateError"));
       }
 
       // Try to dismiss the UI
-      NativePayments.abort(err => {
-        if (err) {
-          return reject(new Error('InvalidStateError'));
-        }
-
-        this._closePaymentRequest();
-
-        // Return `undefined` as proposed in the spec.
-        return resolve(undefined);
-      });
+      NativePayments.abort()
+        .then((_bool) => {
+          this._closePaymentRequest();
+          // Return `undefined` as proposed in the spec.
+          return resolve(undefined);
+        })
+        .catch((_err) => reject(new Error("InvalidStateError")));
     });
   }
 
