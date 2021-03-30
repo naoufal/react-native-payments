@@ -479,8 +479,8 @@ export default class PaymentRequest {
   abort(): Promise<void> {
     return new Promise((resolve, reject) => {
       // We can't abort if the PaymentRequest isn't shown or already closed
-      if (this._state !== "interactive") {
-        return reject(new Error("InvalidStateError"));
+      if (this._state !== 'interactive') {
+        return reject(new Error('InvalidStateError'));
       }
 
       // Try to dismiss the UI
@@ -490,7 +490,7 @@ export default class PaymentRequest {
           // Return `undefined` as proposed in the spec.
           return resolve(undefined);
         })
-        .catch((_err) => reject(new Error("InvalidStateError")));
+        .catch((_err) => reject(new Error('InvalidStateError')));
     });
   }
 
