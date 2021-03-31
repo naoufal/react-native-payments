@@ -442,7 +442,8 @@ export default class PaymentRequest {
     return this._id;
   }
 
-: null | PaymentAddress {
+  // https://www.w3.org/TR/payment-request/#shippingaddress-attribute
+  get shippingAddress(): null | PaymentAddress {
     return this._shippingAddress;
   }
 
