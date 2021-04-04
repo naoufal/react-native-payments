@@ -1,15 +1,12 @@
 @import PassKit;
-
 #import <Foundation/Foundation.h>
+#import "BraintreeCore.h"
 
-#if __has_include(<BraintreeApplePay/BraintreeApplePay.h>)
-#import <BraintreeApplePay/BraintreeApplePay.h>
-#endif
 
 @interface GatewayManager : NSObject
-#if __has_include(<BraintreeApplePay/BraintreeApplePay.h>)
+
 @property (nonatomic, strong) BTAPIClient * _Nullable braintreeClient;
-#endif
+
 
 + (NSArray *_Nonnull)getSupportedGateways;
 - (void)configureGateway:(NSDictionary *_Nonnull)gatewayParameters
@@ -25,6 +22,7 @@
 
 // Braintree
 - (void)configureBraintreeGateway:(NSDictionary *_Nonnull)gatewayParameters;
+
 - (void)createBraintreeTokenWithPayment:(PKPayment *_Nonnull)payment
                     completion:(void (^_Nullable)(NSString * _Nullable token, NSError * _Nullable error))completion;
 @end
