@@ -127,7 +127,7 @@ export default class PaymentRequestUpdateEvent {
 
           if (
             target._details.shippingOptions &&
-            target._details.shippingOptions.length > 0
+            target._details.shippingOptions.length > 0 &&
             value.shippingOptions &&
             value.shippingOptions.find(op => op.selected)?.id !== target._shippingOption
           ) {
