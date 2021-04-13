@@ -10,7 +10,7 @@ import {
   USER_ACCEPT_EVENT,
   SUPPORTED_METHOD_NAME
 } from './constants';
-const noop = () => {};
+const noop = () => { };
 
 import PaymentRequest from '.';
 import NativePayments from '../NativeBridge';
@@ -127,7 +127,9 @@ export default class PaymentRequestUpdateEvent {
 
           if (
             target._details.shippingOptions &&
-            target._details.shippingOptions.length > 0
+            target._details.shippingOptions.length > 0 &&
+            value.shippingOptions &&
+            value.shippingOptions.find(op => op.selected)?.id !== target._shippingOption
           ) {
             target._handleShippingOptionChange({
               selectedShippingOptionId: target._details.shippingOptions[0].id
@@ -159,9 +161,9 @@ export default class PaymentRequestUpdateEvent {
     PaymentDetailsModifierOrPromise:
       | PaymentDetailsUpdate
       | ((
-          PaymentDetailsModifier,
-          PaymentAddress
-        ) => Promise<PaymentDetailsUpdate>)
+        PaymentDetailsModifier,
+        PaymentAddress
+      ) => Promise<PaymentDetailsUpdate>)
   ) {
     // 1. Let event be this PaymentRequestUpdateEvent instance.
     let event = this;
