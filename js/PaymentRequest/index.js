@@ -56,7 +56,7 @@ import {
   SUPPORTED_METHOD_NAME
 } from './constants';
 
-const noop = () => {};
+const noop = () => { };
 const IS_ANDROID = Platform.OS === 'android';
 const IS_IOS = Platform.OS === 'ios'
 
@@ -124,7 +124,8 @@ export default class PaymentRequest {
   constructor(
     methodData: Array<PaymentMethodData> = [],
     details?: PaymentDetailsInit = [],
-    options?: PaymentOptions = {}
+    options?: PaymentOptions = {},
+    disableInitialUpdate?: bool,
   ) {
     // 1. If the current settings object's responsible document is not allowed to use the feature indicated by attribute name allowpaymentrequest, then throw a " SecurityError" DOMException.
     noop();
@@ -196,7 +197,7 @@ export default class PaymentRequest {
     this._shippingType = IS_IOS && options.requestShipping === true
       ? options.shippingType
       : null;
-
+    this._disableInitialUpdate = disableInitialUpdate
     // React Native Payments specific 👇
     // ---------------------------------
 
@@ -227,8 +228,8 @@ export default class PaymentRequest {
 
   // initialize acceptPromiseResolver/Rejecter
   // mainly for unit tests to work without going through the complete flow.
-  _acceptPromiseResolver = () => {}
-  _acceptPromiseRejecter = () => {}
+  _acceptPromiseResolver = () => { }
+  _acceptPromiseRejecter = () => { }
 
   _setupEventListeners() {
     // Internal Events
@@ -273,7 +274,7 @@ export default class PaymentRequest {
     // On iOS, this event fires when the PKPaymentRequest is initialized.
     // So on iOS, we track the amount of times `_handleShippingAddressChange` gets called
     // and noop the first call.
-    if (IS_IOS && this._shippingAddressChangesCount === 1) {
+    if (IS_IOS && this._shippingAddressChangesCount === 1 && !this._disableInitialUpdate) {
       return event.updateWith(this._details);
     }
 
@@ -315,16 +316,16 @@ export default class PaymentRequest {
     let billingContact = null;
     let shippingContact = null;
 
-    if (serializedBillingContact && serializedBillingContact !== ""){
-      try{
+    if (serializedBillingContact && serializedBillingContact !== "") {
+      try {
         billingContact = JSON.parse(serializedBillingContact);
-      }catch(e){}
+      } catch (e) { }
     }
 
-    if (serializedShippingContact && serializedShippingContact !== ""){
-      try{
+    if (serializedShippingContact && serializedShippingContact !== "") {
+      try {
         shippingContact = JSON.parse(serializedShippingContact);
-      }catch(e){}
+      } catch (e) { }
     }
 
     return {
@@ -428,82 +429,82 @@ export default class PaymentRequest {
     eventName: 'shippingaddresschange' | 'shippingoptionchange',
     fn: e => Promise<any>
   ) {
-    if (eventName === SHIPPING_ADDRESS_CHANGE_EVENT) {
-      return (this._shippingAddressChangeFn = fn.bind(this));
+  if (eventName === SHIPPING_ADDRESS_CHANGE_EVENT) {
+    return (this._shippingAddressChangeFn = fn.bind(this));
+  }
+
+  if (eventName === SHIPPING_OPTION_CHANGE_EVENT) {
+    return (this._shippingOptionChangeFn = fn.bind(this));
+  }
+}
+
+// https://www.w3.org/TR/payment-request/#id-attribute
+get id(): string {
+  return this._id;
+}
+
+// https://www.w3.org/TR/payment-request/#shippingaddress-attribute
+get shippingAddress(): null | PaymentAddress {
+  return this._shippingAddress;
+}
+
+// https://www.w3.org/TR/payment-request/#shippingoption-attribute
+get shippingOption(): null | string {
+  return this._shippingOption;
+}
+
+// https://www.w3.org/TR/payment-request/#show-method
+show(): Promise < PaymentResponseType > {
+  this._acceptPromise = new Promise((resolve, reject) => {
+    this._acceptPromiseResolver = resolve;
+    this._acceptPromiseRejecter = reject;
+    if (this._state !== 'created') {
+      return reject(new Error('InvalidStateError'));
     }
 
-    if (eventName === SHIPPING_OPTION_CHANGE_EVENT) {
-      return (this._shippingOptionChangeFn = fn.bind(this));
+    this._state = 'interactive';
+
+
+    // These arguments are passed because on Android we don't call createPaymentRequest.
+    const platformMethodData = getPlatformMethodData(JSON.parse(this._serializedMethodData), Platform.OS);
+    const normalizedDetails = convertDetailAmountsToString(this._details);
+    const options = this._options;
+
+    // Note: resolve will be triggered via _acceptPromiseResolver() from somwhere else
+    return NativePayments.show(platformMethodData, normalizedDetails, options).catch(reject);
+  });
+
+  return this._acceptPromise;
+}
+
+// https://www.w3.org/TR/payment-request/#abort-method
+abort(): Promise < void> {
+  return new Promise((resolve, reject) => {
+    // We can't abort if the PaymentRequest isn't shown or already closed
+    if (this._state !== 'interactive') {
+      return reject(new Error('InvalidStateError'));
     }
-  }
 
-  // https://www.w3.org/TR/payment-request/#id-attribute
-  get id(): string {
-    return this._id;
-  }
-
-  // https://www.w3.org/TR/payment-request/#shippingaddress-attribute
-  get shippingAddress(): null | PaymentAddress {
-    return this._shippingAddress;
-  }
-
-  // https://www.w3.org/TR/payment-request/#shippingoption-attribute
-  get shippingOption(): null | string {
-    return this._shippingOption;
-  }
-
-  // https://www.w3.org/TR/payment-request/#show-method
-  show(): Promise<PaymentResponseType> {
-    this._acceptPromise = new Promise((resolve, reject) => {
-      this._acceptPromiseResolver = resolve;
-      this._acceptPromiseRejecter = reject;
-      if (this._state !== 'created') {
+    // Try to dismiss the UI
+    NativePayments.abort(err => {
+      if (err) {
         return reject(new Error('InvalidStateError'));
       }
 
-      this._state = 'interactive';
+      this._closePaymentRequest();
 
-
-      // These arguments are passed because on Android we don't call createPaymentRequest.
-      const platformMethodData = getPlatformMethodData(JSON.parse(this._serializedMethodData), Platform.OS);
-      const normalizedDetails = convertDetailAmountsToString(this._details);
-      const options = this._options;
-
-      // Note: resolve will be triggered via _acceptPromiseResolver() from somwhere else
-      return NativePayments.show(platformMethodData, normalizedDetails, options).catch(reject);
+      // Return `undefined` as proposed in the spec.
+      return resolve(undefined);
     });
+  });
+}
 
-    return this._acceptPromise;
-  }
-
-  // https://www.w3.org/TR/payment-request/#abort-method
-  abort(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      // We can't abort if the PaymentRequest isn't shown or already closed
-      if (this._state !== 'interactive') {
-        return reject(new Error('InvalidStateError'));
-      }
-
-      // Try to dismiss the UI
-      NativePayments.abort(err => {
-        if (err) {
-          return reject(new Error('InvalidStateError'));
-        }
-
-        this._closePaymentRequest();
-
-        // Return `undefined` as proposed in the spec.
-        return resolve(undefined);
-      });
-    });
-  }
-
-  // https://www.w3.org/TR/payment-request/#canmakepayment-method
-  canMakePayments(): Promise<boolean> {
-    return NativePayments.canMakePayments(
-      getPlatformMethodData(JSON.parse(this._serializedMethodData), Platform.OS)
-    );
-  }
+// https://www.w3.org/TR/payment-request/#canmakepayment-method
+canMakePayments(): Promise < boolean > {
+  return NativePayments.canMakePayments(
+    getPlatformMethodData(JSON.parse(this._serializedMethodData), Platform.OS)
+  );
+}
 
   static canMakePaymentsUsingNetworks = NativePayments.canMakePaymentsUsingNetworks;
 }
