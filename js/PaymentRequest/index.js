@@ -212,7 +212,7 @@ export default class PaymentRequest {
     const normalizedDetails = convertDetailAmountsToString(details);
 
     // Validate gateway config if present
-    if (hasGatewayConfig(platformMethodData)) {
+    if (IS_IOS && hasGatewayConfig(platformMethodData)) {
       validateGateway(
         getGatewayName(platformMethodData),
         NativePayments.supportedGateways
@@ -339,36 +339,32 @@ export default class PaymentRequest {
   }
 
   _getPlatformDetailsAndroid(details: {
+    cardInfo: Object,
     googleTransactionId: string,
     payerEmail: string,
-    paymentDescription: string,
-    shippingAddress: Object,
+    paymentToken: Object,
+    shippingAddress?: Object,
   }) {
     const {
       googleTransactionId,
-      paymentDescription
+      paymentToken,
     } = details;
 
     return {
+      cardInfo,
       googleTransactionId,
-      paymentDescription,
-      // On Android, the recommended flow is to have user's confirm prior to
-      // retrieving the full wallet.
-      getPaymentToken: () => NativePayments.getFullWalletAndroid(
-        googleTransactionId,
-        getPlatformMethodData(JSON.parse(this._serializedMethodData, Platform.OS)),
-        convertDetailAmountsToString(this._details)
-      )
+      paymentToken,
     };
   }
 
   _handleUserAccept(details: {
-    transactionIdentifier: string,
-    paymentData: string,
-    shippingAddress: Object,
-    payerEmail: string,
-    paymentToken?: string,
-    paymentMethod: Object
+    cardInfo?: Object,
+    googleTransactionId?: string,
+    transactionIdentifier?: string,
+    paymentData?: Object,
+    shippingAddress?: Object,
+    payerEmail?: string,
+    paymentToken: Object | string,
   }) {
     // On Android, we don't have `onShippingAddressChange` events, so we
     // set the shipping address when the user accepts.
@@ -499,12 +495,7 @@ abort(): Promise < void> {
   });
 }
 
-// https://www.w3.org/TR/payment-request/#canmakepayment-method
-canMakePayments(): Promise < boolean > {
-  return NativePayments.canMakePayments(
-    getPlatformMethodData(JSON.parse(this._serializedMethodData), Platform.OS)
-  );
-}
+
 
   static canMakePaymentsUsingNetworks = NativePayments.canMakePaymentsUsingNetworks;
 }
