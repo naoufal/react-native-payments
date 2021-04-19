@@ -75,13 +75,12 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
                             if (data != null) {
 
                                 PaymentData paymentData = PaymentData.getFromIntent(data);
-
                                 Log.i(REACT_CLASS, "ANDROID PAY SUCCESS" + buildAddressFromUserAddress(paymentData.getCardInfo().getBillingAddress()));
-
+                                System.out.println(("Printing payment data" + paymentData.getPaymentMethodToken()));
                                 UserAddress userAddress = paymentData.getShippingAddress();
                                 WritableNativeMap shippingAddress = userAddress != null
-                                    ? buildAddressFromUserAddress(userAddress)
-                                    : null;
+                                        ? buildAddressFromUserAddress(userAddress)
+                                        : null;
 
 
                                 // TODO: Move into function
@@ -92,8 +91,8 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
 
                                 WritableNativeMap cardInfo = buildCardInfo(paymentData.getCardInfo());
                                 paymentDetails.putMap("cardInfo", cardInfo);
-
                                 String serializedPaymentToken = paymentData.getPaymentMethodToken().getToken();
+
                                 try {
                                     JSONObject paymentTokenJson = new JSONObject(serializedPaymentToken);
                                     String protocolVersion = paymentTokenJson.getString("protocolVersion");
@@ -187,19 +186,19 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
 
         Task<Boolean> task = mPaymentsClient.isReadyToPay(request);
         task.addOnCompleteListener(
-            new OnCompleteListener<Boolean>() {
-                @Override
-                public void onComplete(@NonNull Task<Boolean> task) {
-                    try {
-                        boolean result = task.getResult(ApiException.class);
-                        if (result) {
-                            successCallback.invoke(result);
+                new OnCompleteListener<Boolean>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Boolean> task) {
+                        try {
+                            boolean result = task.getResult(ApiException.class);
+                            if (result) {
+                                successCallback.invoke(result);
+                            }
+                        } catch (ApiException e) {
+                            errorCallback.invoke(e.getMessage());
                         }
-                    } catch (ApiException e) {
-                        errorCallback.invoke(e.getMessage());
                     }
-                }
-            });
+                });
     }
 
     @ReactMethod
@@ -222,8 +221,8 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
         Log.i(REACT_CLASS, "ANDROID PAY SHOW" + options);
 
         Boolean shouldRequestShipping = options.hasKey("requestShipping") && options.getBoolean("requestShipping")
-                        || options.hasKey("requestPayerName") && options.getBoolean("requestPayerName")
-                        || options.hasKey("requestPayerPhone") && options.getBoolean("requestPayerPhone");
+                || options.hasKey("requestPayerName") && options.getBoolean("requestPayerName")
+                || options.hasKey("requestPayerPhone") && options.getBoolean("requestPayerPhone");
         Boolean shouldRequestPayerPhone = options.hasKey("requestPayerPhone") && options.getBoolean("requestPayerPhone");
 
         final PaymentMethodTokenizationParameters parameters = buildTokenizationParametersFromPaymentMethodData(paymentMethodData);
@@ -232,20 +231,20 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
 
 
         PaymentDataRequest.Builder builder = PaymentDataRequest.newBuilder()
-            .setTransactionInfo(TransactionInfo.newBuilder()
-                .setTotalPriceStatus(WalletConstants.TOTAL_PRICE_STATUS_FINAL)
-                .setTotalPrice(total.getString("value"))
-                .setCurrencyCode(total.getString("currency"))
-                .build())
-            .setPhoneNumberRequired(shouldRequestPayerPhone)
-            .setShippingAddressRequired(shouldRequestShipping)
-            .setPaymentMethodTokenizationParameters(parameters);
+                .setTransactionInfo(TransactionInfo.newBuilder()
+                        .setTotalPriceStatus(WalletConstants.TOTAL_PRICE_STATUS_FINAL)
+                        .setTotalPrice(total.getString("value"))
+                        .setCurrencyCode(total.getString("currency"))
+                        .build())
+                .setPhoneNumberRequired(shouldRequestPayerPhone)
+                .setShippingAddressRequired(shouldRequestShipping)
+                .setPaymentMethodTokenizationParameters(parameters);
 
 
         ReadableArray allowedCardNetworks = paymentMethodData.getArray("supportedNetworks");
         if (allowedCardNetworks != null) {
             builder.setCardRequirements(CardRequirements.newBuilder()
-                .addAllowedCardNetworks(buildAllowedCardNetworks(allowedCardNetworks)).build()
+                    .addAllowedCardNetworks(buildAllowedCardNetworks(allowedCardNetworks)).build()
             );
         }
 
@@ -261,7 +260,7 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
         if (mPaymentsClient == null) buildPaymentsClient(getCurrentActivity(), environment);
 
         AutoResolveHelper.resolveTask(
-            mPaymentsClient.loadPaymentData(request), getCurrentActivity(), LOAD_MASKED_WALLET_REQUEST_CODE);
+                mPaymentsClient.loadPaymentData(request), getCurrentActivity(), LOAD_MASKED_WALLET_REQUEST_CODE);
     }
 
     // Private Method
@@ -272,10 +271,18 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
 
 
         if (tokenizationType.equals("GATEWAY_TOKEN")) {
+
             ReadableMap parameters = tokenizationParameters.getMap("parameters");
+            String merchantId = parameters.getString("merchantId");
+            String publicKey = parameters.getString("publicKey");
             PaymentMethodTokenizationParameters.Builder parametersBuilder = PaymentMethodTokenizationParameters.newBuilder()
                     .setPaymentMethodTokenizationType(PaymentMethodTokenizationType.PAYMENT_GATEWAY)
-                    .addParameter("gateway", parameters.getString("gateway"));
+                    .addParameter("gateway", parameters.getString("gateway"))
+                    .addParameter("braintree:merchantId", "Yeppon" )
+                    .addParameter("braintree:merchantName", "Yeppon")
+                    .addParameter("braintree:apiVersion", "v1")
+                    .addParameter("braintree:sdkVersion", "v3")
+                    .addParameter("braintree:clientKey", publicKey);
 
             ReadableMapKeySetIterator iterator = parameters.keySetIterator();
 
@@ -289,10 +296,15 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
 
         } else {
             String publicKey = tokenizationParameters.getMap("parameters").getString("publicKey");
+            String merchantId = tokenizationParameters.getMap("parameters").getString("merchantId");
 
             return PaymentMethodTokenizationParameters.newBuilder()
                     .setPaymentMethodTokenizationType(PaymentMethodTokenizationType.NETWORK_TOKEN)
                     .addParameter("publicKey", publicKey)
+                    .addParameter("braintree:merchantId", "Yeppon" )
+                    .addParameter("braintree:apiVersion", "v21")
+                    .addParameter("braintree:sdkVersion", "v3")
+                    .addParameter("braintree:clientKey", publicKey)
                     .build();
         }
     }
@@ -415,10 +427,10 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
 
     protected void buildPaymentsClient(Activity currentActivity, int environment) {
         mPaymentsClient = Wallet.getPaymentsClient(
-            currentActivity,
-            new Wallet.WalletOptions.Builder()
-                .setEnvironment(environment)
-                .build()
+                currentActivity,
+                new Wallet.WalletOptions.Builder()
+                        .setEnvironment(environment)
+                        .build()
         );
     }
 }
