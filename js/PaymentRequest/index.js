@@ -339,7 +339,7 @@ export default class PaymentRequest {
   }
 
   _getPlatformDetailsAndroid(details: {
-    cardInfo: Object,
+    // cardInfo: Object,
     googleTransactionId: string,
     payerEmail: string,
     paymentToken: Object,
@@ -351,14 +351,14 @@ export default class PaymentRequest {
     } = details;
 
     return {
-      cardInfo,
+      // cardInfo,
       googleTransactionId,
       paymentToken,
     };
   }
 
   _handleUserAccept(details: {
-    cardInfo?: Object,
+    // cardInfo?: Object,
     googleTransactionId?: string,
     transactionIdentifier?: string,
     paymentData?: Object,

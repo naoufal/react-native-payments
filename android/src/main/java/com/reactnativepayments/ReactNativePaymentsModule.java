@@ -1,49 +1,45 @@
 package com.reactnativepayments;
 
-import android.view.WindowManager;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.annotation.NonNull;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import androidx.annotation.RequiresPermission;
 import android.util.Log;
+import android.view.WindowManager;
 
-import com.facebook.react.bridge.Callback;
-import com.facebook.react.bridge.ReactBridge;
-import com.facebook.react.bridge.ReadableArray;
-import com.facebook.react.bridge.ReadableMapKeySetIterator;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.BooleanResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.identity.intents.model.UserAddress;
-import com.google.android.gms.wallet.*;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.BaseActivityEventListener;
+import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.facebook.react.bridge.WritableNativeArray;
 import com.facebook.react.bridge.WritableNativeMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
-
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.identity.intents.model.UserAddress;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.wallet.AutoResolveHelper;
+import com.google.android.gms.wallet.CardInfo;
+import com.google.android.gms.wallet.CardRequirements;
+import com.google.android.gms.wallet.IsReadyToPayRequest;
+import com.google.android.gms.wallet.LineItem;
+import com.google.android.gms.wallet.PaymentData;
+import com.google.android.gms.wallet.PaymentDataRequest;
+import com.google.android.gms.wallet.PaymentMethodTokenizationParameters;
+import com.google.android.gms.wallet.PaymentMethodTokenizationType;
+import com.google.android.gms.wallet.PaymentsClient;
+import com.google.android.gms.wallet.TransactionInfo;
+import com.google.android.gms.wallet.Wallet;
+import com.google.android.gms.wallet.WalletConstants;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
     private static final int LOAD_MASKED_WALLET_REQUEST_CODE = 88;
@@ -82,7 +78,7 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
                                         ? buildAddressFromUserAddress(userAddress)
                                         : null;
 
-
+                                System.out.println(paymentData);
                                 // TODO: Move into function
                                 WritableNativeMap paymentDetails = new WritableNativeMap();
                                 paymentDetails.putString("payerEmail", paymentData.getEmail());
@@ -91,27 +87,31 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
 
                                 WritableNativeMap cardInfo = buildCardInfo(paymentData.getCardInfo());
                                 paymentDetails.putMap("cardInfo", cardInfo);
+
                                 String serializedPaymentToken = paymentData.getPaymentMethodToken().getToken();
+                                paymentDetails.putString("paymentDetails", paymentData.toJson());
+                                paymentDetails.putString("paymentToken", serializedPaymentToken);
+                                sendEvent(reactContext, "NativePayments:onuseraccept", paymentDetails);
 
-                                try {
-                                    JSONObject paymentTokenJson = new JSONObject(serializedPaymentToken);
-                                    String protocolVersion = paymentTokenJson.getString("protocolVersion");
-                                    String signature = paymentTokenJson.getString("signature");
-                                    String signedMessage = paymentTokenJson.getString("signedMessage");
-
-                                    WritableNativeMap paymentToken = new WritableNativeMap();
-                                    paymentToken.putString("protocolVersion", protocolVersion);
-                                    paymentToken.putString("signature", signature);
-                                    paymentToken.putString("signedMessage", signedMessage);
-
-                                    paymentDetails.putMap("paymentToken", paymentToken);
-
-                                    sendEvent(reactContext, "NativePayments:onuseraccept", paymentDetails);
-
-                                } catch (JSONException e) {
-                                    Log.e(REACT_CLASS, "ANDROID PAY JSON ERROR", e);
-                                    mShowErrorCallback.invoke(errorCode);
-                                }
+//                                try {
+//                                    JSONObject paymentTokenJson = new JSONObject(serializedPaymentToken);
+//                                    String protocolVersion = paymentTokenJson.getString("protocolVersion");
+//                                    String signature = paymentTokenJson.getString("signature");
+//                                    String signedMessage = paymentTokenJson.getString("signedMessage");
+//
+//                                    WritableNativeMap paymentToken = new WritableNativeMap();
+//                                    paymentToken.putString("protocolVersion", protocolVersion);
+//                                    paymentToken.putString("signature", signature);
+//                                    paymentToken.putString("signedMessage", signedMessage);
+//
+//                                    paymentDetails.putMap("paymentToken", paymentToken);
+//
+//                                    sendEvent(reactContext, "NativePayments:onuseraccept", paymentDetails);
+//
+//                                } catch (JSONException e) {
+//                                    Log.e(REACT_CLASS, "ANDROID PAY JSON ERROR", e);
+//                                    mShowErrorCallback.invoke(errorCode);
+//                                }
                             }
                             break;
                         case Activity.RESULT_CANCELED:
@@ -224,7 +224,7 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
                 || options.hasKey("requestPayerName") && options.getBoolean("requestPayerName")
                 || options.hasKey("requestPayerPhone") && options.getBoolean("requestPayerPhone");
         Boolean shouldRequestPayerPhone = options.hasKey("requestPayerPhone") && options.getBoolean("requestPayerPhone");
-
+        Boolean shoudlRequestPayerEmail = options.hasKey("requestPayerEmail") && options.getBoolean("requestPayerEmail");
         final PaymentMethodTokenizationParameters parameters = buildTokenizationParametersFromPaymentMethodData(paymentMethodData);
 
         ReadableMap total = details.getMap("total").getMap("amount");
@@ -237,9 +237,9 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
                         .setCurrencyCode(total.getString("currency"))
                         .build())
                 .setPhoneNumberRequired(shouldRequestPayerPhone)
+                .setEmailRequired(true)
                 .setShippingAddressRequired(shouldRequestShipping)
                 .setPaymentMethodTokenizationParameters(parameters);
-
 
         ReadableArray allowedCardNetworks = paymentMethodData.getArray("supportedNetworks");
         if (allowedCardNetworks != null) {
@@ -276,11 +276,12 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
             String merchantId = parameters.getString("merchantId");
             String publicKey = parameters.getString("publicKey");
             PaymentMethodTokenizationParameters.Builder parametersBuilder = PaymentMethodTokenizationParameters.newBuilder()
-                    .setPaymentMethodTokenizationType(PaymentMethodTokenizationType.PAYMENT_GATEWAY)
+                    .setPaymentMethodTokenizationType(WalletConstants.PAYMENT_METHOD_TOKENIZATION_TYPE_PAYMENT_GATEWAY)
                     .addParameter("gateway", parameters.getString("gateway"))
-                    .addParameter("braintree:merchantId", "Yeppon" )
-                    .addParameter("braintree:merchantName", "Yeppon")
-                    .addParameter("braintree:apiVersion", "v1")
+                    .addParameter("braintree:googleMerchantId", "Yeppon" )
+                    .addParameter("merchantName", "Yeppon")
+                    .addParameter("braintree:merchantId", "Yeppon")
+                    .addParameter("braintree:apiVersion", "v2")
                     .addParameter("braintree:sdkVersion", "v3")
                     .addParameter("braintree:clientKey", publicKey);
 
@@ -304,6 +305,7 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
                     .addParameter("braintree:merchantId", "Yeppon" )
                     .addParameter("braintree:apiVersion", "v21")
                     .addParameter("braintree:sdkVersion", "v3")
+                    .addParameter("protocolVersion", "ECv2")
                     .addParameter("braintree:clientKey", publicKey)
                     .build();
         }
@@ -433,4 +435,5 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
                         .build()
         );
     }
+
 }
