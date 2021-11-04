@@ -117,6 +117,10 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
 
     NSArray<PKPaymentSummaryItem *> * paymentSummaryItems = [self getPaymentSummaryItemsFromDetails:details];
 
+    if (self.paymentMethodCompletion) {
+        self.paymentMethodCompletion (paymentSummaryItems);
+        self.paymentMethodCompletion = nil;
+    }
 
     if (self.shippingMethodCompletion) {
         self.shippingMethodCompletion(
@@ -213,6 +217,18 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
                                                                                                          @"selectedShippingOptionId": shippingMethod.identifier
                                                                                                          }];
 }
+
+// Payment method changes
+ - (void)paymentAuthorizationViewController:(PKPaymentAuthorizationViewController *)controller
+                     didSelectPaymentMethod:(PKPaymentMethod *)paymentMethod
+                                 completion:(nonnull void (^)(NSArray<PKPaymentSummaryItem *> * _Nonnull))completion
+ {
+     self.paymentMethodCompletion = completion;
+     NSString *type = [self paymentMethodTypeToString:paymentMethod.type];
+     [self.bridge.eventDispatcher sendDeviceEventWithName:@"NativePayments:onpaymentmethodchange" body:@{
+                                                                                                          @"paymentMethodType": type
+                                                                                                          }];
+ }
 
 // PRIVATE METHODS
 // https://developer.apple.com/reference/passkit/pkpaymentnetwork
