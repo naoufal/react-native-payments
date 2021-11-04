@@ -21,6 +21,7 @@
 @property (nonatomic, copy) void (^completion)(PKPaymentAuthorizationStatus);
 @property (nonatomic, copy) void (^shippingContactCompletion)(PKPaymentAuthorizationStatus, NSArray<PKShippingMethod *> * _Nonnull, NSArray<PKPaymentSummaryItem *> * _Nonnull);
 @property (nonatomic, copy) void (^shippingMethodCompletion)(PKPaymentAuthorizationStatus, NSArray<PKPaymentSummaryItem *> * _Nonnull);
+@property (nonatomic, copy) void (^paymentMethodCompletion)(NSArray<PKPaymentSummaryItem *> * _Nonnull);
 
 // Private methods
 - (NSArray *_Nonnull)getSupportedNetworksFromMethodData:(NSDictionary *_Nonnull)methodData;

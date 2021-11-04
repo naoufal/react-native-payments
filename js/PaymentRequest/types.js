@@ -84,6 +84,10 @@ export type PaymentShippingOption = {
   selected: boolean
 };
 
+export type PaymentMethod = {
+  paymentMethodType: string
+}
+
 // https://www.w3.org/TR/payment-request/#paymentcomplete-enum
 export type PaymentComplete = 'fail' | 'success' | 'unknown';
 
