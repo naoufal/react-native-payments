@@ -133,8 +133,10 @@ export default class PaymentRequest {
     details?: PaymentDetailsInit = [],
     options?: PaymentOptions = {}
   ) {
-    this._creditDebitDetails = details;
-    details = details.default;
+    if(details && details.default) {
+      this._creditDebitDetails = details;
+      details = details.default;
+    }
 
     // 1. If the current settings object's responsible document is not allowed to use the feature indicated by attribute name allowpaymentrequest, then throw a " SecurityError" DOMException.
     noop();
@@ -286,10 +288,16 @@ export default class PaymentRequest {
     else if (this._paymentMethod === 'PKPaymentMethodTypeDebit') {
       this._details = this._creditDebitDetails.debit;
     }
+    else {
+      // to-do: handle other card, which is covered in another ticket
+      // https://trello.com/c/jXpIHzT6/2280-investigate-apm-mobile-only-show-up-the-supported-cards
+
+      return;
+    }
 
     const event = new PaymentRequestUpdateEvent(
-        PAYMENT_METHOD_CHANGE_EVENT,
-        this
+      PAYMENT_METHOD_CHANGE_EVENT,
+      this,
     );
 
     if (IS_IOS) {
@@ -460,7 +468,7 @@ export default class PaymentRequest {
         this._shippingOptionChangeSubscription
       );
       DeviceEventEmitter.removeSubscription(
-          this._paymentMethodChangeSubscription
+        this._paymentMethodChangeSubscription
       );
     }
   }

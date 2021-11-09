@@ -22,6 +22,22 @@ export function createInteractivePaymentRequest(methodData, details, options) {
   return paymentRequest;
 }
 
+export function createInteractiveCreditPaymentRequest(methodData, details, options) {
+  const paymentRequest = new PaymentRequest(methodData, details, options);
+  paymentRequest._state = 'interactive';
+  paymentRequest._paymentMethod = 'PKPaymentMethodTypeCredit';
+
+  return paymentRequest;
+}
+
+export function createInteractiveDebitPaymentRequest(methodData, details, options) {
+  const paymentRequest = new PaymentRequest(methodData, details, options);
+  paymentRequest._state = 'interactive';
+  paymentRequest._paymentMethod = 'PKPaymentMethodTypeDebit';
+
+  return paymentRequest;
+}
+
 export function createClosedPaymentRequest(methodData, details, options) {
   const paymentRequest = new PaymentRequest(methodData, details, options);
   paymentRequest._state = 'closed';
@@ -63,6 +79,79 @@ const DETAILS = {
   displayItems
 };
 
+export const APPLE_PAY_DETAILS =
+    {
+      default: {
+        id: 'default_details',
+        displayItems: [
+          {
+            label: 'Rent',
+            amount: {currency: 'USD', value: '15.00'}
+          },
+          {
+            label: 'Fee',
+            amount: {currency: 'USD', value: '0.00'}
+          }
+        ],
+        shippingOptions: [{
+          id: 'economy',
+          label: 'Economy Shipping',
+          amount: {currency: 'USD', value: '0.00'},
+          detail: 'Arrives in 3-5 days' // `detail` is specific to React Native Payments
+        }],
+        total: {
+          label: 'Merchant Name',
+          amount: {currency: 'USD', value: '10'},
+        }
+      },
+      credit: {
+        id: 'credit_card_details',
+        displayItems: [
+          {
+            label: 'Movie Ticket',
+            amount: {currency: 'USD', value: '15.00'}
+          },
+          {
+            label: 'Fee',
+            amount: {currency: 'USD', value: '3.50'}
+          }
+        ],
+        shippingOptions: [{
+          id: 'economy',
+          label: 'Economy Shipping',
+          amount: {currency: 'USD', value: '0.00'},
+          detail: 'Arrives in 3-5 days' // `detail` is specific to React Native Payments
+        }],
+        total: {
+          label: 'Merchant Name',
+          amount: {currency: 'USD', value: '18.50'},
+        }
+      },
+      debit: {
+        id: 'debit_card_details',
+        displayItems: [
+          {
+            label: 'Movie Ticket',
+            amount: {currency: 'USD', value: '15.00'}
+          },
+          {
+            label: 'Fee',
+            amount: {currency: 'USD', value: '2.99'}
+          }
+        ],
+        shippingOptions: [{
+          id: 'economy',
+          label: 'Economy Shipping',
+          amount: {currency: 'USD', value: '0.00'},
+          detail: 'Arrives in 3-5 days' // `detail` is specific to React Native Payments
+        }],
+        total: {
+          label: 'Merchant Name',
+          amount: {currency: 'USD', value: '17.99'},
+        }
+      }
+    };
+
 describe('PaymentRequest', () => {
   describe('constructor', () => {});
 
@@ -78,6 +167,14 @@ describe('PaymentRequest', () => {
         const request = new PaymentRequest(METHOD_DATA, DETAILS);
 
         expect(request.id).toBeTruthy();
+      });
+    });
+
+    describe('id', () => {
+      it('should have the same id as `details.id`', () => {
+        const request = new PaymentRequest(METHOD_DATA, APPLE_PAY_DETAILS);
+
+        expect(request.id).toBe('default_details');
       });
     });
 

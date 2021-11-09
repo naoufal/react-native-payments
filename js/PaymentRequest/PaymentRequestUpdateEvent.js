@@ -42,7 +42,7 @@ export default class PaymentRequestUpdateEvent {
       name !== PAYMENT_METHOD_CHANGE_EVENT
     ) {
       throw new Error(
-        `Only "${SHIPPING_ADDRESS_CHANGE_EVENT}" and "${SHIPPING_OPTION_CHANGE_EVENT} and "${PAYMENT_METHOD_CHANGE_EVENT}"" event listeners are supported.`
+        `Only "${SHIPPING_ADDRESS_CHANGE_EVENT}", "${SHIPPING_OPTION_CHANGE_EVENT} and "${PAYMENT_METHOD_CHANGE_EVENT}"" event listeners are supported.`
       );
     }
 

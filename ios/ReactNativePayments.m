@@ -106,7 +106,7 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
                   callback: (RCTResponseSenderBlock)callback)
 
 {
-    if (!self.shippingContactCompletion && !self.shippingMethodCompletion) {
+    if (!self.shippingContactCompletion && !self.shippingMethodCompletion && !self.paymentMethodCompletion) {
         // TODO:
         // - Call callback with error saying shippingContactCompletion was never called;
 

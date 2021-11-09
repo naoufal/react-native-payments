@@ -84,6 +84,7 @@ export type PaymentShippingOption = {
   selected: boolean
 };
 
+// https://www.w3.org/TR/payment-request/#paymentshippingoption-dictionary
 export type PaymentMethod = {
   paymentMethodType: string
 }
