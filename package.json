@@ -1,6 +1,6 @@
 {
   "name": "@appfolio/react-native-payments",
-  "version": "0.8.3",
+  "version": "0.9.0-pre.0",
   "description": "Welcome to the best and most comprehensive library for integrating payments like Apple Pay and Google Pay into your React Native app.",
   "scripts": {
     "run:packager": "cd examples/native && yarn run:packager",
@@ -12,7 +12,10 @@
     "test": "jest"
   },
   "homepage": "https://github.com/appfolio/react-native-payments",
-  "repository": "https://github.com/appfolio/react-native-payments",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/appfolio/react-native-payments.git"
+  },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
