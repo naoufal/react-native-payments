@@ -14,6 +14,7 @@ import type {
   PaymentShippingType,
   PaymentDetailsIOS,
   PaymentDetailsIOSRaw,
+  PaymentMethod
 } from '../types';
 import type PaymentResponseType from './PaymentResponse';
 
@@ -48,8 +49,10 @@ import {
   MODULE_SCOPING,
   SHIPPING_ADDRESS_CHANGE_EVENT,
   SHIPPING_OPTION_CHANGE_EVENT,
+  PAYMENT_METHOD_CHANGE_EVENT,
   INTERNAL_SHIPPING_ADDRESS_CHANGE_EVENT,
   INTERNAL_SHIPPING_OPTION_CHANGE_EVENT,
+  INTERNAL_PAYMENT_METHOD_CHANGE_EVENT,
   USER_DISMISS_EVENT,
   USER_ACCEPT_EVENT,
   GATEWAY_ERROR_EVENT,
@@ -106,6 +109,7 @@ export default class PaymentRequest {
   _serializedModifierData: string;
   _details: Object;
   _options: Object;
+  _creditDebitDetails: Object;
   _state: 'created' | 'interactive' | 'closed';
   _updating: boolean;
   _acceptPromise: Promise<any>;
@@ -113,19 +117,27 @@ export default class PaymentRequest {
   _acceptPromiseRejecter: (reason: any) => void;
   _shippingAddressChangeSubscription: any; // TODO: - add proper type annotation
   _shippingOptionChangeSubscription: any; // TODO: - add proper type annotation
+  _paymentMethodChangeSubscription: any; // TODO: - add proper type annotation
   _userDismissSubscription: any; // TODO: - add proper type annotation
   _userAcceptSubscription: any; // TODO: - add proper type annotation
   _gatewayErrorSubscription: any; // TODO: - add proper type annotation
   _shippingAddressChangesCount: number;
+  _paymentMethodChangesCount: number;
 
   _shippingAddressChangeFn: PaymentRequestUpdateEvent => void; // function provided by user
   _shippingOptionChangeFn: PaymentRequestUpdateEvent => void; // function provided by user
+  _paymentMethodChangeFn: PaymentRequestUpdateEvent => void; // function provided by user
 
   constructor(
     methodData: Array<PaymentMethodData> = [],
     details?: PaymentDetailsInit = [],
     options?: PaymentOptions = {}
   ) {
+    if(details && details.default) {
+      this._creditDebitDetails = details;
+      details = details.default;
+    }
+
     // 1. If the current settings object's responsible document is not allowed to use the feature indicated by attribute name allowpaymentrequest, then throw a " SecurityError" DOMException.
     noop();
 
@@ -206,6 +218,7 @@ export default class PaymentRequest {
     // Set the amount of times `_handleShippingAddressChange` has been called.
     // This is used on iOS to noop the first call.
     this._shippingAddressChangesCount = 0;
+    this._paymentMethodChangesCount = 0;
 
     const platformMethodData = getPlatformMethodData(methodData, Platform.OS);
     const normalizedDetails = convertDetailAmountsToString(details);
@@ -258,7 +271,42 @@ export default class PaymentRequest {
         INTERNAL_SHIPPING_ADDRESS_CHANGE_EVENT,
         this._handleShippingAddressChange.bind(this)
       );
+
+      this._paymentMethodChangeSubscription = DeviceEventEmitter.addListener(
+          INTERNAL_PAYMENT_METHOD_CHANGE_EVENT,
+          this._handlePaymentMethodChange.bind(this)
+      );
     }
+  }
+
+  _handlePaymentMethodChange(paymentMethod: PaymentMethod) {
+    this._paymentMethod = paymentMethod.paymentMethodType;
+
+    if(this._paymentMethod === 'PKPaymentMethodTypeCredit') {
+      this._details = this._creditDebitDetails.credit;
+    }
+    else if (this._paymentMethod === 'PKPaymentMethodTypeDebit') {
+      this._details = this._creditDebitDetails.debit;
+    }
+    else {
+      // to-do: handle other card, which is covered in another ticket
+      // https://trello.com/c/jXpIHzT6/2280-investigate-apm-mobile-only-show-up-the-supported-cards
+
+      return;
+    }
+
+    const event = new PaymentRequestUpdateEvent(
+      PAYMENT_METHOD_CHANGE_EVENT,
+      this,
+    );
+
+    if (IS_IOS) {
+      return event.updateWith(this._details);
+    }
+
+    // Eventually calls `PaymentRequestUpdateEvent._handleDetailsUpdate` when
+    // after a details are returned
+    this._paymentMethodChangeFn && this._paymentMethodChangeFn(event);
   }
 
   _handleShippingAddressChange(postalAddress: PaymentAddress) {
@@ -419,6 +467,9 @@ export default class PaymentRequest {
       DeviceEventEmitter.removeSubscription(
         this._shippingOptionChangeSubscription
       );
+      DeviceEventEmitter.removeSubscription(
+        this._paymentMethodChangeSubscription
+      );
     }
   }
 
@@ -435,6 +486,10 @@ export default class PaymentRequest {
     if (eventName === SHIPPING_OPTION_CHANGE_EVENT) {
       return (this._shippingOptionChangeFn = fn.bind(this));
     }
+
+    if (eventName === PAYMENT_METHOD_CHANGE_EVENT) {
+      return (this._paymentMethodChangeFn = fn.bind(this));
+    }
   }
 
   // https://www.w3.org/TR/payment-request/#id-attribute
@@ -450,6 +505,10 @@ export default class PaymentRequest {
   // https://www.w3.org/TR/payment-request/#shippingoption-attribute
   get shippingOption(): null | string {
     return this._shippingOption;
+  }
+
+  get paymentMethod(): null | string {
+    return this._paymentMethod;
   }
 
   // https://www.w3.org/TR/payment-request/#show-method
