@@ -100,6 +100,7 @@ const IS_IOS = Platform.OS === 'ios'
 
 export default class PaymentRequest {
   _id: string;
+  _paymentMethod: null | string;
   _shippingAddress: null | PaymentAddress;
   _shippingOption: null | string;
   _shippingType: null | PaymentShippingType;
@@ -109,7 +110,6 @@ export default class PaymentRequest {
   _serializedModifierData: string;
   _details: Object;
   _options: Object;
-  _creditDebitDetails: Object;
   _state: 'created' | 'interactive' | 'closed';
   _updating: boolean;
   _acceptPromise: Promise<any>;
@@ -122,7 +122,6 @@ export default class PaymentRequest {
   _userAcceptSubscription: any; // TODO: - add proper type annotation
   _gatewayErrorSubscription: any; // TODO: - add proper type annotation
   _shippingAddressChangesCount: number;
-  _paymentMethodChangesCount: number;
 
   _shippingAddressChangeFn: PaymentRequestUpdateEvent => void; // function provided by user
   _shippingOptionChangeFn: PaymentRequestUpdateEvent => void; // function provided by user
@@ -133,11 +132,6 @@ export default class PaymentRequest {
     details?: PaymentDetailsInit = [],
     options?: PaymentOptions = {}
   ) {
-    if(details && details.default) {
-      this._creditDebitDetails = details;
-      details = details.default;
-    }
-
     // 1. If the current settings object's responsible document is not allowed to use the feature indicated by attribute name allowpaymentrequest, then throw a " SecurityError" DOMException.
     noop();
 
@@ -158,7 +152,7 @@ export default class PaymentRequest {
     // 6. If the displayItems member of details is present, then for each item in details.displayItems:
     validateDisplayItems(details.displayItems, ConstructorError);
 
-    // 7. Let selectedShippingOption be null.
+    // 7. Let selectedShippingOption and payment method be null.
     let selectedShippingOption = null;
 
     // 8. Process shipping options
@@ -198,6 +192,7 @@ export default class PaymentRequest {
 
     // Set attributes (18-20)
     this._id = details.id;
+    this._paymentMethod = null;
 
     // 18. Set the value of request's shippingOption attribute to selectedShippingOption.
     this._shippingOption = selectedShippingOption;
@@ -218,7 +213,6 @@ export default class PaymentRequest {
     // Set the amount of times `_handleShippingAddressChange` has been called.
     // This is used on iOS to noop the first call.
     this._shippingAddressChangesCount = 0;
-    this._paymentMethodChangesCount = 0;
 
     const platformMethodData = getPlatformMethodData(methodData, Platform.OS);
     const normalizedDetails = convertDetailAmountsToString(details);
@@ -282,27 +276,7 @@ export default class PaymentRequest {
   _handlePaymentMethodChange(paymentMethod: PaymentMethod) {
     this._paymentMethod = paymentMethod.paymentMethodType;
 
-    if(this._paymentMethod === 'PKPaymentMethodTypeCredit') {
-      this._details = this._creditDebitDetails.credit;
-    }
-    else if (this._paymentMethod === 'PKPaymentMethodTypeDebit') {
-      this._details = this._creditDebitDetails.debit;
-    }
-    else {
-      // to-do: handle other card, which is covered in another ticket
-      // https://trello.com/c/jXpIHzT6/2280-investigate-apm-mobile-only-show-up-the-supported-cards
-
-      return;
-    }
-
-    const event = new PaymentRequestUpdateEvent(
-      PAYMENT_METHOD_CHANGE_EVENT,
-      this,
-    );
-
-    if (IS_IOS) {
-      return event.updateWith(this._details);
-    }
+    const event = new PaymentRequestUpdateEvent(PAYMENT_METHOD_CHANGE_EVENT, this);
 
     // Eventually calls `PaymentRequestUpdateEvent._handleDetailsUpdate` when
     // after a details are returned
