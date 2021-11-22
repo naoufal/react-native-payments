@@ -58,239 +58,250 @@ const OPTIONS = {
   requestShipping: true
 };
 
-describe('PaymentRequestUpdateEvent', () => {
-  const paymentRequest = new PaymentRequest(METHOD_DATA, DETAILS, OPTIONS);
+['shippingaddresschange', 'shippingoptionchange', 'paymentmethodchange'].forEach((eventName) => {
+  describe(`PaymentRequestUpdateEvent with name="${eventName}"`, () => {
+    const paymentRequest = new PaymentRequest(METHOD_DATA, DETAILS, OPTIONS);
 
-  describe('constructor', () => {
-    it("should throw if `name` isn't `shippingaddresschange` or `shippingoptionchange`", () => {
-      expect(() => {
-        const paymentRequestUpdateEvent = new PaymentRequestUpdateEvent(
-          'foo',
-          paymentRequest
-        );
-      }).toThrow();
-    });
-  });
-
-  describe('attributes', () => {
-    describe('name', () => {
-      it('should return the event name', () => {
-        const paymentRequestUpdateEvent = new PaymentRequestUpdateEvent(
-          'shippingaddresschange',
-          paymentRequest
-        );
-
-        expect(paymentRequestUpdateEvent.name).toBe('shippingaddresschange');
-      });
-    });
-
-    describe('target', () => {
-      it('should return the PaymentRequest instance', () => {
-        const paymentRequestUpdateEvent = new PaymentRequestUpdateEvent(
-          'shippingaddresschange',
-          paymentRequest
-        );
-
-        expect(paymentRequestUpdateEvent.target).toBeInstanceOf(PaymentRequest);
-      });
-    });
-  });
-
-  describe('methods', () => {
-    describe('updateWith', () => {
-      const updateDetails = {
-        displayItems: [
-          ...displayItems,
-          {
-            label: 'Shipping',
-            amount: { currency: 'USD', value: '25.00' }
-          }
-        ],
-        total: {
-          label: 'Total',
-          amount: { currency: 'USD', value: '25.00' }
-        },
-        shippingOptions: [
-          {
-            id: 'economy',
-            label: 'Economy Shipping (5-7 Days)',
-            amount: {
-              currency: 'USD',
-              value: '5.00'
-            },
-            selected: true
-          }
-        ],
-        modifiers: 'foo' // Not sure how these are used yet
-      };
-      const updatedDetails = Object.assign({}, DETAILS, updateDetails);
-
-      it('should throw if `target` is not an instance of PaymentRequest', async () => {
-        const paymentRequestUpdateEvent = new PaymentRequestUpdateEvent(
-          'shippingaddresschange'
-        );
-
-        let error = null;
-
-        try {
-          await paymentRequestUpdateEvent.updateWith(updateDetails);
-        } catch(e) {
-          error = e;
-        }
-
-        expect(error.message).toBe('TypeError');
-      });
-
-      it('should throw if `_waitForUpdate` is `true`', async () => {
-        const interactivePaymentRequest = createInteractivePaymentRequest(
-          METHOD_DATA,
-          DETAILS,
-          OPTIONS
-        );
-        const paymentRequestUpdateEvent = new PaymentRequestUpdateEvent(
-          'shippingaddresschange',
-          interactivePaymentRequest
-        );
-
-        let error = null;
-
-        try {
-          // While waiting for the first `updateWith` to resolve,
-          // it's internal `_waitForUpdate` property gets set
-          // to `true`.
-          await paymentRequestUpdateEvent.updateWith();
-
-          // When the second `updateWith` is fired, the class
-          // throws.
-          await paymentRequestUpdateEvent.updateWith(updateDetails);
-        } catch(e) {
-          error = e;
-        }
-
-        expect(error.message).toBe('InvalidStateError');
-      });
-
-      it('should throw if `target._state` is not equal to `interactive`', async () => {
-        let error1 = null;
-
-        try {
-          const createdPaymentRequest = createCreatedPaymentRequest(
-            METHOD_DATA,
-            DETAILS,
-            OPTIONS
-          );
-          const event1 = new PaymentRequestUpdateEvent(
-            'shippingaddresschange',
-            createdPaymentRequest
-          );
-
-          await event1.updateWith(updateDetails);
-        } catch(e1) {
-          error1 = e1;
-        }
-
-        expect(error1.message).toBe('InvalidStateError');
-
-        let error2 = null;
-
-        try {
-          const closedPaymentRequest = createClosedPaymentRequest(
-            METHOD_DATA,
-            DETAILS,
-            OPTIONS
-          );
-          const event2 = new PaymentRequestUpdateEvent(
-            'shippingaddresschange',
-            closedPaymentRequest
-          );
-
-          await event2.updateWith(updateDetails);
-        } catch(e2) {
-          error2 = e2;
-        }
-
-        expect(error2.message).toBe('InvalidStateError');
-      });
-
-      it('should throw if `target.updating` is `true`', async () => {
-        const updatingPaymentRequest = createUpdatingPaymentRequest(
-          METHOD_DATA,
-          DETAILS,
-          OPTIONS
-        );
-
-        let error = null;
-
-        try {
+    describe('constructor', () => {
+      it("should throw if `name` isn't `shippingaddresschange` or `shippingoptionchange` or `paymentmethodchange`", () => {
+        expect(() => {
           const paymentRequestUpdateEvent = new PaymentRequestUpdateEvent(
-            'shippingaddresschange',
-            updatingPaymentRequest
+            'foo',
+            paymentRequest
+          );
+        }).toThrow();
+      });
+
+      it("should not throw if `name` is valid", () => {
+        expect(() => {
+          const paymentRequestUpdateEvent = new PaymentRequestUpdateEvent(
+            eventName,
+            paymentRequest
+          );
+        }).not.toThrow();
+      });
+    });
+
+    describe('attributes', () => {
+      describe('name', () => {
+        it('should return the event name', () => {
+          const paymentRequestUpdateEvent = new PaymentRequestUpdateEvent(
+            eventName,
+            paymentRequest
           );
 
-          await paymentRequestUpdateEvent.updateWith({});
-        } catch(e) {
-          error = e;
-        }
-
-        expect(error.message).toBe('InvalidStateError');
+          expect(paymentRequestUpdateEvent.name).toBe(eventName);
+        });
       });
 
-      it('should successfully update target details when passed an Object', async () => {
-        const interactivePaymentRequest = createInteractivePaymentRequest(
-          METHOD_DATA,
-          DETAILS,
-          OPTIONS
-        );
-        const paymentRequestUpdateEvent = new PaymentRequestUpdateEvent(
-          'shippingaddresschange',
-          interactivePaymentRequest
-        );
+      describe('target', () => {
+        it('should return the PaymentRequest instance', () => {
+          const paymentRequestUpdateEvent = new PaymentRequestUpdateEvent(
+            eventName,
+            paymentRequest
+          );
 
-        await paymentRequestUpdateEvent.updateWith(updateDetails);
-
-        expect(interactivePaymentRequest._details).toEqual(updatedDetails);
+          expect(paymentRequestUpdateEvent.target).toBeInstanceOf(PaymentRequest);
+        });
       });
+    });
 
-      it('should successfully update target details when passed a Promise that returns an Object', async () => {
-        const interactivePaymentRequest = createInteractivePaymentRequest(
-          METHOD_DATA,
-          DETAILS,
-          OPTIONS
-        );
-        const paymentRequestUpdateEvent = new PaymentRequestUpdateEvent(
-          'shippingaddresschange',
-          interactivePaymentRequest
-        );
+    describe('methods', () => {
+      describe('updateWith', () => {
+        const updateDetails = {
+          displayItems: [
+            ...displayItems,
+            {
+              label: 'Shipping',
+              amount: { currency: 'USD', value: '25.00' }
+            }
+          ],
+          total: {
+            label: 'Total',
+            amount: { currency: 'USD', value: '25.00' }
+          },
+          shippingOptions: [
+            {
+              id: 'economy',
+              label: 'Economy Shipping (5-7 Days)',
+              amount: {
+                currency: 'USD',
+                value: '5.00'
+              },
+              selected: true
+            }
+          ],
+          modifiers: 'foo' // Not sure how these are used yet
+        };
+        const updatedDetails = Object.assign({}, DETAILS, updateDetails);
 
-        await paymentRequestUpdateEvent.updateWith(() => {
-          return Promise.resolve(updateDetails);
+        it('should throw if `target` is not an instance of PaymentRequest', async () => {
+          const paymentRequestUpdateEvent = new PaymentRequestUpdateEvent(
+            eventName
+          );
+
+          let error = null;
+
+          try {
+            await paymentRequestUpdateEvent.updateWith(updateDetails);
+          } catch(e) {
+            error = e;
+          }
+
+          expect(error.message).toBe('TypeError');
         });
 
-        expect(interactivePaymentRequest._details).toEqual(updatedDetails);
-      });
+        it('should throw if `_waitForUpdate` is `true`', async () => {
+          const interactivePaymentRequest = createInteractivePaymentRequest(
+            METHOD_DATA,
+            DETAILS,
+            OPTIONS
+          );
+          const paymentRequestUpdateEvent = new PaymentRequestUpdateEvent(
+            eventName,
+            interactivePaymentRequest
+          );
 
-      it('should return a rejected promise upon rejection of the details Promise', async () => {
-        const interactivePaymentRequest = createInteractivePaymentRequest(
-          METHOD_DATA,
-          DETAILS,
-          OPTIONS
-        );
-        const paymentRequestUpdateEvent = new PaymentRequestUpdateEvent(
-          'shippingaddresschange',
-          interactivePaymentRequest
-        );
+          let error = null;
 
-        let error = null;
+          try {
+            // While waiting for the first `updateWith` to resolve,
+            // it's internal `_waitForUpdate` property gets set
+            // to `true`.
+            await paymentRequestUpdateEvent.updateWith();
 
-        try {
+            // When the second `updateWith` is fired, the class
+            // throws.
+            await paymentRequestUpdateEvent.updateWith(updateDetails);
+          } catch(e) {
+            error = e;
+          }
+
+          expect(error.message).toBe('InvalidStateError');
+        });
+
+        it('should throw if `target._state` is not equal to `interactive`', async () => {
+          let error1 = null;
+
+          try {
+            const createdPaymentRequest = createCreatedPaymentRequest(
+              METHOD_DATA,
+              DETAILS,
+              OPTIONS
+            );
+            const event1 = new PaymentRequestUpdateEvent(
+              eventName,
+              createdPaymentRequest
+            );
+
+            await event1.updateWith(updateDetails);
+          } catch(e1) {
+            error1 = e1;
+          }
+
+          expect(error1.message).toBe('InvalidStateError');
+
+          let error2 = null;
+
+          try {
+            const closedPaymentRequest = createClosedPaymentRequest(
+              METHOD_DATA,
+              DETAILS,
+              OPTIONS
+            );
+            const event2 = new PaymentRequestUpdateEvent(
+              eventName,
+              closedPaymentRequest
+            );
+
+            await event2.updateWith(updateDetails);
+          } catch(e2) {
+            error2 = e2;
+          }
+
+          expect(error2.message).toBe('InvalidStateError');
+        });
+
+        it('should throw if `target.updating` is `true`', async () => {
+          const updatingPaymentRequest = createUpdatingPaymentRequest(
+            METHOD_DATA,
+            DETAILS,
+            OPTIONS
+          );
+
+          let error = null;
+
+          try {
+            const paymentRequestUpdateEvent = new PaymentRequestUpdateEvent(
+              eventName,
+              updatingPaymentRequest
+            );
+
+            await paymentRequestUpdateEvent.updateWith({});
+          } catch(e) {
+            error = e;
+          }
+
+          expect(error.message).toBe('InvalidStateError');
+        });
+
+        it('should successfully update target details when passed an Object', async () => {
+          const interactivePaymentRequest = createInteractivePaymentRequest(
+            METHOD_DATA,
+            DETAILS,
+            OPTIONS
+          );
+          const paymentRequestUpdateEvent = new PaymentRequestUpdateEvent(
+            eventName,
+            interactivePaymentRequest
+          );
+
+          await paymentRequestUpdateEvent.updateWith(updateDetails);
+
+          expect(interactivePaymentRequest._details).toEqual(updatedDetails);
+        });
+
+        it('should successfully update target details when passed a Promise that returns an Object', async () => {
+          const interactivePaymentRequest = createInteractivePaymentRequest(
+            METHOD_DATA,
+            DETAILS,
+            OPTIONS
+          );
+          const paymentRequestUpdateEvent = new PaymentRequestUpdateEvent(
+            eventName,
+            interactivePaymentRequest
+          );
+
           await paymentRequestUpdateEvent.updateWith(() => {
-            return Promise.reject(new Error('Error fetching shipping prices.'));
+            return Promise.resolve(updateDetails);
           });
-        } catch(e) {
-          error = e;
-        }
-        
-        expect(error.message).toBe('Error fetching shipping prices.');
+
+          expect(interactivePaymentRequest._details).toEqual(updatedDetails);
+        });
+
+        it('should return a rejected promise upon rejection of the details Promise', async () => {
+          const interactivePaymentRequest = createInteractivePaymentRequest(
+            METHOD_DATA,
+            DETAILS,
+            OPTIONS
+          );
+          const paymentRequestUpdateEvent = new PaymentRequestUpdateEvent(
+            eventName,
+            interactivePaymentRequest
+          );
+
+          let error = null;
+
+          try {
+            await paymentRequestUpdateEvent.updateWith(() => {
+              return Promise.reject(new Error('Error fetching shipping prices.'));
+            });
+          } catch(e) {
+            error = e;
+          }
+
+          expect(error.message).toBe('Error fetching shipping prices.');
+        });
       });
     });
   });
