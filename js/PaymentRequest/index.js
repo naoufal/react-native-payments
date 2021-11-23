@@ -276,6 +276,10 @@ export default class PaymentRequest {
   _handlePaymentMethodChange(paymentMethod: PaymentMethod) {
     this._paymentMethod = paymentMethod.paymentMethodType;
 
+    if (IS_IOS && this._paymentMethod) {
+      this._paymentMethod = this._paymentMethod.replace('PKPaymentMethodType','').toLowerCase();
+    }
+
     const event = new PaymentRequestUpdateEvent(PAYMENT_METHOD_CHANGE_EVENT, this);
 
     // Eventually calls `PaymentRequestUpdateEvent._handleDetailsUpdate` when
