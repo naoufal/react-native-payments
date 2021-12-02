@@ -55,7 +55,7 @@ RCT_EXPORT_METHOD(createPaymentRequest: (NSDictionary *)methodData
     self.paymentRequest.paymentSummaryItems = [self getPaymentSummaryItemsFromDetails:details];
     self.paymentRequest.shippingMethods = [self getShippingMethodsFromDetails:details];
 
-    [self setRequiredShippingAddressFieldsFromOptions:options];
+    [self setRequiredAddressFieldsFromOptions:options];
 
     // Set options so that we can later access it.
     self.initialOptions = options;
@@ -134,7 +134,7 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
 
     if (self.shippingContactCompletion) {
         // Display shipping address error when shipping is needed and shipping method count is below 1
-        if (self.initialOptions[@"requestShipping"] && [shippingMethods count] == 0) {
+        if ([self.initialOptions[@"requestShipping"] boolValue] && [shippingMethods count] == 0) {
             return self.shippingContactCompletion(
                                                   PKPaymentAuthorizationStatusInvalidShippingPostalAddress,
                                                   shippingMethods,
@@ -186,24 +186,26 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
                    didSelectShippingContact:(PKContact *)contact
                                  completion:(nonnull void (^)(PKPaymentAuthorizationStatus, NSArray<PKShippingMethod *> * _Nonnull, NSArray<PKPaymentSummaryItem *> * _Nonnull))completion
 {
-    self.shippingContactCompletion = completion;
+    if ([self.initialOptions[@"requestShipping"] boolValue]) {
+        self.shippingContactCompletion = completion;
 
-    CNPostalAddress *postalAddress = contact.postalAddress;
-    // street, subAdministrativeArea, and subLocality are supressed for privacy
-    [self.bridge.eventDispatcher sendDeviceEventWithName:@"NativePayments:onshippingaddresschange"
-                                                    body:@{
-                                                           @"recipient": [NSNull null],
-                                                           @"organization": [NSNull null],
-                                                           @"addressLine": [NSNull null],
-                                                           @"city": postalAddress.city,
-                                                           @"region": postalAddress.state,
-                                                           @"country": [postalAddress.ISOCountryCode uppercaseString],
-                                                           @"postalCode": postalAddress.postalCode,
-                                                           @"phone": [NSNull null],
-                                                           @"languageCode": [NSNull null],
-                                                           @"sortingCode": [NSNull null],
-                                                           @"dependentLocality": [NSNull null]
-                                                           }];
+        CNPostalAddress *postalAddress = contact.postalAddress;
+        // street, subAdministrativeArea, and subLocality are supressed for privacy
+        [self.bridge.eventDispatcher sendDeviceEventWithName:@"NativePayments:onshippingaddresschange"
+                                                        body:@{
+                                                            @"recipient": [NSNull null],
+                                                            @"organization": [NSNull null],
+                                                            @"addressLine": [NSNull null],
+                                                            @"city": postalAddress.city,
+                                                            @"region": postalAddress.state,
+                                                            @"country": [postalAddress.ISOCountryCode uppercaseString],
+                                                            @"postalCode": postalAddress.postalCode,
+                                                            @"phone": [NSNull null],
+                                                            @"languageCode": [NSNull null],
+                                                            @"sortingCode": [NSNull null],
+                                                            @"dependentLocality": [NSNull null]
+                                                            }];
+    }
 }
 
 // Shipping Method delegates
@@ -311,13 +313,16 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
 - (NSArray<PKShippingMethod *> *_Nonnull)getShippingMethodsFromDetails:(NSDictionary *_Nonnull)details
 {
     // Setup `shippingMethods` array
-    NSMutableArray <PKShippingMethod *> * shippingMethods = [NSMutableArray array];
+    NSMutableArray <PKShippingMethod *> * shippingMethods = nil;
+    if ([self.initialOptions[@"requestShipping"] boolValue]) {
+        shippingMethods = [NSMutableArray array];
 
-    // Add `shippingOptions` to `shippingMethods`
-    NSArray *shippingOptions = details[@"shippingOptions"];
-    if (shippingOptions.count > 0) {
-        for (NSDictionary *shippingOption in shippingOptions) {
-            [shippingMethods addObject: [self convertShippingOptionToShippingMethod:shippingOption]];
+        // Add `shippingOptions` to `shippingMethods`
+        NSArray *shippingOptions = details[@"shippingOptions"];
+        if (shippingOptions.count > 0) {
+            for (NSDictionary *shippingOption in shippingOptions) {
+                [shippingMethods addObject: [self convertShippingOptionToShippingMethod:shippingOption]];
+            }
         }
     }
 
@@ -347,27 +352,27 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
     return shippingMethod;
 }
 
-- (void)setRequiredShippingAddressFieldsFromOptions:(NSDictionary *_Nonnull)options
+- (void)setRequiredAddressFieldsFromOptions:(NSDictionary *_Nonnull)options
 {
     // Request Shipping
-    if (options[@"requestShipping"]) {
-        self.paymentRequest.requiredShippingAddressFields = PKAddressFieldPostalAddress;
+    if ([options[@"requestShipping"] boolValue]) {
+        NSMutableSet <PKContactField> *shippingContactFields = [NSMutableSet setWithArray:@[PKContactFieldPostalAddress]];
+        if ([options[@"requestPayerName"] boolValue]) {
+            [shippingContactFields addObject:PKContactFieldName];
+        }
+
+        if ([options[@"requestPayerPhone"] boolValue]) {
+            [shippingContactFields addObject:PKContactFieldPhoneNumber];
+        }
+
+        if ([options[@"requestPayerEmail"] boolValue]) {
+            [shippingContactFields addObject:PKContactFieldEmailAddress];
+        }
+        self.paymentRequest.requiredShippingContactFields = shippingContactFields;
     }
 
-    if (options[@"requestBilling"]) {
-        self.paymentRequest.requiredBillingAddressFields = PKAddressFieldPostalAddress;
-    }
-
-    if (options[@"requestPayerName"]) {
-        self.paymentRequest.requiredShippingAddressFields = self.paymentRequest.requiredShippingAddressFields | PKAddressFieldName;
-    }
-
-    if (options[@"requestPayerPhone"]) {
-        self.paymentRequest.requiredShippingAddressFields = self.paymentRequest.requiredShippingAddressFields | PKAddressFieldPhone;
-    }
-
-    if (options[@"requestPayerEmail"]) {
-        self.paymentRequest.requiredShippingAddressFields = self.paymentRequest.requiredShippingAddressFields | PKAddressFieldEmail;
+    if ([options[@"requestBilling"] boolValue]) {
+        self.paymentRequest.requiredBillingContactFields = [NSSet setWithArray:@[PKContactFieldPostalAddress]];
     }
 }
 
