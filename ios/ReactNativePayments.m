@@ -134,7 +134,7 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
 
     if (self.shippingContactCompletion) {
         // Display shipping address error when shipping is needed and shipping method count is below 1
-        if (self.initialOptions[@"requestShipping"] && [shippingMethods count] == 0) {
+        if ([self.initialOptions[@"requestShipping"] boolValue] && [shippingMethods count] == 0) {
             return self.shippingContactCompletion(
                                                   PKPaymentAuthorizationStatusInvalidShippingPostalAddress,
                                                   shippingMethods,
@@ -186,7 +186,7 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
                    didSelectShippingContact:(PKContact *)contact
                                  completion:(nonnull void (^)(PKPaymentAuthorizationStatus, NSArray<PKShippingMethod *> * _Nonnull, NSArray<PKPaymentSummaryItem *> * _Nonnull))completion
 {
-    if (self.initialOptions[@"requestShipping"]) {
+    if ([self.initialOptions[@"requestShipping"] boolValue]) {
         self.shippingContactCompletion = completion;
 
         CNPostalAddress *postalAddress = contact.postalAddress;
@@ -314,7 +314,7 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
 {
     // Setup `shippingMethods` array
     NSMutableArray <PKShippingMethod *> * shippingMethods = nil;
-    if (self.initialOptions[@"requestShipping"]) {
+    if ([self.initialOptions[@"requestShipping"] boolValue]) {
         shippingMethods = [NSMutableArray array];
 
         // Add `shippingOptions` to `shippingMethods`
@@ -355,23 +355,23 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
 - (void)setRequiredAddressFieldsFromOptions:(NSDictionary *_Nonnull)options
 {
     // Request Shipping
-    if (options[@"requestShipping"]) {
+    if ([options[@"requestShipping"] boolValue]) {
         NSMutableSet <PKContactField> *shippingContactFields = [NSMutableSet setWithArray:@[PKContactFieldPostalAddress]];
-        if (options[@"requestPayerName"]) {
+        if ([options[@"requestPayerName"] boolValue]) {
             [shippingContactFields addObject:PKContactFieldName];
         }
 
-        if (options[@"requestPayerPhone"]) {
+        if ([options[@"requestPayerPhone"] boolValue]) {
             [shippingContactFields addObject:PKContactFieldPhoneNumber];
         }
 
-        if (options[@"requestPayerEmail"]) {
+        if ([options[@"requestPayerEmail"] boolValue]) {
             [shippingContactFields addObject:PKContactFieldEmailAddress];
         }
         self.paymentRequest.requiredShippingContactFields = shippingContactFields;
     }
 
-    if (options[@"requestBilling"]) {
+    if ([options[@"requestBilling"] boolValue]) {
         self.paymentRequest.requiredBillingContactFields = [NSSet setWithArray:@[PKContactFieldPostalAddress]];
     }
 }
