@@ -4040,11 +4040,11 @@ react-deep-force-update@^1.0.0:
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-1.0.1.tgz#f911b5be1d2a6fe387507dd6e9a767aa2924b4c7"
 
 "react-native-payments@file:../..":
-  version "0.41.0"
+  version "0.8.3"
   dependencies:
     es6-error "^4.0.2"
     uuid "^3.1.0"
-    validator "^7.0.0"
+    validator "^9.4.1"
 
 react-native@0.41.0:
   version "0.41.0"
@@ -4890,8 +4890,8 @@ type-is@~1.6.15, type-is@~1.6.6:
     mime-types "~2.1.15"
 
 ua-parser-js@^0.7.9:
-  version "0.7.12"
-  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.12.tgz#04c81a99bdd5dc52263ea29d24c6bf8d4818a4bb"
+  version "0.7.31"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.31.tgz#649a656b191dffab4f21d5e053e27ca17cbff5c6"
 
 uglify-js@^2.6, uglify-js@^2.6.2, uglify-js@^2.8.27:
   version "2.8.29"
@@ -4966,9 +4966,9 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "~1.0.0"
     spdx-expression-parse "~1.0.0"
 
-validator@^7.0.0:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/validator/-/validator-7.1.0.tgz#331695afc7e6d72f980bddd68aa296d6b3d6c8b6"
+validator@^9.4.1:
+  version "9.4.1"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-9.4.1.tgz#abf466d398b561cd243050112c6ff1de6cc12663"
 
 vary@~1.0.1:
   version "1.0.1"
