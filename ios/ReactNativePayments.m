@@ -267,7 +267,10 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
     NSArray *jsSupportedNetworks = methodData[@"supportedNetworks"];
     NSMutableArray *supportedNetworks = [NSMutableArray array];
     for (NSString *supportedNetwork in jsSupportedNetworks) {
-        [supportedNetworks addObject: supportedNetworksMapping[supportedNetwork]];
+        PKPaymentNetwork network = supportedNetworksMapping[supportedNetwork];
+        if (network != nil) {
+            [supportedNetworks addObject: network];
+        }
     }
     
     return supportedNetworks;
