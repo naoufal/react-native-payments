@@ -259,10 +259,6 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
         [supportedNetworksMapping setObject:PKPaymentNetworkMada forKey:@"mada"];
     }
     
-    if (iOSVersion >= 12.1) {
-        [supportedNetworksMapping setObject:PKPaymentNetworkMada forKey:@"mada"];
-    }
-    
     // Setup supportedNetworks
     NSArray *jsSupportedNetworks = methodData[@"supportedNetworks"];
     NSMutableArray *supportedNetworks = [NSMutableArray array];
