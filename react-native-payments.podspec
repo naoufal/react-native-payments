@@ -16,5 +16,4 @@ Pod::Spec.new do |s|
 
   s.dependency 'React'
   s.dependency 'Stripe', '~> 19'
-  s.dependency 'Braintree', '~> 4'
 end
