@@ -1,6 +1,7 @@
 #import "ReactNativePayments.h"
 #import <React/RCTUtils.h>
 #import <React/RCTEventDispatcher.h>
+#import <React/RCTLog.h>
 
 @implementation ReactNativePayments
 @synthesize bridge = _bridge;
