@@ -56,23 +56,19 @@ Bear with us while we organize things a bit.
 
 ## Completed
 
-- Apple Pay Stripe
-
 ## Completed, untested
 
-- Apple Pay Braintree
-- Google Pay (Stripe, Braintree)
+- Apple Pay
+- Google Pay
 - Web
 
 ## In progress
-
-- Stripe: Payment Intents (for SCA)
 
 ## Planned
 
 - Tutorial docs
 
-Naoufal, the original author of this library, has done a lot of the hard work integrating iOS, Android, Web platforms and Stripe and Braintree gateways.
+Naoufal, the original author of this library, has done a lot of the hard work integrating iOS, Android, Web platforms.
 
 The library has fallen out of regular maintenance and we're working to test and update all parts to be compatible for RN in the 2020s.
 
@@ -134,7 +130,6 @@ __Features__
 - __Effective__. Faster checkouts that increase conversion.
 - __Future-proof__. Use a W3C Standards API, supported by companies like Google, Firefox and others.
 - __Cross-platform__. Share payments code between your iOS, Android, and web apps.
-- __Add-ons__. Easily enable support for Stripe or Braintree via add-ons.
 
 ---
 
@@ -574,8 +569,7 @@ Provides a button that is used either to trigger payments through Apple Pay or t
 
 ## Add-ons
 Here's a list of Payment Processors that you can enable via add-ons:
-- [Stripe](https://github.com/naoufal/react-native-payments/blob/master/packages/react-native-payments-addon-stripe)
-- [Braintree](https://github.com/naoufal/react-native-payments/blob/master/packages/react-native-payments-addon-braintree)
+- none for now
 
 🚨 _Note: On Android, Payment Processors are enabled by default._
 

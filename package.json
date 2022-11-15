@@ -17,8 +17,6 @@
     "react",
     "react-native",
     "apple-pay",
-    "stripe",
-    "braintree",
     "payments",
     "payment-request",
     "sca",

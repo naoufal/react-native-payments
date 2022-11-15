@@ -711,8 +711,8 @@ export function errorGatewayNotSupported() {
         currencyCode: 'USD',
         paymentMethodTokenizationParameters: {
           parameters: {
-            gateway: 'stripe',
-            'stripe:stripe:publishableKey': 'pk_test_foo'
+            gateway: '',
+            ':publishableKey': 'pk_test_foo'
           }
         }
       }
