@@ -332,7 +332,14 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
 - (PKPaymentSummaryItem *_Nonnull)convertDisplayItemToPaymentSummaryItem:(NSDictionary *_Nonnull)displayItem;
 {
     NSDecimalNumber *decimalNumberAmount = [NSDecimalNumber decimalNumberWithString:displayItem[@"amount"][@"value"]];
-    PKPaymentSummaryItem *paymentSummaryItem = [PKPaymentSummaryItem summaryItemWithLabel:displayItem[@"label"] amount:decimalNumberAmount];
+    PKPaymentSummaryItemType itemType = PKPaymentSummaryItemTypeFinal;
+    if ([displayItem[@"pending"] respondsToSelector:@selector(boolValue)] && [displayItem[@"pending"] boolValue] == YES) {
+        itemType = PKPaymentSummaryItemTypePending;
+    }
+    PKPaymentSummaryItem *paymentSummaryItem = [PKPaymentSummaryItem
+                                                summaryItemWithLabel:displayItem[@"label"]
+                                                amount:decimalNumberAmount
+                                                type:itemType];
 
     return paymentSummaryItem;
 }
