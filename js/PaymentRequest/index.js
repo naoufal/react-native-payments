@@ -409,16 +409,12 @@ export default class PaymentRequest {
 
   _removeEventListeners() {
     // Internal Events
-    DeviceEventEmitter.removeSubscription(this._userDismissSubscription);
-    DeviceEventEmitter.removeSubscription(this._userAcceptSubscription);
+    this._userDismissSubscription.remove()
+    this._userAcceptSubscription.remove()
 
     if (IS_IOS) {
-      DeviceEventEmitter.removeSubscription(
-        this._shippingAddressChangeSubscription
-      );
-      DeviceEventEmitter.removeSubscription(
-        this._shippingOptionChangeSubscription
-      );
+      this._shippingAddressChangeSubscription.remove()
+      this._shippingOptionChangeSubscription.remove()
     }
   }
 
