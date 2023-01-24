@@ -2,6 +2,32 @@
 
 [![Build Status](https://travis-ci.org/naoufal/react-native-payments.svg?branch=master)](https://travis-ci.org/naoufal/react-native-payments) [![Codeship Status for freeman-industries/react-native-payments](https://app.codeship.com/projects/d6d17e65-23f0-4154-b7ce-33ce59471b08/status?branch=master)](https://app.codeship.com/projects/418096)
 
+# 🚨 Important notice 🚨
+
+This project is looking for new authors and maintainers.
+
+More info here: https://github.com/naoufal/react-native-payments/issues/335
+
+**⚠️ Stripe has released an official React Native SDK supporting Apple Pay that has a huge team of paid engineers behind it. ⚠️**
+
+**⚠️ For a bug free experience I strongly recommend you use [@stripe/stripe-react-native](https://github.com/stripe/stripe-react-native) on any new projects. ⚠️**
+
+The scope of this library should probably change to:
+
+- Support networks and products unavailable within Stripe
+- Stick to the principles of the PaymentRequest open interface
+
+If you want to own that direction, please get in touch.
+
+- [@naoufal](https://twitter.com/naoufal) (project owner) on Twitter (sometimes difficult to get hold of)
+- Me, Nabs (afk maintainer) on [my LinkedIn](https://linkedin.com/in/nabilfreeman) (I also have Twitter [@NabsFreeman](https://twitter.com/NabsFreeman), but I think Elon shadowbanned me during the whole jet thing)
+
+Naoufal is the only administrator and he needs to appoint authors and maintainers. I can commit and merge PRs to help any new maintainer get started.
+
+Nabs
+
+# Introduction
+
 Welcome to the best and most comprehensive library for integrating payments like Apple Pay and Google Pay into your React Native app.
 
 This library is designed to be fully compatible with React Native 0.61 and onwards.
