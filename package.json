@@ -1,6 +1,6 @@
 {
   "name": "react-native-payments",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "description": "Welcome to the best and most comprehensive library for integrating payments like Apple Pay and Google Pay into your React Native app.",
   "scripts": {
     "run:packager": "cd examples/native && yarn run:packager",
