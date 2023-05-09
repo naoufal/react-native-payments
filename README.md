@@ -260,12 +260,19 @@ const METHOD_DATA = [{
   supportedMethods: ['android-pay'],
   data: {
     supportedNetworks: ['visa', 'mastercard', 'amex'],
+    // https://developers.google.com/android/reference/com/google/android/gms/wallet/WalletConstants.html 
+    // PAYMENT_METHOD_CARD and PAYMENT_METHOD_TOKENIZED_CARD.. or [1, 2]
+    allowedPaymentMethods: [1, 2], 
     currencyCode: 'USD',
     environment: 'TEST', // defaults to production
     paymentMethodTokenizationParameters: {
-      tokenizationType: 'NETWORK_TOKEN',
+      tokenizationType: 'NETWORK_TOKEN', // or GATEWAY_TOKEN
       parameters: {
-        publicKey: 'your-pubic-key'
+        publicKey: 'your-pubic-key' // https://developers.google.com/pay/api/android/guides/resources/payment-data-cryptography#using-openssl
+        // if use GATEWAY_TOKEN
+      //  gateway: 'your gateway',
+      //  gatewayMerchantId: 'your gatewayMerchantId',
+      //  merchantName: 'your merchantName',
       }
     }
   }

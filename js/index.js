@@ -1,7 +1,7 @@
 import _PaymentRequest from './PaymentRequest';
-import _NativePayments from './NativeBridge';
+import _NativeBridge from './NativeBridge';
 import { PKPaymentButton } from './PKPaymentButton';
 
 export const ApplePayButton = PKPaymentButton;
 export const PaymentRequest = _PaymentRequest;
-export const canMakePayments = _NativePayments.canMakePayments;
+export const canMakePayments = _NativeBridge.canMakePayments;
