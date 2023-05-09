@@ -15,11 +15,6 @@ function prDisplayHandler(paymentRequest) {
   return paymentRequest
     .show()
     .then(paymentResponse => {
-      if (Platform.OS === 'android') {
-        // Fetch PaymentToken
-        paymentResponse.details.getPaymentToken().then(console.log);
-      }
-
       paymentResponse.complete('success');
     })
     .catch(console.warn);
