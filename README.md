@@ -269,10 +269,10 @@ const METHOD_DATA = [{
       tokenizationType: 'NETWORK_TOKEN', // or GATEWAY_TOKEN
       parameters: {
         publicKey: 'your-pubic-key' // https://developers.google.com/pay/api/android/guides/resources/payment-data-cryptography#using-openssl
-        // if use GATEWAY_TOKEN
-      //  gateway: 'your gateway',
-      //  gatewayMerchantId: 'your gatewayMerchantId',
-      //  merchantName: 'your merchantName',
+        //  if use GATEWAY_TOKEN
+        //  gateway: 'your gateway',
+        //  gatewayMerchantId: 'your gatewayMerchantId',
+        //  merchantName: 'your merchantName',
       }
     }
   }
