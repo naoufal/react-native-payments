@@ -266,10 +266,10 @@ const METHOD_DATA = [{
     currencyCode: 'USD',
     environment: 'TEST', // defaults to production
     paymentMethodTokenizationParameters: {
-      tokenizationType: 'NETWORK_TOKEN', // or GATEWAY_TOKEN
+      tokenizationType: 'PAYMENT_METHOD_TOKENIZATION_TYPE_DIRECT', // or PAYMENT_METHOD_TOKENIZATION_TYPE_PAYMENT_GATEWAY 
       parameters: {
         publicKey: 'your-pubic-key' // https://developers.google.com/pay/api/android/guides/resources/payment-data-cryptography#using-openssl
-        //  if use GATEWAY_TOKEN
+        //  if use PAYMENT_METHOD_TOKENIZATION_TYPE_PAYMENT_GATEWAY
         //  gateway: 'your gateway',
         //  gatewayMerchantId: 'your gatewayMerchantId',
         //  merchantName: 'your merchantName',
@@ -631,6 +631,8 @@ Here's a list of Payment Processors that you can enable via add-ons:
 - [Brand Guidelines](https://developers.google.com/pay/api/android/guides/brand-guidelines)
 - [Gateway Token Approach](https://developers.google.com/web/fundamentals/discovery-and-monetization/payment-request/android-pay#gateway_token_approach)
 - [Network Token Approach](https://developers.google.com/web/fundamentals/discovery-and-monetization/payment-request/android-pay#network_token_approach)
+- [WalletConstants](https://developers.google.com/android/reference/com/google/android/gms/wallet/WalletConstants)
+
 
 # License
 Licensed under the MIT License, Copyright © 2017, [Naoufal Kadhom](https://twitter.com/naoufal).
