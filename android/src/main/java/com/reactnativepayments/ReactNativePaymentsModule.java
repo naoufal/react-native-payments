@@ -271,10 +271,10 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
         String tokenizationType = tokenizationParameters.getString("tokenizationType");
 
 
-        if (tokenizationType.equals("GATEWAY_TOKEN")) {
+        if (tokenizationType.equals("PAYMENT_METHOD_TOKENIZATION_TYPE_PAYMENT_GATEWAY")) {
             ReadableMap parameters = tokenizationParameters.getMap("parameters");
             PaymentMethodTokenizationParameters.Builder parametersBuilder = PaymentMethodTokenizationParameters.newBuilder()
-                    .setPaymentMethodTokenizationType(PaymentMethodTokenizationType.PAYMENT_GATEWAY)
+                    .setPaymentMethodTokenizationType(WalletConstants.PAYMENT_METHOD_TOKENIZATION_TYPE_PAYMENT_GATEWAY)
                     .addParameter("gateway", parameters.getString("gateway"));
 
             ReadableMapKeySetIterator iterator = parameters.keySetIterator();
@@ -291,7 +291,7 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
             String publicKey = tokenizationParameters.getMap("parameters").getString("publicKey");
 
             return PaymentMethodTokenizationParameters.newBuilder()
-                    .setPaymentMethodTokenizationType(PaymentMethodTokenizationType.NETWORK_TOKEN)
+                    .setPaymentMethodTokenizationType(WalletConstants.PAYMENT_METHOD_TOKENIZATION_TYPE_DIRECT)
                     .addParameter("publicKey", publicKey)
                     .build();
         }
