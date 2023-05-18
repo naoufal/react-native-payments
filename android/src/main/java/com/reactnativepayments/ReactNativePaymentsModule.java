@@ -98,15 +98,27 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
                                     String protocolVersion = paymentTokenJson.getString("protocolVersion");
                                     String signature = paymentTokenJson.getString("signature");
                                     String signedMessage = paymentTokenJson.getString("signedMessage");
-                                    String intermediateSigningKey = paymentTokenJson.getString("intermediateSigningKey");
+
+                                    String serializeIntermediateSigningKey = paymentTokenJson.getString("intermediateSigningKey");
 
                                     WritableNativeMap paymentToken = new WritableNativeMap();
+
+                                    JSONObject intermediateSigningKeyJson = new JSONObject(serializeIntermediateSigningKey);
+                                    WritableNativeMap intermediateSigningKey = new WritableNativeMap();
+
+                                    String signedKey = intermediateSigningKeyJson.getString("signedKey");
+                                    String signatures = intermediateSigningKeyJson.getString("signatures");
+
+                                    intermediateSigningKey.putString("signedKey", signedKey);
+                                    intermediateSigningKey.putString("signatures", signatures);
+
                                     paymentToken.putString("protocolVersion", protocolVersion);
                                     paymentToken.putString("signature", signature);
                                     paymentToken.putString("signedMessage", signedMessage);
-                                    paymentToken.putString("intermediateSigningKey", intermediateSigningKey);
+                                    paymentToken.putMap("intermediateSigningKey", intermediateSigningKey);
 
                                     paymentDetails.putMap("paymentToken", paymentToken);
+
 
                                     sendEvent(reactContext, "NativePayments:onuseraccept", paymentDetails);
 
