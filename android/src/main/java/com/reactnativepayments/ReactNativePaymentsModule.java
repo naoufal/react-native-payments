@@ -84,7 +84,6 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
                                     : null;
 
 
-                                // TODO: Move into function
                                 WritableNativeMap paymentDetails = new WritableNativeMap();
                                 paymentDetails.putString("payerEmail", paymentData.getEmail());
                                 paymentDetails.putMap("shippingAddress", shippingAddress);
@@ -99,11 +98,13 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
                                     String protocolVersion = paymentTokenJson.getString("protocolVersion");
                                     String signature = paymentTokenJson.getString("signature");
                                     String signedMessage = paymentTokenJson.getString("signedMessage");
+                                    String intermediateSigningKey = paymentTokenJson.getString("intermediateSigningKey");
 
                                     WritableNativeMap paymentToken = new WritableNativeMap();
                                     paymentToken.putString("protocolVersion", protocolVersion);
                                     paymentToken.putString("signature", signature);
                                     paymentToken.putString("signedMessage", signedMessage);
+                                    paymentToken.putString("intermediateSigningKey", intermediateSigningKey);
 
                                     paymentDetails.putMap("paymentToken", paymentToken);
 
