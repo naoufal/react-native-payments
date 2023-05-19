@@ -107,10 +107,16 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
                                     WritableNativeMap intermediateSigningKey = new WritableNativeMap();
 
                                     String signedKey = intermediateSigningKeyJson.getString("signedKey");
-                                    String signatures = intermediateSigningKeyJson.getString("signatures");
+                                    JSONArray signatures = intermediateSigningKeyJson.getJSONArray("signatures");
+                                    WritableNativeArray signaturesArray = new WritableNativeArray();
 
                                     intermediateSigningKey.putString("signedKey", signedKey);
-                                    intermediateSigningKey.putString("signatures", signatures);
+
+                                    for (int i = 0; i < signatures.length(); i++) {
+                                        signaturesArray.pushString(signatures.getString(i));
+                                    }
+
+                                    paymentToken.putArray("signatures", signaturesArray);
 
                                     paymentToken.putString("protocolVersion", protocolVersion);
                                     paymentToken.putString("signature", signature);
