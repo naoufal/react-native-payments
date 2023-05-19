@@ -116,7 +116,7 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
                                         signaturesArray.pushString(signatures.getString(i));
                                     }
 
-                                    intermediateSigningKey.putString("signatures", signaturesArray);
+                                    intermediateSigningKey.putArray("signatures", signaturesArray);
 
                                     paymentToken.putString("protocolVersion", protocolVersion);
                                     paymentToken.putString("signature", signature);
