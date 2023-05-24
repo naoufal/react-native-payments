@@ -375,28 +375,6 @@ public class ReactNativePaymentsModule extends ReactContextBaseJavaModule {
         return result;
     }
 
-    private static List buildLineItems(ReadableArray displayItems) {
-        List<LineItem> list = new ArrayList<LineItem>();
-
-
-        for (int i = 0; i < (displayItems.size() - 1); i++) {
-            ReadableMap displayItem = displayItems.getMap(i);
-            ReadableMap amount = displayItem.getMap("amount");
-
-            list.add(LineItem.newBuilder()
-                    .setCurrencyCode(amount.getString("currency"))
-                    .setDescription(displayItem.getString("label"))
-                    .setQuantity("1")
-                    .setUnitPrice(amount.getString("value"))
-                    .setTotalPrice(amount.getString("value"))
-                    .build());
-        }
-
-        Log.i(REACT_CLASS, "ANDROID PAY getFullWalletAndroid" + list);
-
-        return list;
-    }
-
     private static WritableNativeMap buildAddressFromUserAddress(UserAddress userAddress) {
         WritableNativeMap address = new WritableNativeMap();
 
