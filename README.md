@@ -260,12 +260,19 @@ const METHOD_DATA = [{
   supportedMethods: ['android-pay'],
   data: {
     supportedNetworks: ['visa', 'mastercard', 'amex'],
+    // https://developers.google.com/android/reference/com/google/android/gms/wallet/WalletConstants.html 
+    // PAYMENT_METHOD_CARD and PAYMENT_METHOD_TOKENIZED_CARD.. or [1, 2]
+    allowedPaymentMethods: [1, 2], 
     currencyCode: 'USD',
     environment: 'TEST', // defaults to production
     paymentMethodTokenizationParameters: {
-      tokenizationType: 'NETWORK_TOKEN',
+      tokenizationType: 'PAYMENT_METHOD_TOKENIZATION_TYPE_DIRECT', // or PAYMENT_METHOD_TOKENIZATION_TYPE_PAYMENT_GATEWAY 
       parameters: {
-        publicKey: 'your-pubic-key'
+        publicKey: 'your-pubic-key' // https://developers.google.com/pay/api/android/guides/resources/payment-data-cryptography#using-openssl
+        //  if use PAYMENT_METHOD_TOKENIZATION_TYPE_PAYMENT_GATEWAY
+        //  gateway: 'your gateway',
+        //  gatewayMerchantId: 'your gatewayMerchantId',
+        //  merchantName: 'your merchantName',
       }
     }
   }
@@ -451,7 +458,7 @@ paymentRequest.addEventListener('shippingoptionchange', e => {
 
 For a deeper dive on handling shipping in Payment Request, checkout Google's _[Shipping in Payment Request](https://developers.google.com/web/fundamentals/discovery-and-monetization/payment-request/deep-dive-into-payment-request#shipping_in_payment_request_api)_.
 
-🚨 _Note: On Android, there are no `shippingaddresschange` and `shippingoptionchange` events.  To allow users to update their shipping address, you'll need to trigger a new `PaymentRequest`.  Updating shipping options typically happens after the receiving the `PaymentResponse` and before calling its `getPaymentToken` method._
+🚨 _Note: On Android, there are no `shippingaddresschange` and `shippingoptionchange` events.  To allow users to update their shipping address, you'll need to trigger a new `PaymentRequest`.  Updating shipping options typically happens after the receiving the `PaymentResponse`_
 
 ### Processing Payments
 Now that we know how to initialize, display, and dismiss a Payment Request, let's take a look at how to process payments.
@@ -501,24 +508,19 @@ paymentRequest.show()
 ```es6
 paymentRequest.show()
   .then(paymentResponse => {
-    const { getPaymentToken } = paymentResponse.details;
+    const { ephemeralPublicKey, encryptedMessage, tag } = paymentResponse.details.paymentToken;
 
-    return getPaymentToken()
-      .then(paymentToken => {
-        const { ephemeralPublicKey, encryptedMessage, tag } = paymentResponse.details;
-
-        return fetch('...', {
-          method: 'POST',
-          body: {
-            ephemeralPublicKey,
-            encryptedMessage,
-            tag
-          }
-        })
-        .then(res => res.json())
-        .then(successHandler)
-        .catch(errorHandler)
-      });
+    return fetch('...', {
+      method: 'POST',
+      body: {
+        ephemeralPublicKey,
+        encryptedMessage,
+        tag
+      }
+    })
+    .then(res => res.json())
+    .then(successHandler)
+    .catch(errorHandler)
   });
 ```
 
@@ -533,7 +535,7 @@ When using a payment processor, you'll receive a `paymentToken` field within the
 ```es6
 paymentRequest.show()
   .then(paymentResponse => {
-    const { paymentToken } = paymentResponse.details; // On Android, you need to invoke the `getPaymentToken` method to receive the `paymentToken`.
+    const { paymentToken } = paymentResponse.details;
 
     return fetch('...', {
       method: 'POST',
@@ -554,19 +556,17 @@ paymentRequest.show()
 ```es6
 paymentRequest.show()
   .then(paymentResponse => {
-    const { getPaymentToken } = paymentResponse.details;
+    const { paymentToken } = paymentResponse.details;
 
-    return getPaymentToken()
-      .then(paymentToken => fetch('...', {
-        method: 'POST',
-        body: {
-          paymentToken
-        }
-      })
-      .then(res => res.json())
-      .then(successHandler)
-      .catch(errorHandler);
-    });
+    return fetch('...', {
+      method: 'POST',
+      body: {
+        paymentToken
+      }
+    })
+    .then(res => res.json())
+    .then(successHandler)
+    .catch(errorHandler);
   });
 ```
 
@@ -631,6 +631,8 @@ Here's a list of Payment Processors that you can enable via add-ons:
 - [Brand Guidelines](https://developers.google.com/pay/api/android/guides/brand-guidelines)
 - [Gateway Token Approach](https://developers.google.com/web/fundamentals/discovery-and-monetization/payment-request/android-pay#gateway_token_approach)
 - [Network Token Approach](https://developers.google.com/web/fundamentals/discovery-and-monetization/payment-request/android-pay#network_token_approach)
+- [WalletConstants](https://developers.google.com/android/reference/com/google/android/gms/wallet/WalletConstants)
+
 
 # License
 Licensed under the MIT License, Copyright © 2017, [Naoufal Kadhom](https://twitter.com/naoufal).
