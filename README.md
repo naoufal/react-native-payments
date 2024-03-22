@@ -1,16 +1,30 @@
 # react-native-payments
 
-[![Build Status](https://travis-ci.org/naoufal/react-native-payments.svg?branch=master)](https://travis-ci.org/naoufal/react-native-payments) [![Codeship Status for freeman-industries/react-native-payments](https://app.codeship.com/projects/d6d17e65-23f0-4154-b7ce-33ce59471b08/status?branch=master)](https://app.codeship.com/projects/418096)
+[![Codeship Status for freeman-industries/react-native-payments](https://app.codeship.com/projects/d6d17e65-23f0-4154-b7ce-33ce59471b08/status?branch=master)](https://app.codeship.com/projects/418096)
 
 # 🚨 Important notice 🚨
 
-This project is looking for new authors and maintainers.
+This project is no longer maintained. The good news is that the landscape of payments on React Native has massively changed in the last few years. There is still room for this repo to evolve which I'll detail below, but first I would like to direct your attention to well-funded and well-maintained alternatives that will give you fewer grey hairs.
 
-More info here: https://github.com/naoufal/react-native-payments/issues/335
+## Stripe
+- Stripe has released an official React Native SDK supporting Apple Pay that has a huge team of paid engineers behind it.
+- It has also been included in the [Expo managed environment](https://docs.expo.dev/versions/latest/sdk/stripe/), which means it works on Expo Go. Huge achievement.
+- For a bug free experience and easy integration I strongly recommend you use [@stripe/stripe-react-native](https://github.com/stripe/stripe-react-native) on any new projects.
+- More information and discussion in this issue: https://github.com/naoufal/react-native-payments/issues/335
+ 
+## Community forks and alternatives
 
-**⚠️ Stripe has released an official React Native SDK supporting Apple Pay that has a huge team of paid engineers behind it. ⚠️**
+### Braintree
+- At time of writing, there an actively maintained Braintree RN SDK.
+- Check it out: https://github.com/ekreative/react-native-braintree
+- More information and discussion in this issue: https://github.com/naoufal/react-native-payments/issues/405
 
-**⚠️ For a bug free experience I strongly recommend you use [@stripe/stripe-react-native](https://github.com/stripe/stripe-react-native) on any new projects. ⚠️**
+### Other forks
+- Most notably there is a long running active fork of this library by Appfolio.
+- Check it out: https://github.com/appfolio/react-native-payments
+- Other projects and discussion in this issue: https://github.com/naoufal/react-native-payments/issues/406
+
+## Future of this library
 
 The scope of this library should probably change to:
 
@@ -25,6 +39,8 @@ If you want to own that direction, please get in touch.
 Naoufal is the only administrator and he needs to appoint authors and maintainers. I can commit and merge PRs to help any new maintainer get started.
 
 Nabs
+
+On to the old README...
 
 # Introduction
 
