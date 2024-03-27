@@ -218,8 +218,7 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
 // PRIVATE METHODS
 // https://developer.apple.com/reference/passkit/pkpaymentnetwork
 // ---------------
-- (NSArray *_Nonnull)getSupportedNetworksFromMethodData:(NSDictionary *_Nonnull)methodData
-{
+static NSMutableDictionary *createSupportedNetworksMapping() {
     NSMutableDictionary *supportedNetworksMapping = [[NSMutableDictionary alloc] init];
     
     CGFloat iOSVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
@@ -259,15 +258,24 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
         [supportedNetworksMapping setObject:PKPaymentNetworkMada forKey:@"mada"];
     }
     
-    if (iOSVersion >= 12.1) {
-        [supportedNetworksMapping setObject:PKPaymentNetworkMada forKey:@"mada"];
+    return supportedNetworksMapping;
+}
+
+- (NSArray *_Nonnull)getSupportedNetworksFromMethodData:(NSDictionary *_Nonnull)methodData
+{
+    static NSMutableDictionary * supportedNetworksMapping;
+    if (!supportedNetworksMapping) {
+        supportedNetworksMapping = createSupportedNetworksMapping();
     }
-    
+
     // Setup supportedNetworks
     NSArray *jsSupportedNetworks = methodData[@"supportedNetworks"];
     NSMutableArray *supportedNetworks = [NSMutableArray array];
     for (NSString *supportedNetwork in jsSupportedNetworks) {
-        [supportedNetworks addObject: supportedNetworksMapping[supportedNetwork]];
+        PKPaymentNetwork network = supportedNetworksMapping[supportedNetwork];
+        if (network != nil) {
+            [supportedNetworks addObject: network];
+        }
     }
     
     return supportedNetworks;
