@@ -1,3 +1,166 @@
+# react-native-payments
+
+[![Codeship Status for freeman-industries/react-native-payments](https://app.codeship.com/projects/d6d17e65-23f0-4154-b7ce-33ce59471b08/status?branch=master)](https://app.codeship.com/projects/418096)
+
+# 🚨 Important notice 🚨
+
+This project is no longer maintained. The good news is that the landscape of payments on React Native has massively changed in the last few years. There is still room for this repo to evolve which I'll detail below, but first I would like to direct your attention to well-funded and well-maintained alternatives that will give you fewer grey hairs.
+
+## Stripe
+- Stripe has released an official React Native SDK supporting Apple Pay that has a huge team of paid engineers behind it.
+- It has also been included in the [Expo managed environment](https://docs.expo.dev/versions/latest/sdk/stripe/), which means it works on Expo Go. Huge achievement.
+- For a bug free experience and easy integration I strongly recommend you use [@stripe/stripe-react-native](https://github.com/stripe/stripe-react-native) on any new projects.
+- More information and discussion in this issue: https://github.com/naoufal/react-native-payments/issues/335
+ 
+## Community forks and alternatives
+
+### Braintree
+- At time of writing, there an actively maintained Braintree RN SDK.
+- Check it out: https://github.com/ekreative/react-native-braintree
+- More information and discussion in this issue: https://github.com/naoufal/react-native-payments/issues/405
+
+### Other forks
+- Most notably there is a long running active fork of this library by Appfolio.
+- Check it out: https://github.com/appfolio/react-native-payments
+- Other projects and discussion in this issue: https://github.com/naoufal/react-native-payments/issues/406
+
+## Future of this library
+
+The scope of this library should probably change to:
+
+- Support networks and products unavailable within Stripe
+- Stick to the principles of the PaymentRequest open interface
+
+If you want to own that direction, please get in touch.
+
+- [@naoufal](https://twitter.com/naoufal) (project owner) on Twitter (sometimes difficult to get hold of)
+- Me, Nabs (afk maintainer) on [my LinkedIn](https://linkedin.com/in/nabilfreeman) (I also have Twitter [@NabsFreeman](https://twitter.com/NabsFreeman), but I think Elon shadowbanned me during the whole jet thing)
+
+Naoufal is the only administrator and he needs to appoint authors and maintainers. I can commit and merge PRs to help any new maintainer get started.
+
+Nabs
+
+On to the old README...
+
+# Introduction
+
+Welcome to the best and most comprehensive library for integrating payments like Apple Pay and Google Pay into your React Native app.
+
+This library is designed to be fully compatible with React Native 0.61 and onwards.
+
+<div>
+<img width="200px" src="https://user-images.githubusercontent.com/1627824/27758096-9fc6bf9a-5dc1-11e7-9d8f-b2d409302fc7.gif" />
+<img width="200px" src="https://user-images.githubusercontent.com/1627824/30039983-d75d1b3e-91d8-11e7-9ac9-71d2ed12958c.png" />
+</div>
+
+# Installation
+
+```
+npm install --save react-native-payments
+```
+
+You'll need to autolink on each platform:
+
+### Android
+
+```
+npx jetify
+```
+
+### iOS
+
+```
+cd ios
+pod install
+```
+
+# Guides
+
+## Example projects
+
+- [iOS](https://github.com/freeman-industries/react-native-payments-example-ios)
+
+## Live demo
+
+For a step by step guide, check out this talk by @naoufal.
+
+https://www.youtube.com/watch?v=XrmUuir9OHc&t=652
+
+## API Spec
+
+Down below we have a detailed specification for PaymentRequest and instructions for configuring Apple Pay and Google Pay, which is hopefully enough to get you started.
+
+We also have some legacy example projects in the `examples` directory that will be rewritten soon and linked above.
+
+Bear with us while we organize things a bit.
+
+# Roadmap
+
+## Completed
+
+- Apple Pay Stripe
+
+## Completed, untested
+
+- Apple Pay Braintree
+- Google Pay (Stripe, Braintree)
+- Web
+
+## In progress
+
+- Stripe: Payment Intents (for SCA)
+
+## Planned
+
+- Tutorial docs
+
+Naoufal, the original author of this library, has done a lot of the hard work integrating iOS, Android, Web platforms and Stripe and Braintree gateways.
+
+The library has fallen out of regular maintenance and we're working to test and update all parts to be compatible for RN in the 2020s.
+
+If you're feeling brave give the untested platforms a try and let us know how it worked.
+
+# Contributors
+
+Many people have contributed to the development of `react-native-payments` over time. The people below are currently available to help.
+
+- [@nabilfreeman](https://github.com/nabilfreeman) ⚙️ ✏️
+- [@runticle](https://github.com/runticle) ✏️
+
+---
+Merge PRs: ⚙️ | Review issues: ✏️
+
+## Join us!
+
+All contributions, big or small are welcomed.
+
+For large PRs, please open an issue and have a discussion with us first before you dive in.
+
+Our plan for this library is for it to be useful to all React Native developers so we want to architect it carefully.
+
+# In the wild
+
+These amazing people use `react-native-payments` in their projects.
+
+- [LeSalon (@lesalonapp)](https://github.com/lesalonapp)
+- [Truphone (My Truphone App)](https://truphone.com/consumer/esim-for-smartphone)
+
+To add your organization, open a PR updating this list.
+
+---
+
+🚧
+
+🚧
+
+🚧
+
+🚧
+
+🚧
+
+---
+
 > This project is currently in __beta and APIs are subject to change.__
 
 # React Native Payments
@@ -15,11 +178,6 @@ __Features__
 - __Cross-platform__. Share payments code between your iOS, Android, and web apps.
 - __Add-ons__. Easily enable support for Stripe or Braintree via add-ons.
 
-<div>
-<img width="280px" src="https://user-images.githubusercontent.com/1627824/27758096-9fc6bf9a-5dc1-11e7-9d8f-b2d409302fc7.gif" />
-<img width="280px" src="https://user-images.githubusercontent.com/1627824/30039983-d75d1b3e-91d8-11e7-9ac9-71d2ed12958c.png" />
-</div>
-
 ---
 
 ## Table of Contents
@@ -27,6 +185,7 @@ __Features__
 - [Installation](#installation)
 - [Usage](#usage)
 - [Testing Payments](#testing-payments)
+- [Apple Pay button](#apple-pay-button)
 - [Add-ons](#add-ons)
 - [API](#api)
 - [Resources](#resources)
@@ -80,7 +239,7 @@ Apple has a documentation on how to do this in their _[Configuring your Environm
 1. Add Android Pay and Google Play Services to your dependencies
 1. Enable Android Pay in your Manifest
 
-Google has documentation on how to do this in their _[Setup Android Pay](https://developers.google.com/android-pay/setup)_ guide.
+Google has documentation on how to do this in their _[Setup Android Pay](https://developers.google.com/pay/api/android/guides/setup)_ guide.
 
 ### Importing the Library
 Once Apple Pay/Android Pay is enabled in your app, jump into your app's entrypoint and make the `PaymentRequest` globally available to your app.
@@ -450,6 +609,11 @@ The sandbox environment is a great way to test offline implementation of Apple P
 >
 > ⚠️ **Note:** There are known differences when running Apple Pay on simulator and real device. Make sure you test Apple Pay on real device before going into production.
 
+## Apple Pay Button
+
+Provides a button that is used either to trigger payments through Apple Pay or to prompt the user to set up a card.
+[Detailed docs and examples](docs/ApplePayButton.md)
+
 ## Add-ons
 Here's a list of Payment Processors that you can enable via add-ons:
 - [Stripe](https://github.com/naoufal/react-native-payments/blob/master/packages/react-native-payments-addon-stripe)
@@ -458,10 +622,10 @@ Here's a list of Payment Processors that you can enable via add-ons:
 🚨 _Note: On Android, Payment Processors are enabled by default._
 
 ## API
-### [NativePayments](https://github.com/naoufal/react-native-payments/blob/master/packages/react-native-payments/docs/NativePayments.md)
-### [PaymentRequest](https://github.com/naoufal/react-native-payments/blob/master/packages/react-native-payments/docs/PaymentRequest.md)
-### [PaymentRequestUpdateEvent](https://github.com/naoufal/react-native-payments/blob/master/packages/react-native-payments/docs/PaymentRequestUpdateEvent.md)
-### [PaymentResponse](https://github.com/naoufal/react-native-payments/blob/master/packages/react-native-payments/docs/PaymentResponse.md)
+### [NativePayments](docs/NativePayments.md)
+### [PaymentRequest](docs/PaymentRequest.md)
+### [PaymentRequestUpdateEvent](docs/PaymentRequestUpdateEvent.md)
+### [PaymentResponse](docs/PaymentResponse.md)
 
 ## Resources
 ### Payment Request
@@ -478,9 +642,9 @@ Here's a list of Payment Processors that you can enable via add-ons:
 - [Payment Token Format Reference](https://developer.apple.com/library/content/documentation/PassKit/Reference/PaymentTokenJSON/PaymentTokenJSON.html#//apple_ref/doc/uid/TP40014929)
 
 ### Android Pay
-- [Setup Android Pay](https://developers.google.com/android-pay/setup)
-- [User Flows](https://developers.google.com/android-pay/payment-flows)
-- [Best Practices](https://developers.google.com/android-pay/best-practices)
+- [Setup Android Pay](https://developers.google.com/pay/api/android/guides/setup)
+- [Tutorial](https://developers.google.com/pay/api/android/guides/tutorial)
+- [Brand Guidelines](https://developers.google.com/pay/api/android/guides/brand-guidelines)
 - [Gateway Token Approach](https://developers.google.com/web/fundamentals/discovery-and-monetization/payment-request/android-pay#gateway_token_approach)
 - [Network Token Approach](https://developers.google.com/web/fundamentals/discovery-and-monetization/payment-request/android-pay#network_token_approach)
 
