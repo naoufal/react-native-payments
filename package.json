@@ -1,6 +1,6 @@
 {
   "name": "react-native-payments",
-  "version": "0.8.3",
+  "version": "0.8.3-5",
   "description": "Welcome to the best and most comprehensive library for integrating payments like Apple Pay and Google Pay into your React Native app.",
   "scripts": {
     "run:packager": "cd examples/native && yarn run:packager",
@@ -41,18 +41,18 @@
     "babel-eslint": "^10.1.0",
     "babel-jest": "20.0.3",
     "babel-preset-react-native": "2.0.0",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-flowtype": "^4.7.0",
     "eslint-plugin-import": "^2.17.3",
     "husky": "^0.14.1",
     "jest": "20.0.4",
-    "react-native": "^0.63.3",
-    "react-test-renderer": "16.0.0-alpha.12"
+    "react-native": "^0.70.1",
+    "react-test-renderer": "18.1.0"
   },
   "peerDependencies": {
-    "react": ">=15",
-    "react-native": ">=0.60"
+    "react": ">=18",
+    "react-native": ">=0.70"
   },
   "jest": {
     "testPathIgnorePatterns": [

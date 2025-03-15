@@ -43,6 +43,7 @@ jsconfig.json
 .vscode/*
 .idea
 *.iml
+.history
 
 # project
 #
